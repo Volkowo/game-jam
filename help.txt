@@ -1,0 +1,7 @@
+- clone
+- status
+- add
+commit
+push
+pull
+log
