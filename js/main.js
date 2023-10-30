@@ -1,6 +1,7 @@
 let ship, resourceNodes, base;
 let resourceCounter = 0;
 let spawnBoolean = false;
+let playerSprite;
 
 function preload(){
 
@@ -12,6 +13,9 @@ function setup(){
     base = new Sprite(width/2, height/2);
     base.w = 100;
     base.h = 60;
+
+    playerSprite = new Sprite(100, 300); // sprite for the player
+    playerSprite.overlaps(base);
 
     resourceNodes = new Group();
     // resourceNodes.d = 50;
@@ -35,12 +39,21 @@ function draw(){
     spawnResources();
     collectResources();
     spawnMinions();
+    playerControls();
+}
+
+function playerControls() {
+    if (mouse.presses()) { // moves when the mouse is pressed
+        playerSprite.moveTo(mouse, 3);
+    }
+    line(playerSprite.x, playerSprite. y, mouseX, mouseY); // line that follows the cursor
 }
 
 function spawnResources(){
     if(spawnBoolean == false){
         for(let i = 0; resourceNodes.length < 8; i++){
             resourceNodes.add(createResource());
+            resourceNodes[i].overlaps(playerSprite); // overlaps with the different resources
             console.log(resourceNodes.length);
         }
         spawnBoolean = true;
@@ -60,7 +73,7 @@ function createResource(){
 function collectResources(){
     for(let i = 0; i < resourceNodes.length; i++){
         // console.log(dist(mouseX, mouseY, resourceNodes[0].x, resourceNodes[0].y))
-        if(mouse.pressing() && dist(mouseX, mouseY, resourceNodes[i].x, resourceNodes[i].y) < resourceNodes[0].d){
+        if(dist(playerSprite.x, playerSprite.y, resourceNodes[i].x, resourceNodes[i].y) < resourceNodes[0].d){
             resourceNodes[i].remove();
             resourceCounter += 1;
             console.log(resourceCounter);
