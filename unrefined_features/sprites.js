@@ -33,6 +33,7 @@ class Factory {
         let tempResource = this.createResource(x, y, "Small");
         tempResource.color = 'GREEN';
         tempResource.d = 50;
+        tempResource.pool = Math.floor(random(60,100));
         tempResource.selected = false;
         tempResource.resourcePool = Math.floor(random(30, 50));
         tempResource.text = tempResource.resourcePool
@@ -75,6 +76,7 @@ class Factory {
         tempShip.collectRate = 5;
         tempShip.cost = 8;
         tempShip.selected = false;
+        tempShip.collectRate = 3;
         return tempShip;
     }
 }
