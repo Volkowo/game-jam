@@ -35,9 +35,7 @@ function setup() {
 function draw() {
     background('lightblue');
     createSprite.draw();
-    spriteLogic.draw();
-    background('lightblue');
-    mouseXY();
+    spriteLogic.draw(createSprite);
 
     // text(spriteLogic.currentX, 500, 100)
     // text(spriteLogic.currentY, 600, 100)

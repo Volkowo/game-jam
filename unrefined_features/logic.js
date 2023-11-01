@@ -20,16 +20,24 @@ class Logic {
 
     }
     setup(factory){
+        this.ship = new Group();
         this.base = factory.createBase(1000, H/2-50);
         this.smallResource = factory.createSmallResource(1000, H/2 -200);
         this.bigResource = factory.createBigResource(300, H/4);
-        this.ship = factory.createShip(800, H/2-100);
+        this.ship.push(factory.createShip(800, H/2-100));
     }
 
-    draw(){
+    draw(factory){
         this.movementLogic();
         this.selectLogic();
         this.resourceCollectionLogic();
+        this.spawnShip(factory);1
+    }
+
+    spawnShip(factory){
+        if(kb.presses('O')){
+            this.ship.push(factory.createShip(500, H/2-100));
+        }
     }
 
     selectLogic(){
