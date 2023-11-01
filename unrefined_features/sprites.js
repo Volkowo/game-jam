@@ -31,7 +31,7 @@ class Factory {
 
     createSmallResource(x, y){
         let tempResource = new Sprite(x, y);
-        tempResource.color = 'BROWN';
+        tempResource.color = 'GREEN';
         tempResource.d = 50;
         tempResource.selected = false;
         return tempResource;
