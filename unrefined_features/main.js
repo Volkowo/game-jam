@@ -33,10 +33,12 @@ function setup() {
 }
 
 function draw() {
+    background('lightblue');
+    mouseXY();
+
     spriteFactory.draw();
     spriteLogic.draw(spriteFactory);
-    background('lightblue');
-
+    
     // switches screen states
     switch (currentScreen) {
         case LOADING:
@@ -56,7 +58,17 @@ function draw() {
             break;
     }
 
-    mouseXY();
+    if (frameCount === 150) { // loading screen stops after 150 frames
+        currentScreen = PRESS_ANY_KEY;
+    }
+
+    console.log(currentScreen);
+}
+
+function keyPressed() { // change from press any key to menu
+    if (currentScreen === PRESS_ANY_KEY) {
+        currentScreen = MENU;
+    }
 }
 
 function drawLoadingScreen() {
