@@ -13,6 +13,10 @@ const CREDITS = 4;
 let currentScreen = LOADING;
 
 // classes
+let screenLoading = new Loading();
+let screenPressAnyKey = new PressAnyKey();
+let screenMenu = new Menu();
+let screenCredits = new Credits();
 let spriteFactory = new Factory();
 let spriteLogic = new Logic();
 
