@@ -29,12 +29,12 @@ function preload() {
 function setup() {
     new Canvas(W,H);
     createSprite.setup();
-    spriteLogic.setup();
+    spriteLogic.setup(createSprite);
 }
 
 function draw() {
     createSprite.draw();
-    spriteLogic.draw(createSprite);
+    spriteLogic.draw();
     background('lightblue');
 
     mouseXY();
