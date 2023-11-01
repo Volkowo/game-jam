@@ -12,7 +12,7 @@ class Logic {
         this.goldTick = 60; //3 gold collect every 60 frames
         this.collectRate = 3; //3 gold collect every 60 frames
         this.collectedAmount =0;
-        this.resourcePool = 19; //small resource pool
+        // this.resourcePool = 19; //small resource pool
         this.baseBag = 0;   //base's inventory
         this.shipBag = 0;   //ship's inventory
     }
@@ -21,22 +21,23 @@ class Logic {
     }
     setup(factory){
         this.ship = new Group();
+        
         this.base = factory.createBase(1000, H/2-50);
         this.smallResource = factory.createSmallResource(1000, H/2 -200);
         this.bigResource = factory.createBigResource(300, H/4);
-        this.ship.push(factory.createShip(800, H/2-100));
+        this.ship.push(factory.createShipOne(800, H/2-100));
     }
 
     draw(factory){
         this.movementLogic();
         this.selectLogic();
         this.resourceCollectionLogic();
-        this.spawnShip(factory);1
+        this.spawnShip(factory);
     }
 
     spawnShip(factory){
         if(kb.presses('O')){
-            this.ship.push(factory.createShip(500, H/2-100));
+            this.ship.push(factory.createShipOne(500, H/2-100));
         }
     }
 
@@ -94,7 +95,7 @@ class Logic {
         if(this.base.selected === true && mouse.presses('right')){
             this.base.moveTo(mouseX, mouseY, 3);
         }
-        if(this.ship.selected === true && this.smallResource.mouse.presses('right') && this.resourcePool > 0){
+        if(this.ship.selected === true && this.smallResource.mouse.presses('right') && this.smallResource.resourcePool > 0){
             this.ship.moveTo(this.smallResource);
             this.goCollect = true;
         }
@@ -103,14 +104,14 @@ class Logic {
         }
     }
 
-    resourceCollectionLogic(){
+    resourceCollectionLogic(factory){
         this.ship.overlaps(this.smallResource);
         this.ship.overlaps(this.base);
 
         //if(this.smallResource.mouse.presses('left')){
         //   this.ship.moveTo(this.smallResource);
         //}
-        if(this.ship.overlapping(this.smallResource) && this.goCollect == true){
+        if(this.ship.overlapping(this.smallResource)){
             this.collectingCounter--
             this.ship.visible = false;
             if (this.collectingCounter < 0 || this.resourcePool <= 0) {
@@ -121,14 +122,14 @@ class Logic {
             if (this.ship.visible == false) {
                 this.goldTick--
                 if(this.goldTick<0){
-                    if(this.resourcePool < this.collectRate) {
+                    if(this.smallResource.resourcePool < this.collectRate) {
                         this.collectedAmount = this.resourcePool;
                         this.resourcePool -= this.collectedAmount;
                         this.shipBag += this.collectedAmount;
                         this.goldTick = 60;
                         this.resourceCollected = true;
                     } else {
-                        this.resourcePool -= this.collectRate;
+                        this.smallResource.resourcePool -= this.collectRate;
                         this.shipBag += this.collectRate;
                         this.goldTick = 60;
                         this.resourceCollected = true;
@@ -152,7 +153,7 @@ class Logic {
             this.smallResource.color = "RED";
         }
 
-        this.smallResource.text = this.resourcePool;
+        // this.smallResource.text = this.resourcePool;
         this.base.text = this.baseBag;
         this.ship.text = this.shipBag;
     }
