@@ -8,6 +8,10 @@ class Logic {
     setup(){
 
     }
-    draw(){
+    draw(factory){
+        factory.base;
+        factory.smallResource;
+        factory.bigResource;
+        factory.ship
     }
 }

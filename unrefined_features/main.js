@@ -1,23 +1,23 @@
 const W = 1200;
 const H = 700;
 
-let spriteFactory = new Factory();
+let createSprite = new Factory();
 let spriteLogic = new Logic();
 
 function preload() {
-    spriteFactory.preload();
+    createSprite.preload();
     spriteLogic.preload();
 }
 
 function setup() {
     new Canvas(W,H);
-    spriteFactory.setup();
+    createSprite.setup();
     spriteLogic.setup();
 }
 
 function draw() {
-    spriteFactory.draw();
-    spriteLogic.draw(spriteFactory);
+    createSprite.draw();
+    spriteLogic.draw(createSprite);
     background('lightblue');
 
     mouseXY();
