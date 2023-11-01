@@ -8,7 +8,7 @@ class Logic {
     setup(){
 
     }
-    draw(Factory){
-        
+    draw(factory){
+        factory.base;
     }
 }

@@ -17,7 +17,7 @@ function setup() {
 
 function draw() {
     spriteFactory.draw();
-    spriteLogic.draw();
+    spriteLogic.draw(spriteFactory);
     background('lightblue');
 
     mouseXY();

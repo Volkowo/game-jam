@@ -1,13 +1,13 @@
 class Factory {
     constructor() {
-
+        this.base;
     }
     preload() {
 
     }
     setup() {
         rectMode(CENTER);
-        this.createBase(W/2+300,H/2+100);
+        this.base = this.createBase(W/2+300,H/2+100);
         this.createSmallNode(W/2+400,H/2+200);
         this.createSmallNode(W/2+500,H/2);
         this.createBigNode(200,100);
