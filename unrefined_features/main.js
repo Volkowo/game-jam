@@ -18,26 +18,79 @@ let screenPressAnyKey = new PressAnyKey();
 let screenMenu = new Menu();
 let screenGame = new Game();
 let screenCredits = new Credits();
-let createSprite = new Factory();
+let spriteFactory = new Factory();
 let spriteLogic = new Logic();
 
 function preload() {
-    createSprite.preload();
+    spriteFactory.preload();
     spriteLogic.preload();
 }
 
 function setup() {
-    new Canvas(W,H);
-    createSprite.setup();
-    spriteLogic.setup(createSprite);
+    new Canvas(W, H);
+    spriteFactory.setup();
+    spriteLogic.setup();
 }
 
 function draw() {
     createSprite.draw();
     spriteLogic.draw();
     background('lightblue');
-
     mouseXY();
+
+    spriteFactory.draw();
+    spriteLogic.draw(spriteFactory);
+    
+    // switches screen states
+    switch (currentScreen) {
+        case LOADING:
+            drawLoadingScreen();
+            break;
+        case PRESS_ANY_KEY:
+            drawPressAnyKeyScreen();
+            break;
+        case MENU:
+            drawMenuScreen();
+            break;
+        case GAME:
+            drawGameScreen();
+            break;
+        case CREDITS:
+            drawCreditsScreen();
+            break;
+    }
+
+    if (frameCount === 150) { // loading screen stops after 150 frames
+        currentScreen = PRESS_ANY_KEY;
+    }
+
+    console.log(currentScreen);
+}
+
+function keyPressed() { // change from press any key to menu
+    if (currentScreen === PRESS_ANY_KEY) {
+        currentScreen = MENU;
+    }
+}
+
+function drawLoadingScreen() {
+    // loading screen code
+}
+
+function drawPressAnyKeyScreen() {
+    // press any key to continue code
+}
+
+function drawMenuScreen() {
+    // menu screen code
+}
+
+function drawGameScreen() {
+    // game screen code
+}
+
+function drawCreditsScreen() {
+    // leaderboard screen code
 }
 
 function mouseXY() {
