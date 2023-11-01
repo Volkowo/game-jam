@@ -33,9 +33,14 @@ function setup() {
 }
 
 function draw() {
+    background('lightblue');
     createSprite.draw();
     spriteLogic.draw();
     background('lightblue');
+    mouseXY();
+
+    // text(spriteLogic.currentX, 500, 100)
+    // text(spriteLogic.currentY, 600, 100)
     
     // switches screen states
     switch (currentScreen) {
