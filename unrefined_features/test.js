@@ -9,6 +9,8 @@ let resourceCollected = false;
 let returnToBase = false;
 let resourcePoints = [5, 5, 5];
 let resourcePool = 0;
+let activate = false;
+let goCollect = false;
 
 function preload() {
     baseImg = loadImage("assets/img/battleship.png");
@@ -24,11 +26,12 @@ function setup() {
 
 function draw() {
     background(125);
+    //resourceCollection();
     resourceCollection0();
     resourceCollection1();
     resourceCollection2();
 
-    console.log(destination.current);
+    console.log(identifyNode(), activate);
 
     nodeDepletion();
 }
@@ -73,6 +76,49 @@ function gameSprites() {
     }
 }
 
+function identifyNode() {
+    for(let i=0; i<resourceNodes.length; i++){
+        if(resourceNodes[i].mouse.pressing()){
+            return i;
+        }
+        if(resourceNodes[i].mouse.presses()) {
+            activate = true;
+        }
+    }
+}
+
+function resourceCollection() {
+    let returnNode = identifyNode();
+    if (activate === true && resourceCollected == false && resourcePoints[returnNode] > 0) {
+        new ship.Sprite(width / 2, height / 2 - 50);
+        destination.current = nodeID;
+        ship.life = 3000;
+        goCollect = true;
+        activate = false;
+        nodeID = returnNode;
+        console.log(nodeID);
+    }
+
+        if (goCollect == true && destination.current == nodeID) {
+            ship.moveTo(resourceNodes[nodeID]);
+        }
+        if (goCollect == true && ship.overlaps(resourceNodes[nodeID])) {
+            resourceCollected = true;
+            returnToBase = true;
+            resourcePoints[nodeID] -= 1;
+        }
+    
+        if (returnToBase == true) {
+            ship.moveTo(base);
+        }
+        if (ship.collides(base) && resourceCollected == true) {
+            resourceCollected = false;
+            returnToBase = false;
+            ship.life = 1;
+            resourcePool = resourcePool + 1;
+        }
+}
+
 function resourceCollection0() {
     if (resourceNodes[0].mouse.presses() && resourceCollected == false && resourcePoints[0] > 0) {
         new ship.Sprite(width / 2, height / 2 - 50);
@@ -110,7 +156,7 @@ function resourceCollection1() {
     if (destination.current == 1) {
         ship.moveTo(resourceNodes[1]);
     }
-    if (ship.collides(resourceNodes[1])) {
+    if (ship.overlaps(resourceNodes[1])) {
         resourceCollected = true;
         returnToBase = true;
         resourcePoints[1] -= 1;
@@ -137,7 +183,7 @@ function resourceCollection2() {
     if (destination.current == 2) {
         ship.moveTo(resourceNodes[2]);
     }
-    if (ship.collides(resourceNodes[2])) {
+    if (ship.overlaps(resourceNodes[2])) {
         resourceCollected = true;
         returnToBase = true;
         resourcePoints[2] -= 1;
