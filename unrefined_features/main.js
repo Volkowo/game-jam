@@ -33,10 +33,13 @@ function setup() {
 }
 
 function draw() {
+    background('lightblue');
     createSprite.draw();
     spriteLogic.draw();
-    background('lightblue');
     mouseXY();
+
+    text(spriteLogic.currentX, 500, 100)
+    text(spriteLogic.currentY, 600, 100)
     
     // switches screen states
     switch (currentScreen) {
@@ -61,7 +64,7 @@ function draw() {
         currentScreen = PRESS_ANY_KEY;
     }
 
-    console.log(currentScreen);
+    // console.log(currentScreen);
 }
 
 function keyPressed() { // change from press any key to menu
