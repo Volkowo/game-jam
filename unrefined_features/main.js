@@ -77,7 +77,6 @@ function keyPressed() { // change from press any key to menu
     }
 }
 
-
 function drawLoadingScreen() { // loading screen code
     screenLoading.draw();
 }
@@ -90,25 +89,24 @@ function drawMenuScreen() { // menu screen code
     screenMenu.draw();
 }
 
+function establishGame() { // class set up code here
+    createSprite.setup();
+    spriteLogic.setup(createSprite);
+}
+
 function drawGameScreen() { // game screen code
     if (isGameActive === false) {
         establishGame();
         isGameActive = true;
     }
     
-    // draw
+    // class draw code here
     createSprite.draw();
     spriteLogic.draw(createSprite);
 }
 
 function drawCreditsScreen() { // leaderboard screen code
     screenCredits.draw();
-}
-
-function establishGame() { // game class code here
-    // set up
-    createSprite.setup();
-    spriteLogic.setup(createSprite);
 }
 
 function buttonCreation() {
@@ -144,7 +142,7 @@ function playButtonClicked() {
     creditsButton.hide();
 }
 
-function quitButtonClicked() {
+function quitButtonClicked() { // reset game parameters here (needs to be added)
     currentScreen = MENU;
     playButton.show();
     quitButton.hide();
