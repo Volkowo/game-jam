@@ -3,7 +3,7 @@ class Logic {
         this.base;
         this.smallResource;
         this.bigResource;
-        this.ships;
+        this.ship;
 
         //Collection Logic
         this.goCollect = false;
@@ -123,15 +123,15 @@ class Logic {
             if (this.ship.visible == false) {
                 this.goldTick--
                 if(this.goldTick<0){
-                    if(this.smallResource.resourcePool < this.collectRate) {
+                    if(this.smallResource.resourcePool < this.ship[0].collectRate) {
                         this.collectedAmount = this.smallResource.resourcePool;
                         this.smallResource.resourcePool -= this.collectedAmount;
                         this.shipBag += this.collectedAmount;
                         this.goldTick = 60;
                         this.resourceCollected = true;
                     } else {
-                        this.smallResource.resourcePool -= this.collectRate;
-                        this.shipBag += this.collectRate;
+                        this.smallResource.resourcePool -= this.ship[0].collectRate;
+                        this.shipBag += this.ship[0].collectRate;
                         this.goldTick = 60;
                         this.resourceCollected = true;
                     }
