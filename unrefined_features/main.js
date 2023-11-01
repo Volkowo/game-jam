@@ -16,6 +16,7 @@ let currentScreen = LOADING;
 let screenLoading = new Loading();
 let screenPressAnyKey = new PressAnyKey();
 let screenMenu = new Menu();
+let screenGame = new Game();
 let screenCredits = new Credits();
 let spriteFactory = new Factory();
 let spriteLogic = new Logic();
