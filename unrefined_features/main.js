@@ -10,7 +10,7 @@ const GAME = 3;
 const CREDITS = 4;
 
 // what screen is loaded upon launch/refresh
-let currentScreen = LOADING;
+let currentScreen = GAME;
 
 // button variables
 let playButton;
@@ -64,9 +64,9 @@ function draw() {
             break;
     }
 
-    if (frameCount === 150) { // loading screen stops after 150 frames
-        currentScreen = PRESS_ANY_KEY;
-    }
+    // if (frameCount === 150) { // loading screen stops after 150 frames
+    //     currentScreen = PRESS_ANY_KEY;
+    // }
 }
 
 function keyPressed() { // change from press any key to menu
