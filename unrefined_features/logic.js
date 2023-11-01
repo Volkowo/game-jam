@@ -16,12 +16,47 @@ class Logic {
     }
 
     draw(){
-        this.moveBase();
+        this.selectLogic();
+        this.movementLogic();
     }
-
-    moveBase(){
-        if(mouse.presses()){
+    selectLogic(){
+        if(this.ship.mouse.presses('left')){
+            this.ship.selected = true;
+            this.base.selected = false;
+            this.bigResource.selected = false;
+            this.smallResource.selected = false;
+        }
+        if(this.base.mouse.presses('left')){
+            this.base.selected = true;
+            this.ship.selected = false;
+            this.bigResource.selected = false;
+            this.smallResource.selected = false;
+        }
+        if(this.smallResource.mouse.presses('left')){
+            this.smallResource.selected = true;
+            this.bigResource.selected = false;
+            this.ship.selected = false;
+            this.base.selected = false;
+        }
+        if(this.bigResource.mouse.presses('left')){
+            this.bigResource.selected = true;
+            this.smallResource.selected = false;
+            this.ship.selected = false;
+            this.base.selected = false;
+        }
+    }
+    movementLogic(){        
+        if(this.ship.selected === true && mouse.presses('right')){
+            this.ship.moveTo(mouseX, mouseY, 3);
+        }
+        if(this.base.selected === true && mouse.presses('right')){
             this.base.moveTo(mouseX, mouseY, 3);
+        }
+        if(this.smallResource.selected === true && mouse.presses('right')){
+            this.smallResource.moveTo(mouseX, mouseY, 3);
+        }
+        if(this.bigResource.selected === true && mouse.presses('right')){
+            this.bigResource.moveTo(mouseX, mouseY, 3);
         }
     }
 }

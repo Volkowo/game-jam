@@ -19,6 +19,7 @@ class Factory {
         tempBase.color = 'RED';
         tempBase.w = 80;
         tempBase.h = 80;
+        tempBase.selected = false;
         return tempBase;
     }
 
@@ -32,22 +33,25 @@ class Factory {
         let tempResource = new Sprite(x, y);
         tempResource.color = 'BROWN';
         tempResource.d = 50;
+        tempResource.selected = false;
         return tempResource;
     }
-
+    
     createBigResource(x, y){
         let tempResource = new Sprite(x, y);
         tempResource.color = 'GREEN';
         tempResource.w = 50,
         tempResource.h = 50;
+        tempResource.selected = false;
         return tempResource;
     }
-
+    
     createShip(x, y){
         let tempShip = new Sprite(x, y); 
         tempShip.color = 'YELLOW';
         tempShip.w = 120;
         tempShip.h = 30;
+        tempShip.selected = false;
         return tempShip;
     }
 }
