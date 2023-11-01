@@ -14,7 +14,14 @@ class Logic {
         this.bigResource = factory.createBigResource(300, H/4);
         this.ship = factory.createShip(800, H/2);
     }
+
     draw(){
-        // this.base.x += 1;
+        this.moveBase();
+    }
+
+    moveBase(){
+        if(mouse.presses()){
+            this.base.moveTo(mouseX, mouseY, 3);
+        }
     }
 }
