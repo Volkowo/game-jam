@@ -18,18 +18,18 @@ let screenPressAnyKey = new PressAnyKey();
 let screenMenu = new Menu();
 let screenGame = new Game();
 let screenCredits = new Credits();
-let spriteFactory = new Factory();
+let createSprite = new Factory();
 let spriteLogic = new Logic();
 
 function preload() {
-    spriteFactory.preload();
+    createSprite.preload();
     spriteLogic.preload();
 }
 
 function setup() {
     new Canvas(W, H);
-    spriteFactory.setup();
-    spriteLogic.setup();
+    createSprite.setup();
+    spriteLogic.setup(createSprite);
 }
 
 function draw() {
@@ -37,9 +37,6 @@ function draw() {
     spriteLogic.draw();
     background('lightblue');
     mouseXY();
-
-    spriteFactory.draw();
-    spriteLogic.draw(spriteFactory);
     
     // switches screen states
     switch (currentScreen) {
