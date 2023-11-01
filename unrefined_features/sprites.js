@@ -49,8 +49,8 @@ class Factory {
     createShip(x, y){
         let tempShip = new Sprite(x, y); 
         tempShip.color = 'YELLOW';
-        tempShip.w = 120;
-        tempShip.h = 30;
+        tempShip.w = 20;
+        tempShip.h = 20;
         tempShip.selected = false;
         return tempShip;
     }

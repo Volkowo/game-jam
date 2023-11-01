@@ -61,7 +61,7 @@ function draw() {
         currentScreen = PRESS_ANY_KEY;
     }
 
-    console.log(currentScreen);
+    //console.log(currentScreen);
 }
 
 function keyPressed() { // change from press any key to menu
