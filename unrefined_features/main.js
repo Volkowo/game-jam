@@ -36,7 +36,6 @@ function draw() {
     createSprite.draw();
     spriteLogic.draw();
     background('lightblue');
-    mouseXY();
     
     // switches screen states
     switch (currentScreen) {
@@ -88,11 +87,4 @@ function drawGameScreen() {
 
 function drawCreditsScreen() {
     // leaderboard screen code
-}
-
-function mouseXY() {
-    // mouse x,y display
-    fill("white");
-    textSize(20);
-    text("x" + mouseX + "," + "y" + mouseY, mouseX, mouseY);
 }

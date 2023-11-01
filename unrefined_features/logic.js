@@ -107,7 +107,6 @@ class Logic {
             this.ship.visible = false;
             if (this.collectingCounter < 0 || this.resourcePool <= 0) {
                 this.ship.moveTo(this.base);
-                //this.resourceCollected = true;
                 this.ship.visible = true;
                 console.log('resource collected');
             }

@@ -77,11 +77,11 @@ function gameSprites() {
 }
 
 function identifyNode() {
-    for(let i=0; i<resourceNodes.length; i++){
-        if(resourceNodes[i].mouse.pressing()){
+    for (let i = 0; i < resourceNodes.length; i++) {
+        if (resourceNodes[i].mouse.pressing()) {
             return i;
         }
-        if(resourceNodes[i].mouse.presses()) {
+        if (resourceNodes[i].mouse.presses()) {
             activate = true;
         }
     }
@@ -99,24 +99,24 @@ function resourceCollection() {
         console.log(nodeID);
     }
 
-        if (goCollect == true && destination.current == nodeID) {
-            ship.moveTo(resourceNodes[nodeID]);
-        }
-        if (goCollect == true && ship.overlaps(resourceNodes[nodeID])) {
-            resourceCollected = true;
-            returnToBase = true;
-            resourcePoints[nodeID] -= 1;
-        }
-    
-        if (returnToBase == true) {
-            ship.moveTo(base);
-        }
-        if (ship.collides(base) && resourceCollected == true) {
-            resourceCollected = false;
-            returnToBase = false;
-            ship.life = 1;
-            resourcePool = resourcePool + 1;
-        }
+    if (goCollect == true && destination.current == nodeID) {
+        ship.moveTo(resourceNodes[nodeID]);
+    }
+    if (goCollect == true && ship.overlaps(resourceNodes[nodeID])) {
+        resourceCollected = true;
+        returnToBase = true;
+        resourcePoints[nodeID] -= 1;
+    }
+
+    if (returnToBase == true) {
+        ship.moveTo(base);
+    }
+    if (ship.collides(base) && resourceCollected == true) {
+        resourceCollected = false;
+        returnToBase = false;
+        ship.life = 1;
+        resourcePool = resourcePool + 1;
+    }
 }
 
 function resourceCollection0() {
@@ -147,7 +147,7 @@ function resourceCollection0() {
 }
 
 function resourceCollection1() {
-    if (resourceNodes[1].mouse.presses() && resourceCollected == false  && resourcePoints[1] > 0) {
+    if (resourceNodes[1].mouse.presses() && resourceCollected == false && resourcePoints[1] > 0) {
         new ship.Sprite(width / 2, height / 2 - 50);
         destination.current = 1;
         ship.life = 3000;
@@ -174,7 +174,7 @@ function resourceCollection1() {
 }
 
 function resourceCollection2() {
-    if (resourceNodes[2].mouse.presses() && resourceCollected == false  && resourcePoints[2] > 0) {
+    if (resourceNodes[2].mouse.presses() && resourceCollected == false && resourcePoints[2] > 0) {
         new ship.Sprite(width / 2, height / 2 - 50);
         destination.current = 2;
         ship.life = 3000;
