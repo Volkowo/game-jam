@@ -37,7 +37,6 @@ class Factory {
         tempResource.selected = false;
         tempResource.canBeMoved = false;
         tempResource.resourcePool = Math.floor(random(30, 50));
-        tempResource.text = tempResource.resourcePool;
         return tempResource;
     }
     
@@ -49,7 +48,6 @@ class Factory {
         tempResource.selected = false;
         tempResource.canBeMoved = false;
         tempResource.resourcePool = Math.floor(random(30, 50));
-        tempResource.text = tempResource.resourcePool;
         return tempResource;
     }
 
