@@ -96,9 +96,6 @@ class Logic {
             if (this.ship.visible == false) {
                 this.goldTick--
                 if (this.goldTick < 0) {
-                    if (this.smallResource.resourcePool < this.ship[0].collectRate) {
-                        this.collectedAmount = this.smallResource.resourcePool;
-                        this.smallResource.resourcePool -= this.collectedAmount;
                         if (this.smallResource.resourcePool < this.ship[0].collectRate) {
                             this.collectedAmount = this.smallResource.resourcePool;
                             this.smallResource.resourcePool -= this.collectedAmount;
@@ -137,4 +134,3 @@ class Logic {
             this.ship.text = this.shipBag;
         }
     }
-}
