@@ -27,6 +27,7 @@ class Logic {
         this.resource.push(factory.createSmallResource(1000, H / 2 - 200));
         this.resource.push(factory.createBigResource(300, H / 4));
         this.ship.push(factory.createShipOne(800, H / 2 - 100));
+        this.ship.push(factory.createShipTwo(1000, H/2 - 100));
     }
 
     draw(factory) {
@@ -40,37 +41,66 @@ class Logic {
         if (kb.presses('O')) {
             this.ship.push(factory.createShipOne(500, H / 2 - 100));
         }
+
+        if(kb.presses('P')){
+            this.ship.push(factory.createShipTwo(500, H / 2 - 400));
+        }
     }
 
-    selectLogic(ship) {
+    selectLogic() {
         if (kb.presses('1')) {
-            for (let deselectedShips of this.ship) {
-                if (deselectedShips.type !== ship.type) {
-                    //need to group them
-                    deselectedShips.selected = false;
-                    console.log(deselectedShips);
-                }
-            }
-            ship.selected = true;
+            this.checkShip("One");
         }
+
         if (kb.presses('2')) {
-            this.base.selected = true;
+            this.checkShip("Two");
+        }
+    }
+
+    // Check's which ship is currently being selected through the keyboard input
+    checkShip(type){
+        for(let i = 0; i < this.ship.length; i++){
+            if(this.ship[i].type == type){
+                this.ship[i].selected = true;
+            } else {
+                this.ship[i].selected = false;
+            }
         }
     }
 
     movementLogic(ship) {
-        if (ship.selected === true && mouse.presses('right')) {
-            for (let i = 0; i < this.ship.length; i++) {
-                ship.moveTo(mouseX, mouseY, 3);
-                ship.visible = true;
+        if(mouse.presses('Right')){
+            for(let i = 0; i < this.ship.length; i++){
+                if(this.ship[i].selected == true){
+                    this.ship[i].moveTo(mouseX, mouseY, 3);
+                    ship.visible = true;
+                }
+                this.goCollect = false;
             }
-            // this.ship.moveTo(mouseX, mouseY, 3);
-            // this.ship.visible = true;
-            this.goCollect = false;
         }
-        if (this.base.selected === true && mouse.presses('right')) {
-            this.base.moveTo(mouseX, mouseY, 1);
-        }
+
+        // if(mouse.presses("right")){
+        //     for(let i = 0; i < this.ship.length; i++){
+        //         if(this.ship[i].selected == true){
+
+        //         }
+        //     }
+        // }
+
+        // if (ship.selected === true && mouse.presses('right')) {
+        //     for (let i = 0; i < this.ship.length; i++) {
+        //         ship.moveTo(mouseX, mouseY, 3);
+        //         ship.visible = true;
+        //     }
+        //     // this.ship.moveTo(mouseX, mouseY, 3);
+        //     // this.ship.visible = true;
+        //     this.goCollect = false;
+        // }
+
+        // if (this.base.selected === true && mouse.presses('right')) {
+        //     this.base.moveTo(mouseX, mouseY, 1);
+        // }
+
         if (ship.selected === true && this.resource[0].mouse.presses('right') && this.resource[0].resourcePool > 0) {
             ship.moveTo(this.resource[0]);
             this.goCollect = true;

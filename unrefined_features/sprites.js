@@ -58,7 +58,7 @@ class Factory {
     }
     
     createShipOne(x, y){
-        let tempShip = new Sprite(x, y, "One"); 
+        let tempShip = this.createShip(x, y, "One"); 
         tempShip.color = 'YELLOW';
         tempShip.w = 20;
         tempShip.h = 20;
@@ -70,7 +70,7 @@ class Factory {
     }
 
     createShipTwo(x, y){
-        let tempShip = new Sprite(x, y, "Two"); 
+        let tempShip = this.createShip(x, y, "Two"); 
         tempShip.color = 'ORANGE';
         tempShip.w = 40;
         tempShip.h = 40;
