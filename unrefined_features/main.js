@@ -25,6 +25,7 @@ let screenMenu = new Menu();
 let screenCredits = new Credits();
 let createSprite = new Factory();
 let spriteLogic = new Logic();
+let gameUI = new UI();
 
 // other variables
 let isGameActive = false;
@@ -32,6 +33,7 @@ let isGameActive = false;
 function preload() {
     createSprite.preload();
     spriteLogic.preload();
+    gameUI.preload();
 }
 
 function setup() {
@@ -92,6 +94,7 @@ function drawMenuScreen() { // menu screen code
 function establishGame() { // class set up code here
     createSprite.setup();
     spriteLogic.setup(createSprite);
+    gameUI.setup();
 }
 
 function drawGameScreen() { // game screen code
@@ -103,6 +106,7 @@ function drawGameScreen() { // game screen code
     // class draw code here
     createSprite.draw();
     spriteLogic.draw(createSprite);
+    gameUI.draw();
 }
 
 function drawCreditsScreen() { // leaderboard screen code

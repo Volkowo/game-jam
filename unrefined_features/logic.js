@@ -26,13 +26,14 @@ class Logic {
         this.base = factory.createBase(1000, H / 2 - 50);
         this.resource.push(factory.createSmallResource(1000, H / 2 - 200));
         this.resource.push(factory.createBigResource(300, H / 4));
-        this.ship.push(factory.createShipOne(800, H / 2 - 100));
-        this.ship.push(factory.createShipTwo(1000, H/2 - 100));
+        //this.ship.push(factory.createShipOne(800, H / 2 - 100));
+        //this.ship.push(factory.createShipTwo(1000, H/2 - 100));
     }
 
     draw(factory) {
         this.movementLogic(this.ship);
-        this.selectLogic(this.ship);
+        this.selectLogic('One', '1');
+        this.selectLogic('Two', '2');
         this.resourceCollectionLogic();
         this.spawnShip(factory);
     }
@@ -47,13 +48,9 @@ class Logic {
         }
     }
 
-    selectLogic() {
-        if (kb.presses('1')) {
-            this.checkShip("One");
-        }
-
-        if (kb.presses('2')) {
-            this.checkShip("Two");
+    selectLogic(type, binding) {
+        if (kb.presses(binding)) {
+            this.checkShip(type);
         }
     }
 
@@ -70,12 +67,12 @@ class Logic {
 
     movementLogic(ship) {
         if(mouse.presses('Right')){
-            for(let i = 0; i < this.ship.length; i++){
-                if(this.ship[i].selected == true){
-                    this.ship[i].moveTo(mouseX, mouseY, 3);
+            for(let i = 0; i < ship.length; i++){
+                if(ship[i].selected == true){
+                    ship[i].moveTo(mouseX, mouseY, 3);
                     ship.visible = true;
                 }
-                this.goCollect = false;
+                this.goCollect = true;
             }
         }
 
@@ -104,6 +101,7 @@ class Logic {
         if (ship.selected === true && this.resource[0].mouse.presses('right') && this.resource[0].resourcePool > 0) {
             ship.moveTo(this.resource[0]);
             this.goCollect = true;
+            console.log('yes');
         }
         if (ship.selected === true && this.resource[1].mouse.presses('right')) {
             ship.moveTo(this.resource[1]);
