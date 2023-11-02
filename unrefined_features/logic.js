@@ -6,15 +6,6 @@ class Logic {
         this.ship;
         this.resource;
 
-        // resourceCollected -> goldCollected
-        // collectedAmount -> remainingAmount
-        // goldTick -> collectTick
-        // collectingCounter -> collectTimer
-        // goCollect -> same
-        // collectRate -> same
-        // baseBag -> same
-        // shipBag -> same
-
         //Collection Logic
         // this.goCollect = false;
         // this.resourceCollected = false; //For auto collect
@@ -42,7 +33,8 @@ class Logic {
     draw(factory) {
         strokeWeight(1);
         this.movementLogic(this.ship);
-        this.selectLogic(this.ship);
+        this.selectLogic('One', '1');
+        this.selectLogic('Two', '2');
         this.resourceCollectionLogic();
         this.spawnShip(factory);
     }
@@ -56,6 +48,12 @@ class Logic {
             this.ship.push(factory.createShipTwo(500, H / 2 - 400));
         }
     }
+
+    // selectLogic(type, binding) {
+    //     if (kb.presses(binding)) {
+    //         this.checkShip(type);
+    //     }
+    // }
 
     selectLogic() {
         if (kb.presses('1')) {
@@ -91,8 +89,8 @@ class Logic {
             for(let i = 0; i < this.ship.length; i++){
                 if(this.ship[i].selected == true){
                     this.ship[i].moveTo(mouseX, mouseY, 3);
-                    ship.visible = true;
-                    this.ship[i].goCollect = false;
+                    ship[i].visible = true;
+                    this.ship[i].goCollect = true;
                 }
                 
             }
