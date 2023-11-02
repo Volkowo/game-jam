@@ -20,6 +20,7 @@ class Factory {
         tempBase.w = 80;
         tempBase.h = 80;
         tempBase.selected = false;
+        tempBase.canBeMoved = false;
         return tempBase;
     }
 
@@ -33,8 +34,9 @@ class Factory {
         let tempResource = new Sprite(x, y);
         tempResource.color = 'GREEN';
         tempResource.d = 50;
-        tempResource.pool = Math.floor(random(60,100));
+        tempResource.resourcePool = Math.floor(random(60,100));
         tempResource.selected = false;
+        tempResource.canBeMoved = false;
         return tempResource;
     }
     
@@ -44,6 +46,7 @@ class Factory {
         tempResource.w = 50,
         tempResource.h = 50;
         tempResource.selected = false;
+        tempResource.canBeMoved = false;
         return tempResource;
     }
     
@@ -54,6 +57,8 @@ class Factory {
         tempShip.h = 20;
         tempShip.selected = false;
         tempShip.collectRate = 3;
+        tempShip.canBeMoved = true;
+        tempShip.type = 'small';
         return tempShip;
     }
 }
