@@ -6,15 +6,24 @@ class Logic {
         this.ship;
         this.resource;
 
+        // resourceCollected -> goldCollected
+        // collectedAmount -> remainingAmount
+        // goldTick -> collectTick
+        // collectingCounter -> collectTimer
+        // goCollect -> same
+        // collectRate -> same
+        // baseBag -> same
+        // shipBag -> same
+
         //Collection Logic
-        this.goCollect = false;
-        this.resourceCollected = false; //For auto collect
-        this.collectingCounter = 200; //time ship spend inside the resource for collection
-        this.goldTick = 60; //3 gold collect every 60 frames
-        //this.collectRate = 3; //3 gold collect every 60 frames
-        this.collectedAmount = 0;
-        this.baseBag = 0;   //base's inventory
-        this.shipBag = 0;   //ship's inventory
+        // this.goCollect = false;
+        // this.resourceCollected = false; //For auto collect
+        // this.collectingCounter = 200; //time ship spend inside the resource for collection
+        // this.goldTick = 60; //3 gold collect every 60 frames
+        // //this.collectRate = 3; //3 gold collect every 60 frames
+        // this.collectedAmount = 0;
+        // this.baseBag = 0;   //base's inventory
+        // this.shipBag = 0;   //ship's inventory
     }
     preload() {
 
@@ -31,6 +40,7 @@ class Logic {
     }
 
     draw(factory) {
+        strokeWeight(1);
         this.movementLogic(this.ship);
         this.selectLogic(this.ship);
         this.resourceCollectionLogic();
@@ -65,6 +75,14 @@ class Logic {
             } else {
                 this.ship[i].selected = false;
             }
+
+            if(this.ship[i].selected == true){
+                this.ship[i].strokeWeight = 4;
+                this.ship[i].stroke = "RED";
+            } else if (this.ship[i].selected == false){
+                this.ship[i].strokeWeight = 1;
+                this.ship[i].stroke = "BLACK";
+            }
         }
     }
 
@@ -74,93 +92,80 @@ class Logic {
                 if(this.ship[i].selected == true){
                     this.ship[i].moveTo(mouseX, mouseY, 3);
                     ship.visible = true;
+                    this.ship[i].goCollect = false;
                 }
-                this.goCollect = false;
+                
             }
         }
 
-        // if(mouse.presses("right")){
-        //     for(let i = 0; i < this.ship.length; i++){
-        //         if(this.ship[i].selected == true){
-
-        //         }
-        //     }
-        // }
-
-        // if (ship.selected === true && mouse.presses('right')) {
-        //     for (let i = 0; i < this.ship.length; i++) {
-        //         ship.moveTo(mouseX, mouseY, 3);
-        //         ship.visible = true;
-        //     }
-        //     // this.ship.moveTo(mouseX, mouseY, 3);
-        //     // this.ship.visible = true;
-        //     this.goCollect = false;
-        // }
-
-        // if (this.base.selected === true && mouse.presses('right')) {
-        //     this.base.moveTo(mouseX, mouseY, 1);
-        // }
-
-        if (ship.selected === true && this.resource[0].mouse.presses('right') && this.resource[0].resourcePool > 0) {
-            ship.moveTo(this.resource[0]);
-            this.goCollect = true;
-        }
-        if (ship.selected === true && this.resource[1].mouse.presses('right')) {
-            ship.moveTo(this.resource[1]);
+        for(let i = 0; i < this.resource.length; i++){
+            if(this.resource[i].mouse.presses("Right") && this.resource[i].resourcePool > 0){
+                for(let j = 0; j < this.ship.length; j++){
+                    if(this.ship[j].selected == true){
+                        this.ship[j].moveTo(this.resource[i], 3);
+                        this.ship[j].goCollect = true;
+                    }
+                }
+            }
         }
     }
 
     resourceCollectionLogic(factory) {
-        this.ship.overlaps(this.resource[0]);
-        this.ship.overlaps(this.base);
+        for(let i = 0; i < 1; i++){
 
-        //if(this.resource[0].mouse.presses('left')){
-        //   this.ship.moveTo(this.resource[0]);
-        //}
-        if (this.ship.overlapping(this.resource[0]) && this.goCollect == true) {
-            this.collectingCounter--
-            this.ship.visible = false;
-            if (this.collectingCounter < 0 || this.resource[0].resourcePool <= 0) {
-                this.ship.moveTo(this.base);
-                this.ship.visible = true;
-                console.log('resource collected');
-            }
-            if (this.ship.visible == false) {
-                this.goldTick--
-                if (this.goldTick < 0) {
-                    if (this.resource[0].resourcePool < this.ship[0].collectRate) {
-                        this.collectedAmount = this.resource[0].resourcePool;
-                        this.resource[0].resourcePool -= this.collectedAmount;
-                        this.shipBag += this.collectedAmount;
-                        this.goldTick = 60;
-                        this.resourceCollected = true;
-                    } else {
-                        this.resource[0].resourcePool -= this.ship[0].collectRate;
-                        this.shipBag += this.ship[0].collectRate;
-                        this.goldTick = 60;
-                        this.resourceCollected = true;
+            for(let j = 0; j < this.ship.length; j++){
+                this.ship[j].overlaps(this.resource[i]);
+                this.ship[j].overlaps(this.base);
+
+                // COLLECTING RESOURCE FROM RESOURCE NODE
+                if(this.ship[j].overlapping(this.resource[i]) && this.ship[j].selected == true && this.ship[j].goCollect == true){
+                    this.ship[j].collectingTimer--
+                    console.log("Timer inside the resource: " + this.ship[j].collectingTimer);
+                    this.ship[j].visible = false;
+                    if(this.ship[j].collectingTimer < 0 || this.resource[i].resourcePool <= 0){
+                        this.ship[j].moveTo(this.base);
+                        this.ship[j].visible = true;
                     }
-                    console.log("resource node: " + this.resource[0].resourcePool, "ship inventory: " + this.shipBag);
-                }
-            }
-        }
-        if (this.ship.overlaps(this.base) && this.resourceCollected == true) {
-            if (this.resource[0].resourcePool !== 0) {
-                this.ship.moveTo(this.resource[0]);
-            }
-            this.goCollect = true;
-            this.resourceCollected = false;
-            this.collectingCounter = 200;
-            this.baseBag = this.baseBag + this.shipBag;
-            this.shipBag = 0;
-            console.log('base inventory: ' + this.baseBag);
-        }
-        if (this.resource[0].resourcePool == 0) {
-            this.resource[0].color = "RED";
-        }
+                    if(this.ship[j].visible == false){ 
+                        this.ship[j].collectTick--;
+                        // console.log("Timer to get resource / collect rate: " + this.ship[j].collectTick);
+                        if(this.ship[j].collectTick < 0 && this.resource[i].resourcePool < this.ship[j].collectRate){
 
-        this.resource[0].text = this.resource[0].resourcePool;
-        this.base.text = this.baseBag;
-        this.ship.text = this.shipBag;
+                            this.resource[i].remainingAmount = this.resource[i].resourcePool;
+                            this.resource[i].resourcePool -= this.resource[i].remainingAmount;
+                            this.ship[j].shipBag += this.resource[i].remainingAmount;
+                            this.ship[j].collectTick = 60;
+                            this.ship[j].goldCollected = true;
+                        } else {
+                            this.resource[i].resourcePool -= this.ship[j].collectRate;
+                            this.ship[j].shipBag += this.ship[j].collectRate;
+                            this.ship[j].collectTick = 60;
+                            this.ship[j].goldCollected = true;
+                        }
+                        // console.log("resource node: " + this.resource[0].resourcePool, "ship inventory: " + this.ship[j].shipBag);
+                    }
+                }
+
+                // RETURN TO BASE AFTER RESOURCE COLLECTION
+                if (this.ship[j].overlaps(this.base) && this.ship[j].goldCollected == true) {
+                    if (this.resource[i].resourcePool !== 0) {
+                        this.ship[j].moveTo(this.resource[i]);
+                    }
+                    this.ship[j].goCollect = true;
+                    this.ship[j].goldCollected = false;
+                    this.ship[j].collectingTimer = 200;
+                    this.base.baseBag = this.base.baseBag + this.ship[j].shipBag;
+                    this.ship[j].shipBag = 0;
+                    console.log('base inventory: ' + this.base.baseBag);
+                }
+                if (this.resource[i].resourcePool <= 0) {
+                    this.resource[i].color = "RED";
+                }
+        
+                this.resource[i].text = this.resource[i].resourcePool;
+                this.base.text = this.base.baseBag;
+                this.ship[j].text = this.ship[j].shipBag;
+            }
+        }
     }
 }
