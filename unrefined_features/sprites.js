@@ -72,7 +72,7 @@ class Factory {
         let tempShip = new Sprite(x, y);
         tempShip.type = type;
         tempShip.collectTick = 60;
-        tempShip.collectTimer = 200;
+        tempShip.collectTimer = 3;
         tempShip.drag = 0.2;
         tempShip.bounciness = 0;
         tempShip.rotationLock = true;
