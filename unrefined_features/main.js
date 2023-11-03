@@ -107,7 +107,7 @@ function drawGameScreen() { // game screen code
     createSprite.draw();
     gameUI.factory = createSprite;
     gameUI.draw();
-    spriteLogic.ship = gameUI;
+    spriteLogic.ship = gameUI.ship;
     spriteLogic.draw(createSprite);
 }
 

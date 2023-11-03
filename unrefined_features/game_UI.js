@@ -10,19 +10,21 @@ class UI {
 
         this.ship;
         this.factory;
+
+        this.logicSpawn = new Logic();
     }
 
     preload() {
         
     }
 
-    setup() {
+    setup(factory) {
         this.ship = new Group();
 
         this.UI_Sprites();
         this.gameButtons();
 
-        // this.ship.push(factory.createShipOne(800, H / 2 - 100));
+        this.ship.push(factory.createShipOne(800, H / 2 - 100));
         // this.ship.push(factory.createShipTwo(1000, H/2 - 100));
     }
 
