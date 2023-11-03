@@ -109,7 +109,7 @@ function drawGameScreen() { // game screen code
     //connecting the gameUI to createSprite
     gameUI.factory = createSprite;
 
-    gameUI.draw(createSprite);
+    
     
     //to make sure the logic is using the same groups and sprites from gameUI
     spriteLogic.resource = gameUI.resource;
@@ -117,6 +117,8 @@ function drawGameScreen() { // game screen code
     spriteLogic.base = gameUI.base;
 
     spriteLogic.draw();
+
+    gameUI.draw(spriteLogic);
 }
 
 function drawCreditsScreen() { // leaderboard screen code

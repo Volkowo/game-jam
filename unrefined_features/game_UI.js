@@ -32,9 +32,10 @@ class UI {
         // this.ship.push(factory.createShipTwo(1000, H/2 - 100));
     }
     
-    draw() {
+    draw(logic) {
         this.spawnShip();
-        this.resourceDisplay.text = this.base.baseBag;
+        // console.log(logic.displayText())
+        this.resourceDisplay.text = logic.displayText();
     }
 
     spawnShip() {
@@ -154,17 +155,18 @@ class UI {
         this.resourceDisplay.w = 600;
         this.resourceDisplay.h = 50;
         this.resourceDisplay.color = 'white';
-        this.resourceDisplay.draw = function () {
-            //Frame
-            noStroke();
-            fill(60, 74, 107);
-            rect(0, 0, 600, 50);
-            fill('white');
-            rect(-5, -5, 600, 50);
+        
+        // this.resourceDisplay.draw = function () {
+        //     //Frame
+        //     noStroke();
+        //     fill(60, 74, 107);
+        //     rect(0, 0, 600, 50);
+        //     fill('white');
+        //     rect(-5, -5, 600, 50);
 
-            fill('black');
-            //text("Resource Display" + this.base.baseBag, -50, 0);
-        }
+        //     fill('black');
+        //     // text("Resource Display" + logic.displayText(),-50, 0);
+        // }
         this.resourceDisplay.collider = 'n';
     }
 
