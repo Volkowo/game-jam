@@ -6,7 +6,7 @@ class UI {
         this.buildDisplay;
         this.upgradeDisplay;
         this.upgraded_isplay;
-        this.resourceDisplay;
+        this.resourceDisplayBackground;
 
         this.ship;
         this.factory;
@@ -15,7 +15,7 @@ class UI {
     }
 
     preload() {
-        
+        this.goldFrame = loadImage("assets/UI/gold_display_frame.png");
     }
 
     setup(factory) {
@@ -34,8 +34,7 @@ class UI {
     
     draw(logic) {
         this.spawnShip();
-        // console.log(logic.displayText())
-        this.resourceDisplay.text = logic.displayText();
+        this.notificationManager();
     }
 
     spawnShip() {
@@ -50,221 +49,247 @@ class UI {
     }
     
     UI_Sprites() {
-        //this.base.text = this.resourceAmount;
         //Bedrock - may be add this??? to prevent ships to going into the UI
 
         //UI Background
-        this.backgroundUI = new Sprite(W / 2, 820); //change color
-        this.backgroundUI.draw = function () {
+        this.backgroundUI = new Sprite(85, H/2); //change color
+        this.backgroundUI.w = 170;
+        this.backgroundUI.h = H;
+        this.backgroundUI.draw =()=> {
             noStroke();
             fill(60, 74, 107);
-            rect(0, -40, W, 80);
+            rect(-42.5, 0, 85, H);
             fill(44, 62, 80);
-            rect(0, 40, W, 80);
+            rect(42.5, 0, 85, H);
 
             //UI Background Image
-            tint(255, 50);
-            //image(backgroundUI, 0, 0, width, 150);
+
         }
-        this.backgroundUI.w = W;
-        this.backgroundUI.h = 160;
         this.backgroundUI.collider = "s";
         this.backgroundUI.visible = true;
         this.backgroundUI.layer = 101;
 
-        //Profile Picture of the Ships
-        this.profilePicture = new Sprite(80, 820);
-        this.profilePicture.draw = function () {
-            //Frame
-            noStroke();
-            tint(255, 255);
-            fill('white'); // change color
-            rect(0, 0, 140, 140);
-
-            //Profile Picture
-            //image();
-
-            fill('black');
-            text("Profile Display", -65, 0);
-        }
-        this.profilePicture.collider = 'n';
-
-        //Stat Block of selected object
-        this.statBlock = new Sprite(350, 820);
-        this.statBlock.draw = function () {
-            //Frame
-            noStroke();
-            fill('white');
-            rect(0, 0, 380, 140);
-
-            fill('black');
-            text("Stat Display", -50, 0);
-        }
-        this.statBlock.collider = 'n';
-
         //Upgrade Display
-        this.upgradeDisplay = new Sprite(1020, 820);
+        this.upgradeDisplay = new Sprite(85, 480);
+        this.upgradeDisplay.w = 160;
+        this.upgradeDisplay.h = 800;
         this.upgradeDisplay.draw = function () {
             //Frame
             noStroke();
-            fill('white');
-            rect(0, 0, 600, 140);
+            fill(154, 244, 252);
+            rect(0, -7.5, 160, 800);
 
             fill('black');
-            text("Upgrades coming soon", -120, 0);
+            text("Upgrades coming soon", -60, 0);
         }
         this.upgradeDisplay.collider = 'n';
         this.upgradeDisplay.visible = false;
 
         //Build Display
-        this.buildDisplay = new Sprite(1020, 820);
-        this.buildDisplay.draw = function () {
+        this.buildDisplay = new Sprite(85, 480);
+        this.buildDisplay.w = 160;
+        this.buildDisplay.h = 800;
+        this.buildDisplay.draw =()=> {
             //Frame
             noStroke();
-            fill('white');
-            rect(-228, 0, 142.5, 140);
-            rect(-76, 0, 142.5, 140);
-            rect(76, 0, 142.5, 140);
-            rect(228, 0, 142.5, 140);
+            fill(154, 244, 252);
+            rect(0, -7.5, 160, 800);
 
             //Background
-            fill(99, 70, 138);
-            rect(-228, 0, 140, 137.5);
-            rect(-76, 0, 140, 137.5);
-            rect(76, 0, 140, 137.5);
-            rect(228, 0, 140, 137.5);
+            fill(9, 76, 82);
+            rect(0, -300, 155, 195);
+            rect(0, -102.5, 155, 195);
+            rect(0, 95, 155, 195);
+            rect(0, 292.5, 155, 195);
+
+            //Ship Type Display
+            textAlign(CENTER, CENTER);
+            fill('white');
+            textSize(20);
+            text("Schooner", 0,-380);
+            text("Galleon", 0,-182.5);
+            text("Frigate", 0,15);
+            text("Man-O-war", 0,212.5);
+
+
+            //Stat Display
+            textSize(13);
+            textAlign(LEFT, CENTER);
+            //Ship One
+            text("Hit Point: ", -70, -350);
+            text("Attack: ", -70, -320);
+            text("Speed: ", -70, -290);
+            text("Collect Rate: " + this.ship[0].collectRate, -70, -260);
+            //Ship Two
+            text("Hit Point: ", -70, -152.5);
+            text("Attack: ", -70, -122.5);
+            text("Speed: ", -70, -92.5);
+            text("Collect Rate: ", -70, -62.5);
+            //Ship Three
+            text("Hit Point: ", -70, 45);
+            text("Attack: ", -70, 75);
+            text("Speed: ", -70, 105);
+            text("Collect Rate: ", -70, 135);
+            //Ship Four
+            text("Hit Point: ", -70, 242.5);
+            text("Attack: ", -70, 272.5);
+            text("Speed: ", -70, 302.5);
+            text("Collect Rate: ", -70, 332.5);
         }
         this.buildDisplay.collider = 'n';
         this.buildDisplay.visible = true;
 
-
-        //this is to display upgrades that have already been bought
-        this.upgraded_display = new Sprite(1460, 820);
-        this.upgraded_display.draw = function () {
+        //Resource Display Frame
+        this.resourceDisplayBackground = new Sprite(85,25);
+        this.resourceDisplayBackground.w = 160;
+        this.resourceDisplayBackground.h = 40;
+        this.resourceDisplayBackground.color = 'white';
+        this.resourceDisplayBackground.draw =()=> {
             //Frame
             noStroke();
+            // fill('white');
+            // rect(0,0,160,40);
+
+            image(this.goldFrame,0,0,170,45);
+
+            textAlign(CENTER, CENTER);
             fill('white');
-            rect(0, 0, 260, 140);
-
-            fill('black');
-            text("Already Bought Upgrades", -110, 0);
+            textSize(20);
+            text("Gold: " + this.base.baseBag, 0, 2);
         }
-        this.upgraded_display.collider = 'n';
+        this.resourceDisplayBackground.collider = 'n';
+        this.resourceDisplayBackground.layer = 1000;
 
-        //Top Bar display resource hold by the base
-        this.resourceDisplay = new Sprite(300, 25);
-        this.resourceDisplay.w = 600;
-        this.resourceDisplay.h = 50;
-        this.resourceDisplay.color = 'white';
+        //______________________Notification pop-ups_________________________//
+        this.noGold = new Sprite(320,50);
+        this.noGold.draw = function() {
+            noStroke();
+            fill(0,0,0, 80);
+            rect(0,0, 300, 100);
+
+            fill('red');
+            textSize(25);
+            text("You are broke, Bro.", -120 , -10);
+            text("Get some Gold!", -100 , 25);
+        }
+        this.noGold.startCounter = false;
+        this.noGold.counter = 0;
+        this.noGold.visible = false;
+        this.noGold.collider = 'n';
         
-        // this.resourceDisplay.draw = function () {
-        //     //Frame
-        //     noStroke();
-        //     fill(60, 74, 107);
-        //     rect(0, 0, 600, 50);
-        //     fill('white');
-        //     rect(-5, -5, 600, 50);
-
-        //     fill('black');
-        //     // text("Resource Display" + logic.displayText(),-50, 0);
-        // }
-        this.resourceDisplay.collider = 'n';
+        this.shipBuilt = new Sprite(320,50);
+        this.shipBuilt.draw = function() {
+            noStroke();
+            fill(0,0,0, 80);
+            rect(0,0, 300, 100);
+            
+            fill('red');
+            textSize(25);
+            text("Congrats", -120 , -10);
+            text("You got a ship!", -100 , 25);
+        }
+        this.shipBuilt.startCounter = false;
+        this.shipBuilt.counter = 0;
+        this.shipBuilt.visible = false;
+        this.shipBuilt.collider = 'n';
     }
 
     gameButtons() {
         this.buildButton = createButton("Build");
-        this.buildButton.position(558, 760);
+        this.buildButton.position(13, 58);
         this.buildButton.mouseClicked(() => {this.buildMode()});
-        this.buildButton.style("width", "160px");
-        this.buildButton.style("height", "60px");
-        this.buildButton.style("background-color", "#21408a");
-        this.buildButton.style("border-color", "white");
+        this.buildButton.style("width", "80px");
+        this.buildButton.style("height", "30px");
+        this.buildButton.style("background-color", "#094c52");
+        this.buildButton.style("border-color", "#094c52");
         this.buildButton.style("color", "white");
         this.buildButton.style("font-size", "15px");
-        this.buildButton.style("border-radius", "10px");
         this.buildButton.hide();
 
         this.upgradeButton = createButton("Upgrade");
-        this.upgradeButton.position(558, 838);
+        this.upgradeButton.position(93, 58);
         this.upgradeButton.mouseClicked(() => {this.upgradeMode()});
-        this.upgradeButton.style("width", "160px");
-        this.upgradeButton.style("height", "60px");
-        this.upgradeButton.style("background-color", "#21408a");
-        this.upgradeButton.style("border-color", "white");
+        this.upgradeButton.style("width", "80px");
+        this.upgradeButton.style("height", "30px");
+        this.upgradeButton.style("background-color", "#094c52");
+        this.upgradeButton.style("border-color", "#094c52");
         this.upgradeButton.style("color", "white");
         this.upgradeButton.style("font-size", "15px");
-        this.upgradeButton.style("border-radius", "10px");
         //this.upgradeButton.hide();
 
         this.buildButtonClone = createButton("Build");
-        this.buildButtonClone.position(558, 760);
+        this.buildButtonClone.position(13, 58);
         //this.buildButtonClone.mouseClicked();
-        this.buildButtonClone.style("width", "160px");
-        this.buildButtonClone.style("height", "60px");
-        this.buildButtonClone.style("background-color", "#3c5080");
-        this.buildButtonClone.style("border-color", "white");
-        this.buildButtonClone.style("color", "white");
+        this.buildButtonClone.style("width", "80px");
+        this.buildButtonClone.style("height", "30px");
+        this.buildButtonClone.style("background-color", "#9af4fc");
+        this.buildButtonClone.style("border-color", "#9af4fc");
+        this.buildButtonClone.style("color", "Black");
         this.buildButtonClone.style("font-size", "15px");
-        this.buildButtonClone.style("border-radius", "10px");
         this.buildButtonClone.show();
-
+        this.buildButtonClone.attribute("disabled", "");
+        
         this.upgradeButtonClone = createButton("Upgrade");
-        this.upgradeButtonClone.position(558, 838);
+        this.upgradeButtonClone.position(93, 58);
         //this.upgradeButtonClone.mouseClicked();
-        this.upgradeButtonClone.style("width", "160px");
-        this.upgradeButtonClone.style("height", "60px");
-        this.upgradeButtonClone.style("background-color", "#3c5080");
-        this.upgradeButtonClone.style("border-color", "white");
-        this.upgradeButtonClone.style("color", "white");
+        this.upgradeButtonClone.style("width", "80px");
+        this.upgradeButtonClone.style("height", "30px");
+        this.upgradeButtonClone.style("background-color", "#9af4fc");
+        this.upgradeButtonClone.style("border-color", "#9af4fc");
+        this.upgradeButtonClone.style("color", "Black");
         this.upgradeButtonClone.style("font-size", "15px");
-        this.upgradeButtonClone.style("border-radius", "10px");
         this.upgradeButtonClone.hide();
+        this.upgradeButtonClone.attribute("disabled", "");
 
         this.shipOne = createButton("Build");
-        this.shipOne.position(735, 861);
+        this.shipOne.position(42, 257.5);
         this.shipOne.mouseClicked(() => {this.buildShipOne()});
-        this.shipOne.style("width", "130px");
-        this.shipOne.style("height", "30px");
-        this.shipOne.style("background-color", "#21408a");
+        this.shipOne.style("width", "100px");
+        this.shipOne.style("height", "25px");
+        this.shipOne.style("background-color", "#062d30");
         this.shipOne.style("border-color", "white");
         this.shipOne.style("color", "white");
         this.shipOne.style("font-size", "15px");
+        this.shipOne.style("border-radius", "10px");
         this.shipOne.show();
-
+        
         this.shipTwo = createButton("Build");
-        this.shipTwo.position(886, 861);
+        this.shipTwo.position(42, 455);
         this.shipTwo.mouseClicked(() => {this.buildShipTwo()});
-        this.shipTwo.style("width", "130px");
-        this.shipTwo.style("height", "30px");
-        this.shipTwo.style("background-color", "#21408a");
+        this.shipTwo.style("width", "100px");
+        this.shipTwo.style("height", "25px");
+        this.shipTwo.style("background-color", "#062d30");
         this.shipTwo.style("border-color", "white");
         this.shipTwo.style("color", "white");
         this.shipTwo.style("font-size", "15px");
+        this.shipTwo.style("border-radius", "10px");
         this.shipTwo.show();
-
+        
         this.shipThree = createButton("Build");
-        this.shipThree.position(1039, 861);
+        this.shipThree.position(42, 652.5);
         this.shipThree.mouseClicked(() => {this.buildShipThree()});
-        this.shipThree.style("width", "130px");
-        this.shipThree.style("height", "30px");
-        this.shipThree.style("background-color", "#21408a");
+        this.shipThree.style("width", "100px");
+        this.shipThree.style("height", "25px");
+        this.shipThree.style("background-color", "#062d30");
         this.shipThree.style("border-color", "white");
         this.shipThree.style("color", "white");
         this.shipThree.style("font-size", "15px");
+        this.shipThree.style("border-radius", "10px");
         this.shipThree.show();
-
+        
         this.shipFour = createButton("Build");
-        this.shipFour.position(1190, 861);
+        this.shipFour.position(42, 850);
         this.shipFour.mouseClicked(() => {this.buildShipFour()});
-        this.shipFour.style("width", "130px");
-        this.shipFour.style("height", "30px");
-        this.shipFour.style("background-color", "#21408a");
+        this.shipFour.style("width", "100px");
+        this.shipFour.style("height", "25px");
+        this.shipFour.style("background-color", "#062d30");
         this.shipFour.style("border-color", "white");
         this.shipFour.style("color", "white");
         this.shipFour.style("font-size", "15px");
+        this.shipFour.style("border-radius", "10px");
         this.shipFour.show();
     }
-
+    
     buildMode() {
         this.buildButton.hide();
         this.buildButtonClone.show();
@@ -296,18 +321,64 @@ class UI {
     }
 
     buildShipOne() {
-        this.ship.push(this.factory.createShipOne(500, H / 2 - 100));
+        if (this.base.baseBag >= 10){
+            this.base.baseBag -= 10;
+            this.ship.push(this.factory.createShipOne(500, H / 2 - 100));
+            this.shipBuilt.counter = 100;
+            this.shipBuilt.startCounter = true;
+        } else {
+            //if there's no gold enough to buy ship show the warning
+            this.noGold.counter = 100;
+            this.noGold.startCounter = true;
+        }
     }
-
+    
     buildShipTwo() {
-        this.ship.push(this.factory.createShipTwo(500, H / 2 - 400));
+        if (this.base.baseBag >= 20){
+            this.base.baseBag -= 20;
+            this.ship.push(this.factory.createShipTwo(500, H / 2 - 400));
+            this.shipBuilt.counter = 100;
+            this.shipBuilt.startCounter = true;
+        } else {
+            //if there's no gold enough to buy ship show the warning
+            this.noGold.counter = 100;
+            this.noGold.startCounter = true;
+        }
     }
-
+    
     buildShipThree() {
-
+        console.log('nothing here use other buttons');
+    }
+    
+    buildShipFour() {
+        console.log('nothing here use other buttons');
     }
 
-    buildShipFour() {
+    notificationManager() {
+        if (this.noGold.startCounter == true) {
+            this.noGold.counter--;
+            this.noGold.visible = true;
+            if(this.noGold.counter <= 0) {
+                this.noGold.visible = false;
+                this.noGold.startcounter = false;
+                this.noGold.counter = 1;
+            }
+        }
 
+        if(this.shipBuilt.startCounter == true) {
+            this.shipBuilt.counter--;
+            this.shipBuilt.visible = true;
+            if(this.shipBuilt.counter <= 0) {
+                this.shipBuilt.visible = false;
+                this.shipBuilt.startcounter = false;
+                this.shipBuilt.counter = 1;
+            }
+        }
+
+        if(this.shipBuilt.visible == true){
+            this.noGold.visible = false;
+        } else if (this.noGold.visible == true) {
+            this.shipBuilt.visible = false;
+        }
     }
 }

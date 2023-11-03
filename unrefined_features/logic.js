@@ -103,6 +103,8 @@ class Logic {
                 // this.ship[j].overlaps(this.resource[i]);
                 // this.ship[j].overlaps(this.base);
 
+                // console.log(this.ship[j].collectTimer);
+
                 // COLLECTING RESOURCE FROM RESOURCE NODE
                 if(this.ship[j].colliding(this.resource[i])){
                     // console.log("Timer inside the resource: " + this.ship[j].collectTimer);

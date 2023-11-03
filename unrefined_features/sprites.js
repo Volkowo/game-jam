@@ -19,7 +19,7 @@ class Factory {
         tempBase.color = 'RED';
         tempBase.w = 80;
         tempBase.h = 80;
-        tempBase.baseBag = 0;
+        tempBase.baseBag = 100000;
         tempBase.selected = false;
         tempBase.canBeMoved = false;
         return tempBase;
