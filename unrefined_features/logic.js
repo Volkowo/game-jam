@@ -6,19 +6,18 @@ class Logic {
         this.ship;
         this.resource;
 
-        //Collection Logic
-        // this.goCollect = false;
-        // this.resourceCollected = false; //For auto collect
-        // this.collectingCounter = 200; //time ship spend inside the resource for collection
-        // this.goldTick = 60; //3 gold collect every 60 frames
-        // //this.collectRate = 3; //3 gold collect every 60 frames
-        // this.collectedAmount = 0;
-        // this.baseBag = 0;   //base's inventory
-        // this.shipBag = 0;   //ship's inventory
+        /*
+            1. Spawn ships with resources
+            2. Cooldown(?)
+            3. Make enemies
+            :D basic done :POGGIES:
+        */
     }
+
     preload() {
 
     }
+    
     setup(factory) {
         this.ship = new Group();
         this.resource = new Group();
@@ -91,8 +90,7 @@ class Logic {
                     this.ship[i].moveTo(mouseX, mouseY, 3);
                     ship[i].visible = true;
                     this.ship[i].goCollect = true;
-                }
-                
+                } 
             }
         }
 
@@ -108,37 +106,44 @@ class Logic {
         }
     }
 
-    resourceCollectionLogic(factory) {
+    resourceCollectionLogic() {
         for(let i = 0; i < 1; i++){
-
             for(let j = 0; j < this.ship.length; j++){
                 this.ship[j].overlaps(this.resource[i]);
                 this.ship[j].overlaps(this.base);
 
                 // COLLECTING RESOURCE FROM RESOURCE NODE
                 if(this.ship[j].overlapping(this.resource[i]) && this.ship[j].selected == true && this.ship[j].goCollect == true){
-                    this.ship[j].collectingTimer--
-                    console.log("Timer inside the resource: " + this.ship[j].collectingTimer);
+                    this.ship[j].collectTimer--
+                    console.log("Timer inside the resource: " + this.ship[j].collectTimer);
                     this.ship[j].visible = false;
-                    if(this.ship[j].collectingTimer < 0 || this.resource[i].resourcePool <= 0){
+                    if(this.ship[j].collectTimer < 0 || this.resource[i].resourcePool <= 0){
                         this.ship[j].moveTo(this.base);
                         this.ship[j].visible = true;
                     }
+
                     if(this.ship[j].visible == false){ 
                         this.ship[j].collectTick--;
                         // console.log("Timer to get resource / collect rate: " + this.ship[j].collectTick);
                         if(this.ship[j].collectTick < 0 && this.resource[i].resourcePool < this.ship[j].collectRate){
-
-                            this.resource[i].remainingAmount = this.resource[i].resourcePool;
-                            this.resource[i].resourcePool -= this.resource[i].remainingAmount;
-                            this.ship[j].shipBag += this.resource[i].remainingAmount;
+                            // console.log("This is a writing");
+                            if(frameCount % this.ship[j].collectTimer == 0){
+                                this.resource[i].remainingAmount = this.resource[i].resourcePool;
+                                this.resource[i].resourcePool -= this.resource[i].remainingAmount;
+                                this.ship[j].shipBag += this.resource[i].remainingAmount;
+                            }
                             this.ship[j].collectTick = 60;
                             this.ship[j].goldCollected = true;
+                            this.ship[j].text = this.ship[j].shipBag;
                         } else {
-                            this.resource[i].resourcePool -= this.ship[j].collectRate;
-                            this.ship[j].shipBag += this.ship[j].collectRate;
+                            // console.log("This is a writing too")
+                            if(frameCount % this.ship[j].collectTimer == 0){
+                                this.resource[i].resourcePool -= this.ship[j].collectRate;
+                                this.ship[j].shipBag += this.ship[j].collectRate;   
+                            }
                             this.ship[j].collectTick = 60;
                             this.ship[j].goldCollected = true;
+                            this.ship[j].text = this.ship[j].shipBag;
                         }
                         // console.log("resource node: " + this.resource[0].resourcePool, "ship inventory: " + this.ship[j].shipBag);
                     }
@@ -151,7 +156,7 @@ class Logic {
                     }
                     this.ship[j].goCollect = true;
                     this.ship[j].goldCollected = false;
-                    this.ship[j].collectingTimer = 200;
+                    this.ship[j].collectTimer = 200;
                     this.base.baseBag = this.base.baseBag + this.ship[j].shipBag;
                     this.ship[j].shipBag = 0;
                     console.log('base inventory: ' + this.base.baseBag);
