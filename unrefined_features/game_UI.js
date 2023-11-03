@@ -7,20 +7,41 @@ class UI {
         this.upgradeDisplay;
         this.upgraded_isplay;
         this.topBar;
-    }
-    preload() {
 
+        this.ship;
+        this.factory;
     }
+
+    preload() {
+        
+    }
+
     setup() {
+        this.ship = new Group();
+
         this.UI_Sprites();
         this.gameButtons();
-    }
-    draw() {
 
+        // this.ship.push(factory.createShipOne(800, H / 2 - 100));
+        // this.ship.push(factory.createShipTwo(1000, H/2 - 100));
     }
+
+    draw() {
+        this.spawnShip();
+    }
+
+    spawnShip() {
+        if (kb.presses('O')) {
+            this.ship.push(this.factory.createShipOne(500, H / 2 - 100));
+        }
+
+        if(kb.presses('P')){
+            this.ship.push(this.factory.createShipTwo(500, H / 2 - 400));
+        }
+    }
+
     UI_Sprites() {
         //Bedrock - may be add this??? to prevent ships to going into the UI
-
 
         //UI Background
         this.backgroundUI = new Sprite(W / 2, 820); //change color
@@ -102,7 +123,7 @@ class UI {
         this.buildDisplay.visible = true;
 
 
-        //Already Bought Upgrades display
+        //this is to display upgrades that have already been bought
         this.upgraded_display = new Sprite(1460, 820);
         this.upgraded_display.draw = function () {
             //Frame
@@ -132,7 +153,7 @@ class UI {
     gameButtons() {
         this.buildButton = createButton("Build");
         this.buildButton.position(558, 760);
-        this.buildButton.mouseClicked(this.buildMode);
+        this.buildButton.mouseClicked(() => {this.buildMode()});
         this.buildButton.style("width", "160px");
         this.buildButton.style("height", "60px");
         this.buildButton.style("background-color", "#21408a");
@@ -144,7 +165,7 @@ class UI {
 
         this.upgradeButton = createButton("Upgrade");
         this.upgradeButton.position(558, 838);
-        this.upgradeButton.mouseClicked(this.upgradeMode);
+        this.upgradeButton.mouseClicked(() => {this.upgradeMode()});
         this.upgradeButton.style("width", "160px");
         this.upgradeButton.style("height", "60px");
         this.upgradeButton.style("background-color", "#21408a");
@@ -167,7 +188,7 @@ class UI {
         this.buildButtonClone.show();
 
         this.upgradeButtonClone = createButton("Upgrade");
-        this.upgradeButtonClone.position(558, 830);
+        this.upgradeButtonClone.position(558, 838);
         //this.upgradeButtonClone.mouseClicked();
         this.upgradeButtonClone.style("width", "160px");
         this.upgradeButtonClone.style("height", "60px");
@@ -180,7 +201,7 @@ class UI {
 
         this.shipOne = createButton("Build");
         this.shipOne.position(735, 861);
-        this.shipOne.mouseClicked(this.buildShipOne);
+        this.shipOne.mouseClicked(() => {this.buildShipOne()});
         this.shipOne.style("width", "130px");
         this.shipOne.style("height", "30px");
         this.shipOne.style("background-color", "#21408a");
@@ -191,7 +212,7 @@ class UI {
 
         this.shipTwo = createButton("Build");
         this.shipTwo.position(886, 861);
-        this.shipTwo.mouseClicked(this.buildShipTwo);
+        this.shipTwo.mouseClicked(() => {this.buildShipTwo()});
         this.shipTwo.style("width", "130px");
         this.shipTwo.style("height", "30px");
         this.shipTwo.style("background-color", "#21408a");
@@ -202,7 +223,7 @@ class UI {
 
         this.shipThree = createButton("Build");
         this.shipThree.position(1039, 861);
-        this.shipThree.mouseClicked(this.buildShipThree);
+        this.shipThree.mouseClicked(() => {this.buildShipThree()});
         this.shipThree.style("width", "130px");
         this.shipThree.style("height", "30px");
         this.shipThree.style("background-color", "#21408a");
@@ -213,7 +234,7 @@ class UI {
 
         this.shipFour = createButton("Build");
         this.shipFour.position(1190, 861);
-        this.shipFour.mouseClicked(this.buildShipFour);
+        this.shipFour.mouseClicked(() => {this.buildShipFour()});
         this.shipFour.style("width", "130px");
         this.shipFour.style("height", "30px");
         this.shipFour.style("background-color", "#21408a");
@@ -254,11 +275,11 @@ class UI {
     }
 
     buildShipOne() {
-
+        this.ship.push(this.factory.createShipOne(500, H / 2 - 100));
     }
 
     buildShipTwo() {
-
+        this.ship.push(this.factory.createShipTwo(500, H / 2 - 400));
     }
 
     buildShipThree() {

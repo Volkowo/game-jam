@@ -24,16 +24,16 @@ let screenPressAnyKey = new PressAnyKey();
 let screenMenu = new Menu();
 let screenCredits = new Credits();
 let createSprite = new Factory();
-let spriteLogic = new Logic();
 let gameUI = new UI();
+let spriteLogic = new Logic();
 
 // other variables
 let isGameActive = false;
 
 function preload() {
     createSprite.preload();
-    spriteLogic.preload();
     gameUI.preload();
+    spriteLogic.preload();
 }
 
 function setup() {
@@ -93,8 +93,8 @@ function drawMenuScreen() { // menu screen code
 
 function establishGame() { // class set up code here
     createSprite.setup();
+    gameUI.setup(createSprite);
     spriteLogic.setup(createSprite);
-    gameUI.setup();
 }
 
 function drawGameScreen() { // game screen code
@@ -105,8 +105,10 @@ function drawGameScreen() { // game screen code
     
     // class draw code here
     createSprite.draw();
-    spriteLogic.draw(createSprite);
+    gameUI.factory = createSprite;
     gameUI.draw();
+    spriteLogic.ship = gameUI;
+    spriteLogic.draw(createSprite);
 }
 
 function drawCreditsScreen() { // leaderboard screen code

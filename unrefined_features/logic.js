@@ -20,14 +20,14 @@ class Logic {
 
     }
     setup(factory) {
-        this.ship = new Group();
+        //this.ship = new Group();
         this.resource = new Group();
 
         this.base = factory.createBase(1000, H / 2 - 50);
         this.resource.push(factory.createSmallResource(1000, H / 2 - 200));
         this.resource.push(factory.createBigResource(300, H / 4));
-        this.ship.push(factory.createShipOne(800, H / 2 - 100));
-        this.ship.push(factory.createShipTwo(1000, H/2 - 100));
+        // this.ship.push(factory.createShipOne(800, H / 2 - 100));
+        // this.ship.push(factory.createShipTwo(1000, H/2 - 100));
     }
 
     draw(factory) {
@@ -36,18 +36,18 @@ class Logic {
         this.selectLogic('One', '1');
         this.selectLogic('Two', '2');
         this.resourceCollectionLogic();
-        this.spawnShip(factory);
+        // this.spawnShip(factory);
     }
 
-    spawnShip(factory) {
-        if (kb.presses('O')) {
-            this.ship.push(factory.createShipOne(500, H / 2 - 100));
-        }
+    // spawnShip(factory) {
+    //     if (kb.presses('O')) {
+    //         this.ship.push(factory.createShipOne(500, H / 2 - 100));
+    //     }
 
-        if(kb.presses('P')){
-            this.ship.push(factory.createShipTwo(500, H / 2 - 400));
-        }
-    }
+    //     if(kb.presses('P')){
+    //         this.ship.push(factory.createShipTwo(500, H / 2 - 400));
+    //     }
+    // }
 
     // selectLogic(type, binding) {
     //     if (kb.presses(binding)) {
