@@ -48,6 +48,7 @@ class Factory {
         tempResource.color = 'GREEN';
         tempResource.w = 50,
         tempResource.h = 50;
+        tempResource.collider = 's';
         tempResource.remainingAmount = 0;
         tempResource.resourcePool = Math.floor(random(30, 50));
 

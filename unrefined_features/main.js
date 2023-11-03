@@ -105,10 +105,18 @@ function drawGameScreen() { // game screen code
     
     // class draw code here
     createSprite.draw();
+
+    //connecting the gameUI to createSprite
     gameUI.factory = createSprite;
-    gameUI.draw();
-    spriteLogic.ship = gameUI;
-    spriteLogic.draw(createSprite);
+
+    gameUI.draw(createSprite);
+    
+    //to make sure the logic is using the same groups and sprites from gameUI
+    spriteLogic.resource = gameUI.resource;
+    spriteLogic.ship = gameUI.ship;
+    spriteLogic.base = gameUI.base;
+
+    spriteLogic.draw();
 }
 
 function drawCreditsScreen() { // leaderboard screen code

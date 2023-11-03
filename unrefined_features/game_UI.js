@@ -6,41 +6,49 @@ class UI {
         this.buildDisplay;
         this.upgradeDisplay;
         this.upgraded_isplay;
-        this.topBar;
+        this.resourceDisplay;
 
         this.ship;
         this.factory;
+        this.resource;
+        this.base;
     }
 
     preload() {
         
     }
 
-    setup() {
+    setup(factory) {
         this.ship = new Group();
+        this.resource = new Group();
 
-        this.UI_Sprites();
         this.gameButtons();
-
-        // this.ship.push(factory.createShipOne(800, H / 2 - 100));
+        this.UI_Sprites();
+        
+        this.base = factory.createBase(1000, H / 2 - 50);
+        this.resource.push(factory.createSmallResource(1000, H / 2 - 200));
+        this.resource.push(factory.createBigResource(300, H / 4));
+        this.ship.push(factory.createShipOne(800, H / 2 - 100));
         // this.ship.push(factory.createShipTwo(1000, H/2 - 100));
     }
-
+    
     draw() {
         this.spawnShip();
+        this.resourceDisplay.text = this.base.baseBag;
     }
 
     spawnShip() {
         if (kb.presses('O')) {
             this.ship.push(this.factory.createShipOne(500, H / 2 - 100));
         }
-
+        
         if(kb.presses('P')){
             this.ship.push(this.factory.createShipTwo(500, H / 2 - 400));
         }
     }
-
+    
     UI_Sprites() {
+        //this.base.text = this.resourceAmount;
         //Bedrock - may be add this??? to prevent ships to going into the UI
 
         //UI Background
@@ -56,7 +64,9 @@ class UI {
             tint(255, 50);
             //image(backgroundUI, 0, 0, width, 150);
         }
-        this.backgroundUI.collider = "n";
+        this.backgroundUI.w = W;
+        this.backgroundUI.h = 160;
+        this.backgroundUI.collider = "s";
         this.backgroundUI.visible = true;
         this.backgroundUI.layer = 101;
 
@@ -75,6 +85,7 @@ class UI {
             fill('black');
             text("Profile Display", -65, 0);
         }
+        this.profilePicture.collider = 'n';
 
         //Stat Block of selected object
         this.statBlock = new Sprite(350, 820);
@@ -87,7 +98,7 @@ class UI {
             fill('black');
             text("Stat Display", -50, 0);
         }
-        this.statBlock.debug = true;
+        this.statBlock.collider = 'n';
 
         //Upgrade Display
         this.upgradeDisplay = new Sprite(1020, 820);
@@ -113,6 +124,8 @@ class UI {
             rect(-76, 0, 142.5, 140);
             rect(76, 0, 142.5, 140);
             rect(228, 0, 142.5, 140);
+
+            //Background
             fill(99, 70, 138);
             rect(-228, 0, 140, 137.5);
             rect(-76, 0, 140, 137.5);
@@ -134,10 +147,14 @@ class UI {
             fill('black');
             text("Already Bought Upgrades", -110, 0);
         }
+        this.upgraded_display.collider = 'n';
 
-        //Top Bar
-        this.topBar = new Sprite(300, 25);
-        this.topBar.draw = function () {
+        //Top Bar display resource hold by the base
+        this.resourceDisplay = new Sprite(300, 25);
+        this.resourceDisplay.w = 600;
+        this.resourceDisplay.h = 50;
+        this.resourceDisplay.color = 'white';
+        this.resourceDisplay.draw = function () {
             //Frame
             noStroke();
             fill(60, 74, 107);
@@ -146,8 +163,9 @@ class UI {
             rect(-5, -5, 600, 50);
 
             fill('black');
-            text("Resource Display", -50, 0);
+            //text("Resource Display" + this.base.baseBag, -50, 0);
         }
+        this.resourceDisplay.collider = 'n';
     }
 
     gameButtons() {
