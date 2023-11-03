@@ -41,6 +41,7 @@ class UI {
     spawnShip() {
         if (kb.presses('O')) {
             this.ship.push(this.factory.createShipOne(500, H / 2 - 100));
+            
         }
         
         if(kb.presses('P')){

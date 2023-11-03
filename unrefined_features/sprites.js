@@ -28,6 +28,7 @@ class Factory {
     createResource(x, y, size) {
         let tempResource = new Sprite(x, y);
         tempResource.size = size;
+        tempResource.collider = 's'
         return tempResource;
     }
 
@@ -36,6 +37,7 @@ class Factory {
         tempResource.color = 'GREEN';
         tempResource.d = 50;
         tempResource.remainingAmount = 0;
+        tempResource.bounciness = 0;
         tempResource.resourcePool = Math.floor(random(30, 50));
 
         tempResource.selected = false;
@@ -50,6 +52,7 @@ class Factory {
         tempResource.h = 50;
         tempResource.collider = 's';
         tempResource.remainingAmount = 0;
+        tempResource.bounciness = 0;
         tempResource.resourcePool = Math.floor(random(30, 50));
 
         tempResource.selected = false;
@@ -73,7 +76,7 @@ class Factory {
         tempShip.type = type;
         tempShip.collectTick = 60;
         tempShip.collectTimer = 3;
-        tempShip.drag = 0.2;
+        tempShip.drag = 1.2;
         tempShip.bounciness = 0;
         tempShip.rotationLock = true;
         return tempShip;
