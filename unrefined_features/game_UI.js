@@ -6,7 +6,6 @@ class UI {
         this.buildDisplay;
         this.upgradeDisplay;
         this.upgraded_isplay;
-        this.resourceDisplay;
         this.resourceDisplayBackground;
 
         this.ship;
@@ -16,7 +15,7 @@ class UI {
     }
 
     preload() {
-
+        this.goldFrame = loadImage("assets/UI/gold_display_frame.png");
     }
 
     setup(factory) {
@@ -35,9 +34,7 @@ class UI {
     
     draw(logic) {
         this.spawnShip();
-        // console.log(logic.displayText())
-        this.resourceDisplay.text = logic.displayText();
-        this.warningManager();
+        this.notificationManager();
     }
 
     spawnShip() {
@@ -51,14 +48,13 @@ class UI {
     }
     
     UI_Sprites() {
-        //this.base.text = this.resourceAmount;
         //Bedrock - may be add this??? to prevent ships to going into the UI
 
         //UI Background
         this.backgroundUI = new Sprite(85, H/2); //change color
         this.backgroundUI.w = 170;
         this.backgroundUI.h = H;
-        this.backgroundUI.draw = function () {
+        this.backgroundUI.draw =()=> {
             noStroke();
             fill(60, 74, 107);
             rect(-42.5, 0, 85, H);
@@ -92,7 +88,7 @@ class UI {
         this.buildDisplay = new Sprite(85, 480);
         this.buildDisplay.w = 160;
         this.buildDisplay.h = 800;
-        this.buildDisplay.draw = function () {
+        this.buildDisplay.draw =()=> {
             //Frame
             noStroke();
             fill(154, 244, 252);
@@ -104,6 +100,40 @@ class UI {
             rect(0, -102.5, 155, 195);
             rect(0, 95, 155, 195);
             rect(0, 292.5, 155, 195);
+
+            //Ship Type Display
+            textAlign(CENTER, CENTER);
+            fill('white');
+            textSize(20);
+            text("Schooner", 0,-380);
+            text("Galleon", 0,-182.5);
+            text("Frigate", 0,15);
+            text("Man-O-war", 0,212.5);
+
+
+            //Stat Display
+            textSize(13);
+            textAlign(LEFT, CENTER);
+            //Ship One
+            text("Hit Point: ", -70, -350);
+            text("Attack: ", -70, -320);
+            text("Speed: ", -70, -290);
+            text("Collect Rate: " + this.ship[0].collectRate, -70, -260);
+            //Ship Two
+            text("Hit Point: ", -70, -152.5);
+            text("Attack: ", -70, -122.5);
+            text("Speed: ", -70, -92.5);
+            text("Collect Rate: ", -70, -62.5);
+            //Ship Three
+            text("Hit Point: ", -70, 45);
+            text("Attack: ", -70, 75);
+            text("Speed: ", -70, 105);
+            text("Collect Rate: ", -70, 135);
+            //Ship Four
+            text("Hit Point: ", -70, 242.5);
+            text("Attack: ", -70, 272.5);
+            text("Speed: ", -70, 302.5);
+            text("Collect Rate: ", -70, 332.5);
         }
         this.buildDisplay.collider = 'n';
         this.buildDisplay.visible = true;
@@ -113,27 +143,21 @@ class UI {
         this.resourceDisplayBackground.w = 160;
         this.resourceDisplayBackground.h = 40;
         this.resourceDisplayBackground.color = 'white';
-        this.resourceDisplayBackground.draw = function () {
+        this.resourceDisplayBackground.draw =()=> {
             //Frame
             noStroke();
-            fill('white');
-            rect(0,0,160,40);
+            // fill('white');
+            // rect(0,0,160,40);
 
-            fill('black');
+            image(this.goldFrame,0,0,170,45);
+
+            textAlign(CENTER, CENTER);
+            fill('white');
             textSize(20);
-            text("Gold: ", -50, 7);
+            text("Gold: " + this.base.baseBag, 0, 2);
         }
         this.resourceDisplayBackground.collider = 'n';
         this.resourceDisplayBackground.layer = 1000;
-
-        //Resource Display
-        this.resourceDisplay = new Sprite(120, 27);
-        this.resourceDisplay.w = 1;
-        this.resourceDisplay.h = 1;
-        this.resourceDisplay.color = 'white';
-        this.resourceDisplay.stroke = 'white';
-        this.resourceDisplay.collider = 'n';
-        this.resourceDisplay.textSize = 20;
 
         //______________________Notification pop-ups_________________________//
         this.noGold = new Sprite(320,50);
@@ -143,7 +167,7 @@ class UI {
             rect(0,0, 300, 100);
 
             fill('red');
-            textSize(30);
+            textSize(25);
             text("You are broke, Bro.", -120 , -10);
             text("Get some Gold!", -100 , 25);
         }
@@ -159,7 +183,7 @@ class UI {
             rect(0,0, 300, 100);
             
             fill('red');
-            textSize(30);
+            textSize(25);
             text("Congrats", -120 , -10);
             text("You got a ship!", -100 , 25);
         }
@@ -329,7 +353,7 @@ class UI {
         console.log('nothing here use other buttons');
     }
 
-    warningManager() {
+    notificationManager() {
         if (this.noGold.startCounter == true) {
             this.noGold.counter--;
             this.noGold.visible = true;
@@ -348,6 +372,12 @@ class UI {
                 this.shipBuilt.startcounter = false;
                 this.shipBuilt.counter = 1;
             }
+        }
+
+        if(this.shipBuilt.visible == true){
+            this.noGold.visible = false;
+        } else if (this.noGold.visible == true) {
+            this.shipBuilt.visible = false;
         }
     }
 }
