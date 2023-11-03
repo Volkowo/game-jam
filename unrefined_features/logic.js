@@ -113,7 +113,7 @@ class Logic {
                 this.ship[j].overlaps(this.resource[i]);
                 this.ship[j].overlaps(this.base);
 
-                console.log(this.ship[j].collectTimer);
+                //console.log(this.ship[j].collectTimer);
 
                 // COLLECTING RESOURCE FROM RESOURCE NODE
                 if(this.ship[j].overlapping(this.resource[i]) && this.ship[j].goCollect == true){
@@ -177,9 +177,9 @@ class Logic {
     }
 
     displayText(){
-        console.log("Calling the method")
+        //console.log("Calling the method")
         this.base.text = this.base.baseBag;
-        console.log("Values before return: ", this.base.text, this.base.baseBag)
+        //console.log("Values before return: ", this.base.text, this.base.baseBag)
         return this.base.baseBag;
     }
 }
