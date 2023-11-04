@@ -30,12 +30,10 @@ class Logic {
     draw(factory) {
         strokeWeight(1);
         this.movementLogic(this.ship);
-        // this.selectLogic();
         this.selectLogic('One', '1');
         this.selectLogic('Two', '2');
         this.resourceCollectionLogic();
-        // this.spawnShip(factory);
-        // this.checkShipAmount();
+
         // console.log("COUNTER ONE: " + this.counterOne, "COUNTER TWO: " + this.counterTwo, "SHIP AMOUNT: " + this.shipAmount);
         
     }
