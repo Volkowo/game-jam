@@ -60,17 +60,6 @@ class Factory {
         return tempResource;
     }
 
-    // ADD -> collectTick, collectTimer
-
-    // resourceCollected -> goldCollected (ship)
-    // collectedAmount -> remainingAmount (resource)
-    // goldTick -> collectTick (ship)
-    // collectingTimer -> collectTimer (ship)
-    // goCollect -> same (ship)
-    // collectRate -> same (ship)
-    // baseBag -> same
-    // shipBag -> same
-
     createShip(x, y, type) {
         let tempShip = new Sprite(x, y);
         tempShip.type = type;

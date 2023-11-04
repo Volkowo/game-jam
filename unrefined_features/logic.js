@@ -145,7 +145,7 @@ class Logic {
                     // }
                 }
 
-                // RETURN TO BASE AFTER RESOURCE COLLECTION
+                // RETURN TO BASE AFTER RESOURCE COLLECTION -- DELETE!!!
                 if (this.ship[j].overlaps(this.base) && this.ship[j].goldCollected == true) {
                     if (this.resource[i].resourcePool !== 0) {
                         this.ship[j].moveTo(this.resource[i]);
