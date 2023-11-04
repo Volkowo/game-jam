@@ -34,20 +34,20 @@ class UI {
         this.ship.push(factory.createShipOne(800, H/2));
     }
     
-    draw(factory) {
+    draw() {
         textFont(this.gameFont);
-        this.spawnShip(factory);
+        this.spawnShip();
         this.notificationManager();
     }
 
-    spawnShip(factory) {
+    spawnShip() {
         if (kb.presses('O')) {
-            this.ship.push(factory.createShipOne(500, H / 2 - 100));
+            this.ship.push(this.factory.createShipOne(500, H / 2 - 100));
             
         }
         
         if(kb.presses('P')){
-            this.ship.push(factory.createShipTwo(500, H / 2 - 400));
+            this.ship.push(this.factory.createShipTwo(500, H / 2 - 400));
         }
     }
     
@@ -353,7 +353,7 @@ class UI {
     buildShipOne() {
         if (this.base.baseBag >= 10){ //need to implement the ship.cost from factory class
             this.base.baseBag -= 10;
-            console.log(this.factory.createShipOne(500, H / 2 - 100))
+            // console.log(this.factory.createShipOne(500, H / 2 - 100))
             this.ship.push(this.factory.createShipOne(500, H / 2 - 100));
             this.shipBuilt.counter = 100;
             this.shipBuilt.startCounter = true;
