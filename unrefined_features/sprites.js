@@ -1,6 +1,6 @@
 class Factory {
     constructor() {
-
+        
     }
     preload() {
 
@@ -19,7 +19,7 @@ class Factory {
         tempBase.color = 'RED';
         tempBase.w = 80;
         tempBase.h = 80;
-        tempBase.baseBag = 100000;
+        tempBase.baseBag = 50;
         tempBase.selected = false;
         tempBase.canBeMoved = false;
         return tempBase;
@@ -79,7 +79,8 @@ class Factory {
         tempShip.collectRate = 2;
         tempShip.cost = 5;
         tempShip.shipBag = 0;
-
+        tempShip.buildTime = 10;
+        
         // BOOLEAN-RELATED
         tempShip.selected = false;
         tempShip.canBeMoved = true;
@@ -94,7 +95,7 @@ class Factory {
         tempShip.w = 40;
         tempShip.h = 40;
         tempShip.collectRate = 5;
-        tempShip.cost = 8;
+        tempShip.cost = 10;
         tempShip.shipBag = 0;
 
         // BOOLEAN-RELATED

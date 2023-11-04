@@ -16,6 +16,7 @@ class UI {
 
     preload() {
         this.goldFrame = loadImage("assets/UI/gold_display_frame.png");
+        this.gameFont = loadFont("assets/font/new_rodin_pro.otf");
     }
 
     setup(factory) {
@@ -33,6 +34,7 @@ class UI {
     }
     
     draw(logic) {
+        textFont(this.gameFont);
         this.spawnShip();
         this.notificationManager();
     }
@@ -79,8 +81,12 @@ class UI {
             fill(154, 244, 252);
             rect(0, -7.5, 160, 800);
 
+            textAlign(CENTER,CENTER);
             fill('black');
-            text("Upgrades coming soon", -60, 0);
+            stroke('black');
+            strokeWeight(1);
+            textSize(11);
+            text("Upgrades coming soon", 0, 0);
         }
         this.upgradeDisplay.collider = 'n';
         this.upgradeDisplay.visible = false;
@@ -94,47 +100,60 @@ class UI {
             noStroke();
             fill(154, 244, 252);
             rect(0, -7.5, 160, 800);
-
+            
             //Background
             fill(9, 76, 82);
             rect(0, -300, 155, 195);
             rect(0, -102.5, 155, 195);
             rect(0, 95, 155, 195);
             rect(0, 292.5, 155, 195);
-
+            
             //Ship Type Display
             textAlign(CENTER, CENTER);
+            strokeWeight(1);
+            stroke('white');
             fill('white');
-            textSize(20);
-            text("Schooner", 0,-380);
-            text("Galleon", 0,-182.5);
-            text("Frigate", 0,15);
-            text("Man-O-war", 0,212.5);
-
-
-            //Stat Display
-            textSize(13);
+            textSize(15);
+            text("Schooner", 0,-385);
+            text("Galleon", 0,-187.5);
+            text("Frigate", 0,10);
+            text("Man-O-war", 0,207.5);
+            
+            //Stat Display              //need to implement the ship.stats from factory class
+            strokeWeight(0.5);
+            stroke('white');
+            textSize(10);
             textAlign(LEFT, CENTER);
             //Ship One
-            text("Hit Point: ", -70, -350);
-            text("Attack: ", -70, -320);
-            text("Speed: ", -70, -290);
-            text("Collect Rate: " + this.ship[0].collectRate, -70, -260);
+            text("Hit Point : 20", -70, -315);
+            text("Attack : 5", -70, -300);
+            text("Speed : 5", -70, -285);
+            text("Collect Rate : " + this.ship[0].collectRate + "/s", -70, -270); //ideal code
+            text("Gold Cost : 10", -70, -255);
+            text("Build Time : 5s", -70, -240);
             //Ship Two
-            text("Hit Point: ", -70, -152.5);
-            text("Attack: ", -70, -122.5);
-            text("Speed: ", -70, -92.5);
-            text("Collect Rate: ", -70, -62.5);
+            text("Hit Point : 30", -70, -117.5);
+            text("Attack : 8", -70, -102.5);
+            text("Speed : 4", -70, -87.5);
+            text("Collect Rate : 5/s", -70, -72.5);
+            text("Gold Cost : 20", -70, -57.5);
+            text("Build Time : 10s", -70, -42.5);
             //Ship Three
-            text("Hit Point: ", -70, 45);
-            text("Attack: ", -70, 75);
-            text("Speed: ", -70, 105);
-            text("Collect Rate: ", -70, 135);
+            text("Hit Point : 50", -70, 80);
+            text("Attack : 5", -70, 95);
+            text("Speed : 3", -70, 110);
+            text("Collect Rate : 5/s", -70, 125);
+            text("Gold Cost : 25", -70, 140);
+            text("Build Time : 10s", -70, 155);
             //Ship Four
-            text("Hit Point: ", -70, 242.5);
-            text("Attack: ", -70, 272.5);
-            text("Speed: ", -70, 302.5);
-            text("Collect Rate: ", -70, 332.5);
+            text("Hit Point : 80", -70, 277.5);
+            text("Attack : 10", -70, 292.5);
+            text("Speed : 2", -70, 307.5);
+            text("Collect Rate : 1/s", -70, 322.5);
+            text("Gold Cost : ", -70, 337.5);
+            text("Build Time : 30s", -70, 352.5);
+
+            //Also add pictures for ships??????
         }
         this.buildDisplay.collider = 'n';
         this.buildDisplay.visible = true;
@@ -153,9 +172,11 @@ class UI {
             image(this.goldFrame,0,0,170,45);
 
             textAlign(CENTER, CENTER);
+            strokeWeight(1);
+            stroke('white');
             fill('white');
             textSize(20);
-            text("Gold: " + this.base.baseBag, 0, 2);
+            text("Gold: " + this.base.baseBag, 0, 0);
         }
         this.resourceDisplayBackground.collider = 'n';
         this.resourceDisplayBackground.layer = 1000;
@@ -167,6 +188,8 @@ class UI {
             fill(0,0,0, 80);
             rect(0,0, 300, 100);
 
+            strokeWeight(1);
+            stroke('red');
             fill('red');
             textSize(25);
             text("You are broke, Bro.", -120 , -10);
@@ -183,6 +206,8 @@ class UI {
             fill(0,0,0, 80);
             rect(0,0, 300, 100);
             
+            strokeWeight(1);
+            stroke('red');
             fill('red');
             textSize(25);
             text("Congrats", -120 , -10);
@@ -244,6 +269,7 @@ class UI {
         this.shipOne = createButton("Build");
         this.shipOne.position(42, 257.5);
         this.shipOne.mouseClicked(() => {this.buildShipOne()});
+        // this.shipOne.mouseOver(() => {this.hoverShipOne()});
         this.shipOne.style("width", "100px");
         this.shipOne.style("height", "25px");
         this.shipOne.style("background-color", "#062d30");
@@ -256,6 +282,7 @@ class UI {
         this.shipTwo = createButton("Build");
         this.shipTwo.position(42, 455);
         this.shipTwo.mouseClicked(() => {this.buildShipTwo()});
+        // this.shipTwo.mouseOver(() => {this.hoverShipTwo()});
         this.shipTwo.style("width", "100px");
         this.shipTwo.style("height", "25px");
         this.shipTwo.style("background-color", "#062d30");
@@ -268,6 +295,7 @@ class UI {
         this.shipThree = createButton("Build");
         this.shipThree.position(42, 652.5);
         this.shipThree.mouseClicked(() => {this.buildShipThree()});
+        // this.shipThree.mouseOver(() => {this.hoverShipThree()});
         this.shipThree.style("width", "100px");
         this.shipThree.style("height", "25px");
         this.shipThree.style("background-color", "#062d30");
@@ -280,6 +308,7 @@ class UI {
         this.shipFour = createButton("Build");
         this.shipFour.position(42, 850);
         this.shipFour.mouseClicked(() => {this.buildShipFour()});
+        this.shipFour.mouseOver(() => {this.hoverShipFour()});
         this.shipFour.style("width", "100px");
         this.shipFour.style("height", "25px");
         this.shipFour.style("background-color", "#062d30");
@@ -321,7 +350,7 @@ class UI {
     }
 
     buildShipOne() {
-        if (this.base.baseBag >= 10){
+        if (this.base.baseBag >= 10){ //need to implement the ship.cost from factory class
             this.base.baseBag -= 10;
             this.ship.push(this.factory.createShipOne(500, H / 2 - 100));
             this.shipBuilt.counter = 100;
@@ -334,7 +363,7 @@ class UI {
     }
     
     buildShipTwo() {
-        if (this.base.baseBag >= 20){
+        if (this.base.baseBag >= 20){ //need to implement the ship.cost from factory class
             this.base.baseBag -= 20;
             this.ship.push(this.factory.createShipTwo(500, H / 2 - 400));
             this.shipBuilt.counter = 100;
@@ -352,6 +381,23 @@ class UI {
     
     buildShipFour() {
         console.log('nothing here use other buttons');
+    }
+
+    hoverShipOne() {
+        console.log('this is for hover1')
+    }
+    hoverShipTwo() {
+        console.log('this is for hover2')
+    }
+    hoverShipThree() {
+        console.log('this is for hover3')
+    }
+    hoverShipFour() {
+        console.log('this is for hover4')
+    }
+
+    hoverOut(){
+        console.log('this is for hhoverOut')
     }
 
     notificationManager() {
