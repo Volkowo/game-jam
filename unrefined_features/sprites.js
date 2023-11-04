@@ -20,6 +20,7 @@ class Factory {
         tempBase.w = 80;
         tempBase.h = 80;
         tempBase.baseBag = 50;
+        tempBase.collider = 'k'
         tempBase.selected = false;
         tempBase.canBeMoved = false;
         return tempBase;
@@ -53,7 +54,8 @@ class Factory {
         tempResource.collider = 's';
         tempResource.remainingAmount = 0;
         tempResource.bounciness = 0;
-        tempResource.resourcePool = Math.floor(random(30, 50));
+        tempResource.resourcePool = Math.floor(random(100, 150));
+        tempResource.resourceCap = 500;
 
         tempResource.selected = false;
         tempResource.canBeMoved = false;
@@ -80,12 +82,15 @@ class Factory {
         tempShip.cost = 5;
         tempShip.shipBag = 0;
         tempShip.buildTime = 10;
+        tempShip.shootingTimer = 50;
         
         // BOOLEAN-RELATED
         tempShip.selected = false;
         tempShip.canBeMoved = true;
         tempShip.goCollect = false;
         tempShip.goldCollected = false;
+        tempShip.singleShot = true;
+        tempShip.burstFire = false;
         return tempShip;
     }
 
@@ -97,12 +102,15 @@ class Factory {
         tempShip.collectRate = 5;
         tempShip.cost = 10;
         tempShip.shipBag = 0;
+        tempShip.shootingTimer = 50;
 
         // BOOLEAN-RELATED
         tempShip.selected = false;
         tempShip.canBeMoved = true;
         tempShip.goCollect = false;
         tempShip.goldCollected = false;
+        tempShip.singleShot = true;
+        tempShip.burstFire = false;
         return tempShip;
     }
 }
