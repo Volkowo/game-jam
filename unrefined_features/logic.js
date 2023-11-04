@@ -192,9 +192,9 @@ class Logic {
 
         this.shootingTimer--
 
-        for (let i = 0; i < this.ship.length; i++) { // create player bullet sprites (change this.resource to this.enemy or whatever when it gets added)
+        for (let i = 0; i < this.ship.length; i++) { 
             for (let k = 0; k < this.resource.length; k++) {
-                if (dist(this.resource[k].x, this.resource[k].y, this.ship[i].x, this.ship[i].y) <= 200) {
+                if (dist(this.resource[k].x, this.resource[k].y, this.ship[i].x, this.ship[i].y) <= 200) { // create player bullet sprites (change this.resource to this.enemy or whatever when it gets added)
                     if (this.shootingTimer <= 0) {
                         if (this.singleShot === true) {
                             this.singleBulletGroup.push(this.createSingleShot(this.ship[i].x, this.ship[i].y));
@@ -206,12 +206,7 @@ class Logic {
                         this.shootingTimer = 50;
                     }
                 }
-            }
-        }
-
-        for (let i = 0; i < this.ship.length; i++) { // player bullet collision (change the resource to the actual enemy later)
-            for (let k = 0; k < this.resource.length; k++) {
-                for (let s = 0; s < this.singleBulletGroup.length; s++) {
+                for (let s = 0; s < this.singleBulletGroup.length; s++) { // collision for player single shot
                     this.singleBulletGroup.direction = this.singleBulletGroup[s].angleTo(this.resource[k]);
                     this.singleBulletGroup.speed = 4;
                     this.singleBulletGroup.overlaps(this.resource[k]);
@@ -220,7 +215,7 @@ class Logic {
                         this.singleBulletGroup[s].remove();
                     }
                 }
-                for (let a = 0; a <this.burstBulletGroup.length; a++) {
+                for (let a = 0; a <this.burstBulletGroup.length; a++) { // collision for player burst shot
                     this.burstBulletGroup.direction = this.burstBulletGroup[a].angleTo(this.resource[k]);
                     this.burstBulletGroup.speed = 5;
                     this.burstBulletGroup.overlaps(this.resource[k]);
