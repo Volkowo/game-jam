@@ -205,23 +205,27 @@ class Logic {
                         }
                         this.shootingTimer = 50;
                     }
-                    for (let s = 0; s < this.singleBulletGroup.length; s++) { // collision for player single shot
+                    for (let s = 0; s < this.singleBulletGroup.length; s++) { // direction for player single shot
                         this.singleBulletGroup.direction = this.singleBulletGroup[s].angleTo(this.resource[k]);
                         this.singleBulletGroup.speed = 4;
                         this.singleBulletGroup.overlaps(this.resource[k]);
                         this.singleBulletGroup.overlaps(this.ship[i]);
-                        if (this.singleBulletGroup[s].collides(this.resource[k])) {
-                            this.singleBulletGroup[s].remove();
-                        }
                     }
-                    for (let a = 0; a <this.burstBulletGroup.length; a++) { // collision for player burst shot
+                    for (let a = 0; a <this.burstBulletGroup.length; a++) { // direction for player burst shot
                         this.burstBulletGroup.direction = this.burstBulletGroup[a].angleTo(this.resource[k]);
                         this.burstBulletGroup.speed = 5;
                         this.burstBulletGroup.overlaps(this.resource[k]);
                         this.burstBulletGroup.overlaps(this.ship[i]);
-                        if (this.burstBulletGroup[a].collides(this.resource[k])) {
-                            this.burstBulletGroup[a].remove();
-                        }
+                    }
+                }
+                for (let s = 0; s < this.singleBulletGroup.length; s++) { // collision for player single shot
+                    if (this.singleBulletGroup[s].collides(this.resource[k])) {
+                        this.singleBulletGroup[s].remove();
+                    }
+                }
+                for (let a = 0; a <this.burstBulletGroup.length; a++) { // collision for player burst shot
+                    if (this.burstBulletGroup[a].collides(this.resource[k])) {
+                        this.burstBulletGroup[a].remove();
                     }
                 }
             }
