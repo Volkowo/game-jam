@@ -198,24 +198,22 @@ class Logic {
                     if (this.shootingTimer <= 0) {
                         if (this.singleShot === true) {
                             this.singleBulletGroup.push(this.createSingleShot(this.ship[i].x, this.ship[i].y));
+                            for (let s = 0; s < this.singleBulletGroup.length; s++) { // direction for player single shot
+                                this.singleBulletGroup.direction = this.singleBulletGroup[s].angleTo(this.resource[k]);
+                                this.singleBulletGroup.speed = 4;
+                                this.singleBulletGroup.overlaps(this.ship[i]);
+                            }
                         } else if (this.burstFire === true) {
                             this.burstBulletGroup.push(this.createBurstBullet(this.ship[i].x, this.ship[i].y - 15));
                             this.burstBulletGroup.push(this.createBurstBullet(this.ship[i].x, this.ship[i].y));
                             this.burstBulletGroup.push(this.createBurstBullet(this.ship[i].x, this.ship[i].y + 15));
+                            for (let a = 0; a <this.burstBulletGroup.length; a++) { // direction for player burst shot
+                                this.burstBulletGroup.direction = this.burstBulletGroup[a].angleTo(this.resource[k]);
+                                this.burstBulletGroup.speed = 5;
+                                this.burstBulletGroup.overlaps(this.ship[i]);
+                            }
                         }
                         this.shootingTimer = 50;
-                    }
-                    for (let s = 0; s < this.singleBulletGroup.length; s++) { // direction for player single shot
-                        this.singleBulletGroup.direction = this.singleBulletGroup[s].angleTo(this.resource[k]);
-                        this.singleBulletGroup.speed = 4;
-                        this.singleBulletGroup.overlaps(this.resource[k]);
-                        this.singleBulletGroup.overlaps(this.ship[i]);
-                    }
-                    for (let a = 0; a <this.burstBulletGroup.length; a++) { // direction for player burst shot
-                        this.burstBulletGroup.direction = this.burstBulletGroup[a].angleTo(this.resource[k]);
-                        this.burstBulletGroup.speed = 5;
-                        this.burstBulletGroup.overlaps(this.resource[k]);
-                        this.burstBulletGroup.overlaps(this.ship[i]);
                     }
                 }
                 for (let s = 0; s < this.singleBulletGroup.length; s++) { // collision for player single shot
