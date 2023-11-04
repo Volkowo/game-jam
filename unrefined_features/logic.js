@@ -194,18 +194,16 @@ class Logic {
 
         for (let i = 0; i < this.ship.length; i++) { 
             for (let k = 0; k < this.resource.length; k++) {
-                if (this.resource[k].type == "Big") {
-                    if (dist(this.resource[k].x, this.resource[k].y, this.ship[i].x, this.ship[i].y) <= 200) { // create player bullet sprites (change this.resource to this.enemy or whatever when it gets added)
-                        if (this.shootingTimer <= 0) {
-                            if (this.singleShot === true) {
-                                this.singleBulletGroup.push(this.createSingleShot(this.ship[i].x, this.ship[i].y));
-                            } else if (this.burstFire === true) {
-                                this.burstBulletGroup.push(this.createBurstBullet(this.ship[i].x, this.ship[i].y - 15));
-                                this.burstBulletGroup.push(this.createBurstBullet(this.ship[i].x, this.ship[i].y));
-                                this.burstBulletGroup.push(this.createBurstBullet(this.ship[i].x, this.ship[i].y + 15));
-                            }
-                            this.shootingTimer = 50;
+                if (dist(this.resource[k].x, this.resource[k].y, this.ship[i].x, this.ship[i].y) <= 200) { // create player bullet sprites (change this.resource to this.enemy or whatever when it gets added)
+                    if (this.shootingTimer <= 0) {
+                        if (this.singleShot === true) {
+                            this.singleBulletGroup.push(this.createSingleShot(this.ship[i].x, this.ship[i].y));
+                        } else if (this.burstFire === true) {
+                            this.burstBulletGroup.push(this.createBurstBullet(this.ship[i].x, this.ship[i].y - 15));
+                            this.burstBulletGroup.push(this.createBurstBullet(this.ship[i].x, this.ship[i].y));
+                            this.burstBulletGroup.push(this.createBurstBullet(this.ship[i].x, this.ship[i].y + 15));
                         }
+                        this.shootingTimer = 50;
                     }
                     for (let s = 0; s < this.singleBulletGroup.length; s++) { // collision for player single shot
                         this.singleBulletGroup.direction = this.singleBulletGroup[s].angleTo(this.resource[k]);
