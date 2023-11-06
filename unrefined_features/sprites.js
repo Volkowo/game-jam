@@ -3,9 +3,12 @@ class Factory {
         
     }
     preload() {
-
+        this.shipOne = loadImage("assets/img/ship_img/schooner_player.png");
+        this.shipTwo = loadImage("assets/img/ship_img/galleon_player.png");
+        this.shipThree = loadImage("assets/img/ship_img/frigate_player.png");
+        this.shipFour = loadImage("assets/img/ship_img/manowar_player.png");
     }
-    // just a test. Remove it later
+
     setup() {
 
     }
@@ -19,7 +22,7 @@ class Factory {
         tempBase.color = 'RED';
         tempBase.w = 80;
         tempBase.h = 80;
-        tempBase.baseBag = 50;
+        tempBase.baseBag = 500;
         tempBase.collider = 'k'
         tempBase.selected = false;
         tempBase.canBeMoved = false;
@@ -70,6 +73,7 @@ class Factory {
         tempShip.drag = 1.2;
         tempShip.bounciness = 0;
         tempShip.rotationLock = true;
+        tempShip.layer = 2;
         return tempShip;
     }
 
@@ -77,7 +81,8 @@ class Factory {
         let tempShip = this.createShip(x, y, "One");
         tempShip.color = 'YELLOW';
         tempShip.w = 20;
-        tempShip.h = 60;
+        tempShip.h = 35;
+        tempShip.img = this.shipOne;
 
         // STATS
         tempShip.hitPoint = 20;
@@ -102,8 +107,10 @@ class Factory {
     createShipTwo(x, y) {
         let tempShip = this.createShip(x, y, "Two");
         tempShip.color = 'ORANGE';
-        tempShip.w = 30;
-        tempShip.h = 60;
+        tempShip.w = 33;
+        tempShip.h = 63;
+        tempShip.scale = 0.8;
+        tempShip.img = this.shipTwo;
 
         // STATS
         tempShip.hitPoint = 30;
@@ -130,6 +137,7 @@ class Factory {
         tempShip.color = 'BROWN';
         tempShip.w = 50;
         tempShip.h = 60;
+        tempShip.img = this.shipThree;
 
         // STATS
         tempShip.hitPoint = 50;
@@ -156,6 +164,7 @@ class Factory {
         tempShip.color = 'BROWN';
         tempShip.w = 60;
         tempShip.h = 75;
+        tempShip.img = this.shipFour;
 
         // STATS
         tempShip.hitPoint = 80;
@@ -175,5 +184,17 @@ class Factory {
         tempShip.singleShot = true;
         tempShip.burstFire = false;
         return tempShip;
+    }
+
+    createSelection(x, y, d){
+        let selection = new Sprite(x, y);
+        selection.d = d;
+        selection.visible = true;
+        selection.collider = 'n'
+        selection.color = ""
+        selection.strokeWeight = 3;
+        selection.stroke = "RED"
+        selection.layer = 1;
+        return selection;
     }
 }
