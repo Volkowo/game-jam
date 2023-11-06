@@ -113,10 +113,11 @@ function drawGameScreen() { // game screen code
     
     //to make sure the logic is using the same groups and sprites from gameUI
     spriteLogic.resource = gameUI.resource;
+    // spriteLogic.selection = gameUI.selection;
     spriteLogic.ship = gameUI.ship;
     spriteLogic.base = gameUI.base;
 
-    spriteLogic.draw();
+    spriteLogic.draw(createSprite);
 
     gameUI.draw(createSprite);
 }

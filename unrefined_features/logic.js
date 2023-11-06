@@ -5,6 +5,7 @@ class Logic {
         this.bigResource;
         this.ship;
         this.resource;
+        this.selection
 
         this.shipAmount = 0;
         this.counterOne = 0;
@@ -33,6 +34,7 @@ class Logic {
     setup(factory) {
         this.singleBulletGroup = new Group();
         this.burstBulletGroup = new Group();
+        this.selection = new Group();
     }
 
     draw(factory) {
@@ -42,8 +44,11 @@ class Logic {
         this.selectLogic('Two', '2');
         this.resourceCollectionLogic();
         this.shootingLogic();
+        this.selectionCircle(factory);
 
         this.resourceRegeneration();
+        console.log(this.selection.length);
+        // allSprites.debug = true;
 
         // console.log("REGEN TIMER: " + this.regenTimer, "REGEN VALUE: " + this.regenValue)
 
@@ -51,11 +56,11 @@ class Logic {
         
     }
 
-    selectLogic(type, binding) {
+    selectLogic(type, binding, factory) {
         if (kb.presses(binding)) {
             // console.log("Test")
             this.shipAmount = 0;
-            this.checkShip(type);
+            this.checkShip(type, factory);
         }
     }
 
@@ -69,8 +74,9 @@ class Logic {
             }
 
             if(this.ship[i].selected == true){
-                this.ship[i].strokeWeight = 4;
-                this.ship[i].stroke = "RED";
+                console.log("ship selected")
+                // this.ship[i].strokeWeight = 4;
+                // this.ship[i].stroke = "RED";
                 if(this.ship[i].type == 'One'){
                     this.shipAmount++;
                     this.counterOne = this.shipAmount;
@@ -82,6 +88,24 @@ class Logic {
                 this.ship[i].strokeWeight = 1;
                 this.ship[i].stroke = "BLACK";
             }
+        }
+    }
+
+    selectionCircle(factory){
+        for(let i = 2; i < this.ship.length; i++){
+            if(this.ship[i].selected == true){
+                // this.selection.push(factory.createSelection(this.ship[i].x, this.ship[i].y, this.ship[i].w + 30));
+                noFill();
+                strokeWeight(4);
+                stroke("WHITE");
+                ellipse(this.ship[i].x, this.ship[i].y, this.ship[i].w + 30, this.ship[i].h + 20);
+                
+                
+            }
+
+            // if(this.selection.length > 1){
+            //     this.selection.shift();
+            // }
         }
     }
 
@@ -117,7 +141,7 @@ class Logic {
                 // console.log(this.ship[j].collectTimer);
 
                 // COLLECTING RESOURCE FROM RESOURCE NODE
-                console.log("------------------------");
+                // console.log("------------------------");
                 if(this.ship[j].colliding(this.resource[i])){
                     console.log("COLLECT RESOURCE");
                     this.ship[j].visible = true;
@@ -195,7 +219,7 @@ class Logic {
             this.burstFire = true;
         }
 
-        this.shootingTimer--
+        this.shootingTimer--;
 
         for (let i = 0; i < this.ship.length; i++) { 
             for (let k = 0; k < this.resource.length; k++) {

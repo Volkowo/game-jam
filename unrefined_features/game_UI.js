@@ -12,6 +12,7 @@ class UI {
         this.factory;
         this.resource;
         this.base;
+        this.selection;
     }
 
     preload() {
