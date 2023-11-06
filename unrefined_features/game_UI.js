@@ -10,14 +10,19 @@ class UI {
         this.gameFrameTop;
         this.gameFrameBottom;
         this.gameFrameRight;
-
+        this.shipType;
+        this.startBuildingShipOne = false;
+        this.startBuildingShipTwo = false;
+        this.startBuildingShipThree = false;
+        this.startBuildingShipFour = false;
+        
         this.ship;
         this.factory;
         this.resource;
         this.base;
         this.logic;
     }
-
+    
     preload() {
         this.playerSchooner = loadImage("assets/img/ship_img/schooner_player.png");
         this.playerGalleon = loadImage("assets/img/ship_img/galleon_player.png");
@@ -27,42 +32,38 @@ class UI {
         this.woodenUI = loadImage("assets/UI/UI_background.png");
         this.gameFont = loadFont("assets/font/new_rodin_pro.otf");
     }
-
+    
     setup(factory) {
         this.ship = new Group();
         this.resource = new Group();
-
+        
         this.gameButtons();
         this.UI_Sprites();
         
         this.base = factory.createBase(1000, H / 2 - 50);
         this.resource.push(factory.createSmallResource(1000, H / 2 - 200));
         this.resource.push(factory.createBigResource(300, H / 4));
+        
+        // For default ship stats
         this.ship.push(factory.createShipOne(10000, 10000));
         this.ship.push(factory.createShipTwo(10000, 10000));
         this.ship.push(factory.createShipThree(10000, 10000));
         this.ship.push(factory.createShipFour(10000, 10000));
+        
+        //Starting ships
         this.ship.push(factory.createShipOne(800, H/2));
         this.ship.push(factory.createShipTwo(800, H/2 + 100));
         this.ship.push(factory.createShipThree(800, H/2 + 200));
         this.ship.push(factory.createShipFour(800, H/2 + 300));
+
+        //start
+        this.trainingTime = 0;
     }
     
     draw() {
         textFont(this.gameFont);
         this.spawnShip();
         this.notificationManager();
-    }
-
-    spawnShip() {
-        if (kb.presses('O')) {
-            this.ship.push(this.factory.createShipOne(500, H / 2 - 100));
-            
-        }
-        
-        if(kb.presses('P')){
-            this.ship.push(this.factory.createShipTwo(500, H / 2 - 400));
-        }
     }
     
     UI_Sprites() {
@@ -173,7 +174,7 @@ class UI {
             text("Frigate", -45,11);
             text("Man-O-war", -45,208.5);
             
-            //Stat Display              //need to implement the ship.stats from factory class
+            //Stat Display
             strokeWeight(0.5);
             stroke(71, 40, 14);
             fill(71, 40, 14);
@@ -183,36 +184,64 @@ class UI {
             text("Hit Point : " + this.ship[0].hitPoint, -10, -350);
             text("Attack : " + this.ship[0].attack, -10, -325);
             text("Speed : " + this.ship[0].movementSpeed, -10, -300);
-            text("Collect Rate : " + this.ship[0].collectRate + "/s", -10, -275); //ideal code
+            text("Collect Rate : " + this.ship[0].collectRate + "/s", -10, -275);
             text("Gold Cost : " + this.ship[0].cost, -10, -250);
-            text("Build Time : " + this.ship[0].buildTime + 's', -10, -225);
+            text("Build Time : 5s", -10, -225);
             //Ship Two
             text("Hit Point : " + this.ship[1].hitPoint, -10, -152.5);
             text("Attack : " + this.ship[1].attack, -10, -127.5);
             text("Speed : " + this.ship[1].movementSpeed, -10, -102.5);
             text("Collect Rate : " + this.ship[1].collectRate + "/s", -10, -77.5);
             text("Gold Cost : " + this.ship[1].cost, -10, -52.5);
-            text("Build Time : " + this.ship[1].buildTime + 's', -10, -27.5);
+            text("Build Time : 10s" + 's', -10, -27.5);
             //Ship Three
             text("Hit Point : " + this.ship[2].hitPoint, -10, 45);
             text("Attack : " + this.ship[2].attack, -10, 70);
             text("Speed : " + this.ship[2].movementSpeed, -10, 95);
             text("Collect Rate : " + this.ship[2].collectRate + "/s", -10, 120);
             text("Gold Cost : " + this.ship[2].cost, -10, 145);
-            text("Build Time : " + this.ship[2].buildTime + 's', -10, 170);
+            text("Build Time : 10s", -10, 170);
             //Ship Four
             text("Hit Point : " + this.ship[3].hitPoint, -10, 242.5);
             text("Attack : "+ this.ship[3].attack, -10, 267.5);
             text("Speed : " + this.ship[3].movementSpeed, -10, 292.5);
             text("Collect Rate : " + this.ship[3].collectRate + "/s", -10, 317.5);
             text("Gold Cost : " + this.ship[3].cost, -10, 342.5);
-            text("Build Time : " + this.ship[3].buildTime + 's', -10, 367.5);
+            text("Build Time : 25s", -10, 367.5);
 
             //Ship Profile Images
             image(this.playerSchooner,-55,-285);
             image(this.playerGalleon,-55,-80);
             image(this.playerFrigate,-55,110);
             image(this.playerManOWar,-55,310);
+
+            //BuildAnimation
+            // if(this.startBuildingShipOne == true){
+            //     let width = 190;
+            //     let time = (this.ship[0].buildTime/60);
+            //     let offset = width/time;
+            //     rect(-95,-370,width,10);
+            //     if(frameCount %60 == 0){
+            //         console.log('yes');
+            //         width = width - offset;
+            //     }
+            // }
+            if(this.startBuildingShipOne == true){
+                let length = this.ship[0].buildTime/1.57894737;
+                rect(-95,-370,length,10);
+            }
+            if(this.startBuildingShipTwo == true){
+                let length = (this.ship[1].buildTime)/3.15789474;
+                rect(-95,-172,length,10);
+            }
+            if(this.startBuildingShipThree == true){
+                let length = (this.ship[2].buildTime)/3.15789474;
+                rect(-95, 25,length,10);
+            }
+            if(this.startBuildingShipFour == true){
+                let length = (this.ship[3].buildTime)/7.89473684;
+                rect(-95,223,length,10);
+            }
         }
         this.buildDisplay.collider = 'n';
         this.buildDisplay.visible = true;
@@ -291,7 +320,7 @@ class UI {
         this.buildButton.hide();
 
         this.upgradeButton = createButton("Upgrade");
-        this.upgradeButton.position(113, 58);
+        this.upgradeButton.position(110, 58);
         this.upgradeButton.mouseClicked(() => {this.upgradeMode()});
         this.upgradeButton.style("width", "101px");
         this.upgradeButton.style("height", "30px");
@@ -327,7 +356,7 @@ class UI {
 
         this.shipOne = createButton("Build");
         this.shipOne.position(118, 92.5);
-        this.shipOne.mouseClicked(() => {this.buildShipOne()});
+        this.shipOne.mouseClicked(() => {this.buildShip('One')});
         // this.shipOne.mouseOver(() => {this.hoverShipOne()});
         this.shipOne.style("width", "90px");
         this.shipOne.style("height", "25px");
@@ -340,7 +369,7 @@ class UI {
         
         this.shipTwo = createButton("Build");
         this.shipTwo.position(118, 290.5);
-        this.shipTwo.mouseClicked(() => {this.buildShipTwo()});
+        this.shipTwo.mouseClicked(() => {this.buildShip('Two')});
         // this.shipTwo.mouseOver(() => {this.hoverShipTwo()});
         this.shipTwo.style("width", "90px");
         this.shipTwo.style("height", "25px");
@@ -353,7 +382,7 @@ class UI {
         
         this.shipThree = createButton("Build");
         this.shipThree.position(118, 487.5);
-        this.shipThree.mouseClicked(() => {this.buildShipThree()});
+        this.shipThree.mouseClicked(() => {this.buildShip('Three')});
         // this.shipThree.mouseOver(() => {this.hoverShipThree()});
         this.shipThree.style("width", "90px");
         this.shipThree.style("height", "25px");
@@ -366,7 +395,7 @@ class UI {
         
         this.shipFour = createButton("Build");
         this.shipFour.position(118, 685.5);
-        this.shipFour.mouseClicked(() => {this.buildShipFour()});
+        this.shipFour.mouseClicked(() => {this.buildShip('Four')});
         // this.shipFour.mouseOver(() => {this.hoverShipFour()});
         this.shipFour.style("width", "90px");
         this.shipFour.style("height", "25px");
@@ -453,13 +482,22 @@ class UI {
         this.upgradeDisplay.visible = true;
     }
 
-    buildShipOne() {
-        if (this.base.baseBag >= 5){ //need to implement the ship.cost from factory class
-            this.base.baseBag -= 5;
-            // console.log(this.factory.createShipOne(500, H / 2 - 100))
-            this.ship.push(this.factory.createShipOne(500, H / 2 - 100));
-            this.shipBuilt.counter = 100;
-            this.shipBuilt.startCounter = true;
+    buildShip(type) {
+        if (type == 'One') {
+            this.shipType = 0;
+            this.startBuildingShipOne = true;
+        } else if (type == 'Two') {
+            this.shipType = 1;
+            this.startBuildingShipTwo = true;
+        } else if (type == 'Three') {
+            this.shipType = 2;
+            this.startBuildingShipThree = true;
+        } else if (type == 'Four') {
+            this.shipType = 3;
+            this.startBuildingShipFour = true;
+        }
+        if (this.base.baseBag >= this.ship[this.shipType].cost){
+            this.base.baseBag -= this.ship[this.shipType].cost;
         } else {
             //if there's no gold enough to buy ship show the warning
             this.noGold.counter = 100;
@@ -467,57 +505,59 @@ class UI {
         }
     }
     
-    buildShipTwo() {
-        if (this.base.baseBag >= 10){ //need to implement the ship.cost from factory class
-            this.base.baseBag -= 10;
-            this.ship.push(this.factory.createShipTwo(500, H / 2 - 200));
-            this.shipBuilt.counter = 100;
-            this.shipBuilt.startCounter = true;
-        } else {
-            //if there's no gold enough to buy ship show the warning
-            this.noGold.counter = 100;
-            this.noGold.startCounter = true;
-        }
-    }
+    // buildShipTwo() {
+    //     if (this.base.baseBag >= this.ship[1].cost){ //need to implement the ship.cost from factory class
+    //         this.base.baseBag -= this.ship[1].cost;
+    //         this.ship.push(this.factory.createShipTwo(500, H / 2 - 200));
+    //         this.shipBuilt.counter = 100;
+    //         this.shipBuilt.startCounter = true;
+    //         this.startBuilding = true;
+    //     } else {
+    //         //if there's no gold enough to buy ship show the warning
+    //         this.noGold.counter = 100;
+    //         this.noGold.startCounter = true;
+    //     }
+    // }
     
-    buildShipThree() {
-        if (this.base.baseBag >= 25){ //need to implement the ship.cost from factory class
-            this.base.baseBag -= 25;
-            this.ship.push(this.factory.createShipThree(500, H / 2 - 300));
-            this.shipBuilt.counter = 100;
-            this.shipBuilt.startCounter = true;
-        } else {
-            //if there's no gold enough to buy ship show the warning
-            this.noGold.counter = 100;
-            this.noGold.startCounter = true;
-        }
-    }
+    // buildShipThree() {
+    //     if (this.base.baseBag >= this.ship[2].cost){ //need to implement the ship.cost from factory class
+    //         this.base.baseBag -= this.ship[2].cost;
+    //         this.ship.push(this.factory.createShipThree(500, H / 2 - 300));
+    //         this.shipBuilt.counter = 100;
+    //         this.shipBuilt.startCounter = true;
+    //         this.startBuilding = true;
+    //     } else {
+    //         //if there's no gold enough to buy ship show the warning
+    //         this.noGold.counter = 100;
+    //         this.noGold.startCounter = true;
+    //     }
+    // }
     
-    buildShipFour() {
-        if (this.base.baseBag >= 35){ //need to implement the ship.cost from factory class
-            this.base.baseBag -= 35;
-            this.ship.push(this.factory.createShipFour(500, H / 2 - 400));
-            this.shipBuilt.counter = 100;
-            this.shipBuilt.startCounter = true;
-        } else {
-            //if there's no gold enough to buy ship show the warning
-            this.noGold.counter = 100;
-            this.noGold.startCounter = true;
-        }
-    }
+    // buildShipFour() {
+    //     if (this.base.baseBag >= this.ship[3].cost){ //need to implement the ship.cost from factory class
+    //         this.base.baseBag -= this.ship[3].cost;
+    //         this.ship.push(this.factory.createShipFour(500, H / 2 - 400));
+    //         this.shipBuilt.counter = 100;
+    //         this.shipBuilt.startCounter = true;
+    //         this.startBuilding = true;
+    //     } else {
+    //         //if there's no gold enough to buy ship show the warning
+    //         this.noGold.counter = 100;
+    //         this.noGold.startCounter = true;
+    //     }
+    // }
 
     selectShipOne() {
-        this.logic.selectLogic('One', '1');
-        console.log('select ship one');
+        this.logic.checkShip('One');
     }
     selectShipTwo() {
-        console.log('select ship two');
+        this.logic.checkShip('Two');
     }
     selectShipThree() {
-        console.log('select ship three');
+        this.logic.checkShip('Three');
     }
     selectShipFour() {
-        console.log('select ship four');
+        this.logic.checkShip('Four');
     }
 
     //May be do this????????????????
@@ -535,7 +575,7 @@ class UI {
     }
 
     hoverOut(){
-        console.log('this is for hhoverOut')
+        console.log('this is for hoverOut')
     }
 
     notificationManager() {
@@ -563,6 +603,57 @@ class UI {
             this.noGold.visible = false;
         } else if (this.noGold.visible == true) {
             this.shipBuilt.visible = false;
+        }
+    }
+
+    spawnShip() {
+        if(this.startBuildingShipOne == true) {
+            this.ship[0].buildTime --;
+            //console.log(this.ship[0].buildTime);
+            if (this.ship[0].buildTime <= 0) {
+                console.log('ship');
+                this.ship[0].buildTime = 300;
+                this.ship.push(this.factory.createShipOne(500, H / 2 - 100));
+                this.shipBuilt.counter = 100;
+                this.shipBuilt.startCounter = true;
+                this.startBuildingShipOne = false;
+            }
+        }
+        if(this.startBuildingShipTwo == true) {
+            this.ship[1].buildTime --;
+            console.log(this.ship[1].buildTime);
+            if (this.ship[1].buildTime <= 0) {
+                console.log('ship');
+                this.ship[1].buildTime = 600;
+                this.ship.push(this.factory.createShipTwo(500, H / 2 - 100));
+                this.shipBuilt.counter = 100;
+                this.shipBuilt.startCounter = true;
+                this.startBuildingShipTwo = false;
+            }
+        }
+        if(this.startBuildingShipThree == true) {
+            this.ship[2].buildTime --;
+            console.log(this.ship[2].buildTime);
+            if (this.ship[2].buildTime <= 0) {
+                console.log('ship');
+                this.ship[2].buildTime = 600;
+                this.ship.push(this.factory.createShipThree(500, H / 2 - 100));
+                this.shipBuilt.counter = 100;
+                this.shipBuilt.startCounter = true;
+                this.startBuildingShipThree = false;
+            }
+        }
+        if(this.startBuildingShipFour == true) {
+            this.ship[3].buildTime --;
+            console.log(this.ship[3].buildTime);
+            if (this.ship[3].buildTime <= 0) {
+                console.log('ship');
+                this.ship[3].buildTime = 1500;
+                this.ship.push(this.factory.createShipFour(500, H / 2 - 100));
+                this.shipBuilt.counter = 100;
+                this.shipBuilt.startCounter = true;
+                this.startBuildingShipFour = false;
+            }
         }
     }
 }

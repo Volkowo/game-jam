@@ -92,7 +92,7 @@ class Factory {
         tempShip.movementSpeed = 5;
         tempShip.collectRate = 2;
         tempShip.cost = 5;
-        tempShip.buildTime = 10;
+        tempShip.buildTime = 300;
         tempShip.shipBag = 0;
         tempShip.shootingTimer = 50;
         tempShip.rotation = tempShip.direction;
@@ -122,7 +122,7 @@ class Factory {
         tempShip.movementSpeed = 4;
         tempShip.collectRate = 5;
         tempShip.cost = 10;
-        tempShip.buildTime = 10;
+        tempShip.buildTime = 600;
         tempShip.shipBag = 0;
         tempShip.shootingTimer = 50;
         
@@ -151,7 +151,7 @@ class Factory {
         tempShip.movementSpeed = 3;
         tempShip.collectRate = 5;
         tempShip.cost = 25;
-        tempShip.buildTime = 10;
+        tempShip.buildTime = 600;
         tempShip.shipBag = 0;
         tempShip.shootingTimer = 50;
         
@@ -180,7 +180,7 @@ class Factory {
         tempShip.movementSpeed = 2;
         tempShip.collectRate = 1;
         tempShip.cost = 35;
-        tempShip.buildTime = 30;
+        tempShip.buildTime = 1500;
         tempShip.shipBag = 0;
         tempShip.shootingTimer = 50;
 
