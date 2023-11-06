@@ -17,7 +17,6 @@ class Logic {
 
         this.singleShot = true;
         this.burstFire = false;
-        this.shootingTimer = 50;
 
         /*
             1. Spawn ships with resources
@@ -219,38 +218,38 @@ class Logic {
             this.burstFire = true;
         }
 
-        this.shootingTimer--;
-
-        for (let i = 0; i < this.ship.length; i++) { 
-            for (let k = 0; k < this.resource.length; k++) {
-                if (dist(this.resource[k].x, this.resource[k].y, this.ship[i].x, this.ship[i].y) <= 200) { // create player bullet sprites (change this.resource to this.enemy or whatever when it gets added)
-                    if (this.shootingTimer <= 0) {
-                        if (this.singleShot === true) {
+        for (let i = 0; i < this.ship.length; i++) {
+            this.ship[i].shootingTimer--
+            for (let k = 0; k < this.resource.length; k++) { // for distance check below
+                this.distance = dist(this.resource[k].x, this.resource[k].y, this.ship[i].x, this.ship[i].y);
+                if (this.distance <= 200) { // create player bullet sprites (change this.resource to this.enemy or whatever when it gets added)
+                    if (this.ship[i].shootingTimer <= 0) {
+                        if (this.singleShot === true) { // for above boolean if statement (toggled after 'q' key press)
                             this.singleBulletGroup.push(this.createSingleShot(this.ship[i].x, this.ship[i].y));
-                            for (let s = 0; s < this.singleBulletGroup.length; s++) { // direction for player single shot
+                            for (let s = 0; s < this.singleBulletGroup.length; s++) { // direction and collision for the current bullet
                                 this.singleBulletGroup.direction = this.singleBulletGroup[s].angleTo(this.resource[k]);
                                 this.singleBulletGroup.speed = 4;
                                 this.singleBulletGroup.overlaps(this.ship[i]);
                             }
-                        } else if (this.burstFire === true) {
+                        } else if (this.burstFire === true) { // creates three sprites spread out toggle after a 'w' key press
                             this.burstBulletGroup.push(this.createBurstBullet(this.ship[i].x, this.ship[i].y - 15));
                             this.burstBulletGroup.push(this.createBurstBullet(this.ship[i].x, this.ship[i].y));
                             this.burstBulletGroup.push(this.createBurstBullet(this.ship[i].x, this.ship[i].y + 15));
-                            for (let a = 0; a <this.burstBulletGroup.length; a++) { // direction for player burst shot
+                            for (let a = 0; a < this.burstBulletGroup.length; a++) { // parameters for player burst shot
                                 this.burstBulletGroup.direction = this.burstBulletGroup[a].angleTo(this.resource[k]);
                                 this.burstBulletGroup.speed = 5;
                                 this.burstBulletGroup.overlaps(this.ship[i]);
                             }
                         }
-                        this.shootingTimer = 50;
-                    }
+                        this.ship[i].shootingTimer = 50;
+                    }      
                 }
-                for (let s = 0; s < this.singleBulletGroup.length; s++) { // collision for player single shot
+                for (let s = 0; s < this.singleBulletGroup.length; s++) { // collision for player single shot (needs to be outisde of the if statement so its always active)
                     if (this.singleBulletGroup[s].collides(this.resource[k])) {
                         this.singleBulletGroup[s].remove();
                     }
                 }
-                for (let a = 0; a <this.burstBulletGroup.length; a++) { // collision for player burst shot
+                for (let a = 0; a < this.burstBulletGroup.length; a++) { // same collision detection for player burst shot
                     if (this.burstBulletGroup[a].collides(this.resource[k])) {
                         this.burstBulletGroup[a].remove();
                     }
