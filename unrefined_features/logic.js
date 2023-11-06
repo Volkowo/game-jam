@@ -62,11 +62,11 @@ class Logic {
         
     }
 
-    selectLogic(type, binding, factory) {
+    selectLogic(type, binding) {
         if (kb.presses(binding)) {
             // console.log("Test")
             this.shipAmount = 0;
-            this.checkShip(type, factory);
+            this.checkShip(type);
         }
     }
 
@@ -256,7 +256,15 @@ class Logic {
                                 this.burstBulletGroup.overlaps(this.ship[i]);
                             }
                         }
-                        this.ship[i].shootingTimer = 50;
+                        if (this.ship[i].type == "One") { // sets shooting cooldown timer for each ship type
+                            this.ship[i].shootingTimer = 50;
+                        } else if (this.ship[i].type == "Two") {
+                            this.ship[i].shootingTimer = 100;
+                        } else if (this.ship[i].type == "Three") {
+                            this.ship[i].shootingTimer = 150;
+                        } else if (this.ship[i].type == "Four") {
+                            this.ship[i].shootingTimer = 200;
+                        }
                     }      
                 }
                 for (let s = 0; s < this.singleBulletGroup.length; s++) { // collision for player single shot (needs to be outisde of the if statement so its always active)
@@ -277,14 +285,16 @@ class Logic {
         let tempBullet = new Sprite(x, y);
         tempBullet.diameter = 10;
         tempBullet.color = 'yellow';
+        tempBullet.life = 60;
         tempBullet.shoot = false;
         return tempBullet;
     }
-
+    
     createBurstBullet(x, y) { // burst ones
         let tempBurst = new Sprite(x, y);
         tempBurst.diameter = 5;
         tempBurst.color = 'orange';
+        tempBurst.life = 60;
         tempBurst.shoot = false;
         return tempBurst;
     }

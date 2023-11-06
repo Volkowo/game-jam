@@ -7,12 +7,15 @@ class UI {
         this.upgradeDisplay;
         this.upgraded_isplay;
         this.resourceDisplayBackground;
+        this.gameFrameTop;
+        this.gameFrameBottom;
+        this.gameFrameRight;
 
         this.ship;
         this.factory;
+        this.logic;
         this.resource;
         this.base;
-        this.selection;
     }
 
     preload() {
@@ -40,6 +43,9 @@ class UI {
         this.ship.push(factory.createShipThree(10000, 10000));
         this.ship.push(factory.createShipFour(10000, 10000));
         this.ship.push(factory.createShipOne(800, H/2));
+        this.ship.push(factory.createShipTwo(800, H/2 + 100));
+        this.ship.push(factory.createShipThree(800, H/2 + 200));
+        this.ship.push(factory.createShipFour(800, H/2 + 300));
     }
     
     draw() {
@@ -60,10 +66,40 @@ class UI {
     }
     
     UI_Sprites() {
-        //Bedrock - may be add this??? to prevent ships to going into the UI
+        //Bedrock - may be add this??? to prevent ships to going into the UI or leave the screen
+        this.gameFrameTop = new Sprite(W/2,0);
+        this.gameFrameTop.w = W;
+        this.gameFrameTop.h = 2;
+        this.gameFrameTop.draw =()=> {
+            noStroke();
+            fill('brown');
+            rect(0,0,W,2);
+        }
+        this.gameFrameTop.collider = 's';
+        
+        this.gameFrameBottom = new Sprite(W/2,H);
+        this.gameFrameBottom.w = W;
+        this.gameFrameBottom.h = 2;
+        this.gameFrameBottom.draw =()=> {
+            noStroke();
+            fill('brown');
+            rect(0,0,W,2);
+        }
+        this.gameFrameBottom.collider = 's';
+        
+        this.gameFrameRight = new Sprite(W,H/2);
+        this.gameFrameRight.w = 2;
+        this.gameFrameRight.h = H;
+        this.gameFrameRight.draw =()=> {
+            noStroke();
+            fill('brown');
+            rect(0,0,2,H);
+        }
+        this.gameFrameRight.collider = 's';
+
 
         //UI Background
-        this.backgroundUI = new Sprite(105, H/2); //change color
+        this.backgroundUI = new Sprite(105, H/2);
         this.backgroundUI.w = 210;
         this.backgroundUI.h = H;
         this.backgroundUI.draw =()=> {
@@ -144,33 +180,33 @@ class UI {
             textSize(10.5);
             textAlign(LEFT, CENTER);
             //Ship One
-            text("Hit Point : 20", -10, -350);
-            text("Attack : 5", -10, -325);
-            text("Speed : 5", -10, -300);
+            text("Hit Point : " + this.ship[0].hitPoint, -10, -350);
+            text("Attack : " + this.ship[0].attack, -10, -325);
+            text("Speed : " + this.ship[0].movementSpeed, -10, -300);
             text("Collect Rate : " + this.ship[0].collectRate + "/s", -10, -275); //ideal code
-            text("Gold Cost : 10", -10, -250);
-            text("Build Time : 5s", -10, -225);
+            text("Gold Cost : " + this.ship[0].cost, -10, -250);
+            text("Build Time : " + this.ship[0].buildTime + 's', -10, -225);
             //Ship Two
-            text("Hit Point : 30", -10, -152.5);
-            text("Attack : 8", -10, -127.5);
-            text("Speed : 4", -10, -102.5);
-            text("Collect Rate : 5/s", -10, -77.5);
-            text("Gold Cost : 20", -10, -52.5);
-            text("Build Time : 10s", -10, -27.5);
+            text("Hit Point : " + this.ship[1].hitPoint, -10, -152.5);
+            text("Attack : " + this.ship[1].attack, -10, -127.5);
+            text("Speed : " + this.ship[1].movementSpeed, -10, -102.5);
+            text("Collect Rate : " + this.ship[1].collectRate + "/s", -10, -77.5);
+            text("Gold Cost : " + this.ship[1].cost, -10, -52.5);
+            text("Build Time : " + this.ship[1].buildTime + 's', -10, -27.5);
             //Ship Three
-            text("Hit Point : 50", -10, 45);
-            text("Attack : 5", -10, 70);
-            text("Speed : 3", -10, 95);
-            text("Collect Rate : 5/s", -10, 120);
-            text("Gold Cost : 25", -10, 145);
-            text("Build Time : 10s", -10, 170);
+            text("Hit Point : " + this.ship[2].hitPoint, -10, 45);
+            text("Attack : " + this.ship[2].attack, -10, 70);
+            text("Speed : " + this.ship[2].movementSpeed, -10, 95);
+            text("Collect Rate : " + this.ship[2].collectRate + "/s", -10, 120);
+            text("Gold Cost : " + this.ship[2].cost, -10, 145);
+            text("Build Time : " + this.ship[2].buildTime + 's', -10, 170);
             //Ship Four
-            text("Hit Point : 80", -10, 242.5);
-            text("Attack : 10", -10, 267.5);
-            text("Speed : 2", -10, 292.5);
-            text("Collect Rate : 1/s", -10, 317.5);
-            text("Gold Cost : ", -10, 342.5);
-            text("Build Time : 30s", -10, 367.5);
+            text("Hit Point : " + this.ship[3].hitPoint, -10, 242.5);
+            text("Attack : "+ this.ship[3].attack, -10, 267.5);
+            text("Speed : " + this.ship[3].movementSpeed, -10, 292.5);
+            text("Collect Rate : " + this.ship[3].collectRate + "/s", -10, 317.5);
+            text("Gold Cost : " + this.ship[3].cost, -10, 342.5);
+            text("Build Time : " + this.ship[3].buildTime + 's', -10, 367.5);
 
             //Ship Profile Images
             image(this.playerSchooner,-55,-285);
@@ -243,7 +279,6 @@ class UI {
     }
 
     gameButtons() {
-        // Fix the damn buttonsssssssssssssssssssssssssssssssssss
         this.buildButton = createButton("Build");
         this.buildButton.position(13, 58);
         this.buildButton.mouseClicked(() => {this.buildMode()});
@@ -264,7 +299,7 @@ class UI {
         this.upgradeButton.style("border-color", "#f6eee3");
         this.upgradeButton.style("color", "#47280e");
         this.upgradeButton.style("font-size", "15px");
-        //this.upgradeButton.hide();
+        this.upgradeButton.show();
 
         this.buildButtonClone = createButton("Build");
         this.buildButtonClone.position(13, 58);
@@ -341,6 +376,51 @@ class UI {
         this.shipFour.style("font-size", "15px");
         // this.shipFour.style("border-radius", "10px");
         this.shipFour.show();
+
+        //Selection Buttons
+        this.selectButtonOne = createButton('1');
+        this.selectButtonOne.position(1300, 30);
+        this.selectButtonOne.mouseClicked(() => {this.selectShipOne()});
+        this.selectButtonOne.style("width", "30px");
+        this.selectButtonOne.style("height", "30px");
+        this.selectButtonOne.style("background-color", "#f6eee3");
+        this.selectButtonOne.style("border-color", "#733c0f");
+        this.selectButtonOne.style("color", "#47280e");
+        this.selectButtonOne.style("font-size", "15px");
+        this.selectButtonOne.show();
+
+        this.selectButtonTwo = createButton('2');
+        this.selectButtonTwo.position(1350, 30);
+        this.selectButtonTwo.mouseClicked(() => {this.selectShipTwo()});
+        this.selectButtonTwo.style("width", "30px");
+        this.selectButtonTwo.style("height", "30px");
+        this.selectButtonTwo.style("background-color", "#f6eee3");
+        this.selectButtonTwo.style("border-color", "#733c0f");
+        this.selectButtonTwo.style("color", "#47280e");
+        this.selectButtonTwo.style("font-size", "15px");
+        this.selectButtonTwo.show();
+
+        this.selectButtonThree = createButton('3');
+        this.selectButtonThree.position(1400, 30);
+        this.selectButtonThree.mouseClicked(() => {this.selectShipThree()});
+        this.selectButtonThree.style("width", "30px");
+        this.selectButtonThree.style("height", "30px");
+        this.selectButtonThree.style("background-color", "#f6eee3");
+        this.selectButtonThree.style("border-color", "#733c0f");
+        this.selectButtonThree.style("color", "#47280e");
+        this.selectButtonThree.style("font-size", "15px");
+        this.selectButtonThree.show();
+
+        this.selectButtonFour = createButton('4');
+        this.selectButtonFour.position(1450, 30);
+        this.selectButtonFour.mouseClicked(() => {this.selectShipFour()});
+        this.selectButtonFour.style("width", "30px");
+        this.selectButtonFour.style("height", "30px");
+        this.selectButtonFour.style("background-color", "#f6eee3");
+        this.selectButtonFour.style("border-color", "#733c0f");
+        this.selectButtonFour.style("color", "#47280e");
+        this.selectButtonFour.style("font-size", "15px");
+        this.selectButtonFour.show();
     }
     
     buildMode() {
@@ -426,17 +506,32 @@ class UI {
         }
     }
 
+    selectShipOne() {
+        //this.logic.selectLogic('One', '1');
+        console.log('select ship one');
+    }
+    selectShipTwo() {
+        console.log('select ship two');
+    }
+    selectShipThree() {
+        console.log('select ship three');
+    }
+    selectShipFour() {
+        console.log('select ship four');
+    }
+
+    //May be do this????????????????
     hoverShipOne() {
-        console.log('this is for hover1')
+        console.log('this is for hover1');
     }
     hoverShipTwo() {
-        console.log('this is for hover2')
+        console.log('this is for hover2');
     }
     hoverShipThree() {
-        console.log('this is for hover3')
+        console.log('this is for hover3');
     }
     hoverShipFour() {
-        console.log('this is for hover4')
+        console.log('this is for hover4');
     }
 
     hoverOut(){
