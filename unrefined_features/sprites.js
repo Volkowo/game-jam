@@ -7,7 +7,13 @@ class Factory {
         this.shipTwo = loadImage("assets/img/ship_sprites/galleon_player.png");
         this.shipThree = loadImage("assets/img/ship_sprites/frigate_player.png");
         this.shipFour = loadImage("assets/img/ship_sprites/manowar_player.png");
+
+        this.enemyOne = loadImage("assets/img/ship_sprites/schooner_enemy.png");
+        this.enemyTwo = loadImage("assets/img/ship_sprites/galleon_enemy.png");
+        this.enemyThree = loadImage("assets/img/ship_sprites/frigate_enemy.png");
+        this.enemyFour = loadImage("assets/img/ship_sprites/manowar_enemy.png");
     }
+
 
     setup() {
 
@@ -193,6 +199,123 @@ class Factory {
         tempShip.burstFire = false;
         tempShip.shoot = true;
         return tempShip;
+    }
+
+    createEnemy(x, y, type) {
+        let tempEnemy = new Sprite(x, y);
+        tempEnemy.type = type;
+        tempEnemy.collectTick = 60;
+        tempEnemy.collectTimer = 3;
+        tempEnemy.drag = 0.5;
+        tempEnemy.bounciness = 0;
+        tempEnemy.direction = 90;
+        tempEnemy.rotationLock = true;
+        tempEnemy.layer = 2;
+        return tempEnemy;
+    }
+    
+    createEnemyOne(x, y) {
+        let tempEnemy = this.createEnemy(x, y, "One");
+        tempEnemy.color = 'YELLOW';
+        tempEnemy.w = 20;
+        tempEnemy.h = 35;
+        tempEnemy.scale = 0.7;
+        tempEnemy.img = this.enemyOne;
+        
+        // STATS
+        tempEnemy.hitPoint = 20;
+        tempEnemy.attack = 5;
+        tempEnemy.movementSpeed = 5;
+        tempEnemy.shootingTimer = 50;
+        tempEnemy.rotation = tempEnemy.direction;
+        
+        // BOOLEAN-RELATED
+        tempEnemy.selected = false;
+        tempEnemy.canBeMoved = true;
+        tempEnemy.goCollect = false;
+        tempEnemy.goldCollected = false;
+        tempEnemy.singleShot = true;
+        tempEnemy.burstFire = false;
+        tempEnemy.shoot = false;
+        return tempEnemy;
+    }
+
+    createEnemyTwo(x, y) {
+        let tempEnemy = this.createEnemy(x, y, "Two");
+        tempEnemy.color = 'ORANGE';
+        tempEnemy.w = 33;
+        tempEnemy.h = 63;
+        tempEnemy.scale = 0.7;
+        tempEnemy.img = this.enemyTwo;
+        tempEnemy.rotation = tempEnemy.direction;
+        
+        // STATS
+        tempEnemy.hitPoint = 30;
+        tempEnemy.attack = 8;
+        tempEnemy.movementSpeed = 4;
+        tempEnemy.shootingTimer = 50;
+        
+        // BOOLEAN-RELATED
+        tempEnemy.selected = false;
+        tempEnemy.canBeMoved = true;
+        tempEnemy.goCollect = false;
+        tempEnemy.goldCollected = false;
+        tempEnemy.singleShot = true;
+        tempEnemy.burstFire = false;
+        tempEnemy.shoot = false;
+        return tempEnemy;
+    }
+    
+    createEnemyThree(x, y) {
+        let tempEnemy = this.createEnemy(x, y, "Three");
+        tempEnemy.color = 'BROWN';
+        tempEnemy.w = 43;
+        tempEnemy.h = 63;
+        tempEnemy.scale = 0.7;
+        tempEnemy.img = this.enemyThree;
+        tempEnemy.rotation = tempEnemy.direction;
+        
+        // STATS
+        tempEnemy.hitPoint = 50;
+        tempEnemy.attack = 5;
+        tempEnemy.movementSpeed = 3;
+        tempEnemy.shootingTimer = 50;
+        
+        // BOOLEAN-RELATED
+        tempEnemy.selected = false;
+        tempEnemy.canBeMoved = true;
+        tempEnemy.goCollect = false;
+        tempEnemy.goldCollected = false;
+        tempEnemy.singleShot = true;
+        tempEnemy.burstFire = false;
+        tempEnemy.shoot = false;
+        return tempEnemy;
+    }
+    
+    createEnemyFour(x, y) {
+        let tempEnemy = this.createEnemy(x, y, "Four");
+        tempEnemy.color = 'BROWN';
+        tempEnemy.w = 60;
+        tempEnemy.h = 85;
+        tempEnemy.scale = 0.7;
+        tempEnemy.img = this.enemyFour;
+        tempEnemy.rotation = tempEnemy.direction;
+
+        // STATS
+        tempEnemy.hitPoint = 80;
+        tempEnemy.attack = 10;
+        tempEnemy.movementSpeed = 2;
+        tempEnemy.shootingTimer = 50;
+
+        // BOOLEAN-RELATED
+        tempEnemy.selected = false;
+        tempEnemy.canBeMoved = true;
+        tempEnemy.goCollect = false;
+        tempEnemy.goldCollected = false;
+        tempEnemy.singleShot = true;
+        tempEnemy.burstFire = false;
+        tempEnemy.shoot = true;
+        return tempEnemy;
     }
 
     createSelection(x, y, d){

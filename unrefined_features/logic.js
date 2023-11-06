@@ -40,7 +40,7 @@ class Logic {
     }
 
     draw(factory) {
-        strokeWeight(1);
+        strokeWeight(1);1
         this.movementLogic(this.ship);
         this.shipRotate();
         this.selectLogic('One', '1');
@@ -57,9 +57,6 @@ class Logic {
         // console.log("REGEN TIMER: " + this.regenTimer, "REGEN VALUE: " + this.regenValue)
         // console.log("COUNTER ONE: " + this.counterOne, "COUNTER TWO: " + this.counterTwo, 
         // "COUNTER Three: " + this.counterThree, "COUNTER FOUR: " + this.counterFour, "SHIP AMOUNT: " + this.shipAmount);
-
-        
-        
     }
 
     selectLogic(type, binding) {
