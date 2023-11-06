@@ -76,14 +76,15 @@ class Factory {
         tempShip.layer = 2;
         return tempShip;
     }
-
+    
     createShipOne(x, y) {
         let tempShip = this.createShip(x, y, "One");
         tempShip.color = 'YELLOW';
         tempShip.w = 20;
         tempShip.h = 35;
+        tempShip.scale = 0.7;
         tempShip.img = this.shipOne;
-
+        
         // STATS
         tempShip.hitPoint = 20;
         tempShip.attack = 5;
@@ -93,6 +94,7 @@ class Factory {
         tempShip.buildTime = 10;
         tempShip.shipBag = 0;
         tempShip.shootingTimer = 50;
+        tempShip.rotation = tempShip.direction;
         
         // BOOLEAN-RELATED
         tempShip.selected = false;
@@ -109,9 +111,9 @@ class Factory {
         tempShip.color = 'ORANGE';
         tempShip.w = 33;
         tempShip.h = 63;
-        tempShip.scale = 0.8;
+        tempShip.scale = 0.7;
         tempShip.img = this.shipTwo;
-
+        
         // STATS
         tempShip.hitPoint = 30;
         tempShip.attack = 8;
@@ -121,7 +123,7 @@ class Factory {
         tempShip.buildTime = 10;
         tempShip.shipBag = 0;
         tempShip.shootingTimer = 50;
-
+        
         // BOOLEAN-RELATED
         tempShip.selected = false;
         tempShip.canBeMoved = true;
@@ -131,14 +133,15 @@ class Factory {
         tempShip.burstFire = false;
         return tempShip;
     }
-
+    
     createShipThree(x, y) {
         let tempShip = this.createShip(x, y, "Three");
         tempShip.color = 'BROWN';
         tempShip.w = 43;
         tempShip.h = 63;
+        tempShip.scale = 0.7;
         tempShip.img = this.shipThree;
-
+        
         // STATS
         tempShip.hitPoint = 50;
         tempShip.attack = 5;
@@ -148,7 +151,7 @@ class Factory {
         tempShip.buildTime = 10;
         tempShip.shipBag = 0;
         tempShip.shootingTimer = 50;
-
+        
         // BOOLEAN-RELATED
         tempShip.selected = false;
         tempShip.canBeMoved = true;
@@ -158,12 +161,13 @@ class Factory {
         tempShip.burstFire = false;
         return tempShip;
     }
-
+    
     createShipFour(x, y) {
         let tempShip = this.createShip(x, y, "Four");
         tempShip.color = 'BROWN';
         tempShip.w = 60;
         tempShip.h = 85;
+        tempShip.scale = 0.7;
         tempShip.img = this.shipFour;
 
         // STATS

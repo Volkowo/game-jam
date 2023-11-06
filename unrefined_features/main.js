@@ -108,7 +108,7 @@ function drawGameScreen() { // game screen code
 
     //connecting the gameUI to createSprite
     gameUI.factory = createSprite;
-
+    gameUI.logic = spriteLogic;
     
     
     //to make sure the logic is using the same groups and sprites from gameUI

@@ -53,16 +53,15 @@ class Logic {
         // console.log(this.selection.length);
         // allSprites.debug = true;
         // console.log("REGEN TIMER: " + this.regenTimer, "REGEN VALUE: " + this.regenValue)
-        console.log("COUNTER ONE: " + this.counterOne, "COUNTER TWO: " + this.counterTwo, 
-        "COUNTER Three: " + this.counterThree, "COUNTER FOUR: " + this.counterFour, "SHIP AMOUNT: " + this.shipAmount);
-        
+        //console.log("COUNTER ONE: " + this.counterOne, "COUNTER TWO: " + this.counterTwo, 
+        //"COUNTER Three: " + this.counterThree, "COUNTER FOUR: " + this.counterFour, "SHIP AMOUNT: " + this.shipAmount);
     }
 
-    selectLogic(type, binding, factory) {
+    selectLogic(type, binding) {
         if (kb.presses(binding)) {
             // console.log("Test")
             this.shipAmount = 0;
-            this.checkShip(type, factory);
+            this.checkShip(type);
         }
     }
 
@@ -76,7 +75,7 @@ class Logic {
             }
 
             if(this.ship[i].selected == true){
-                console.log("ship selected")
+                //console.log("ship selected")
                 // this.ship[i].strokeWeight = 4;
                 // this.ship[i].stroke = "RED";
                 if(this.ship[i].type == 'One'){
@@ -269,13 +268,15 @@ class Logic {
         let tempBullet = new Sprite(x, y);
         tempBullet.diameter = 10;
         tempBullet.color = 'yellow';
+        tempBullet.life = 60;
         return tempBullet;
     }
-
+    
     createBurstBullet(x, y) { // burst ones
         let tempBurst = new Sprite(x, y);
         tempBurst.diameter = 5;
         tempBurst.color = 'orange';
+        tempBurst.life = 60;
         return tempBurst;
     }
 }
