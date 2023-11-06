@@ -70,7 +70,7 @@ class Factory {
         tempShip.type = type;
         tempShip.collectTick = 60;
         tempShip.collectTimer = 3;
-        tempShip.drag = 1.2;
+        tempShip.drag = 0.5;
         tempShip.bounciness = 0;
         tempShip.rotationLock = true;
         tempShip.layer = 2;
@@ -135,8 +135,8 @@ class Factory {
     createShipThree(x, y) {
         let tempShip = this.createShip(x, y, "Three");
         tempShip.color = 'BROWN';
-        tempShip.w = 50;
-        tempShip.h = 60;
+        tempShip.w = 43;
+        tempShip.h = 63;
         tempShip.img = this.shipThree;
 
         // STATS
@@ -163,7 +163,7 @@ class Factory {
         let tempShip = this.createShip(x, y, "Four");
         tempShip.color = 'BROWN';
         tempShip.w = 60;
-        tempShip.h = 75;
+        tempShip.h = 85;
         tempShip.img = this.shipFour;
 
         // STATS

@@ -10,6 +10,8 @@ class Logic {
         this.shipAmount = 0;
         this.counterOne = 0;
         this.counterTwo = 0;
+        this.counterThree = 0;
+        this.counterFour = 0;
         this.amountReduced = 0;
 
         this.regenTimer = 0;
@@ -42,17 +44,18 @@ class Logic {
         this.movementLogic(this.ship);
         this.selectLogic('One', '1');
         this.selectLogic('Two', '2');
+        this.selectLogic('Three', '3');
+        this.selectLogic('Four', '4');
         this.resourceCollectionLogic();
         this.shootingLogic();
         this.selectionCircle(factory);
 
         this.resourceRegeneration();
-        console.log(this.selection.length);
+        // console.log(this.selection.length);
         // allSprites.debug = true;
-
         // console.log("REGEN TIMER: " + this.regenTimer, "REGEN VALUE: " + this.regenValue)
-
-        // console.log("COUNTER ONE: " + this.counterOne, "COUNTER TWO: " + this.counterTwo, "SHIP AMOUNT: " + this.shipAmount);
+        console.log("COUNTER ONE: " + this.counterOne, "COUNTER TWO: " + this.counterTwo, 
+        "COUNTER Three: " + this.counterThree, "COUNTER FOUR: " + this.counterFour, "SHIP AMOUNT: " + this.shipAmount);
         
     }
 
@@ -66,7 +69,7 @@ class Logic {
 
     // Check's which ship is currently being selected through the keyboard input
     checkShip(type){
-        for(let i = 2; i < this.ship.length; i++){
+        for(let i = 4; i < this.ship.length; i++){
             if(this.ship[i].type == type){
                 this.ship[i].selected = true;
             } else {
@@ -83,6 +86,12 @@ class Logic {
                 } else if(this.ship[i].type == 'Two') {
                     this.shipAmount++;
                     this.counterTwo = this.shipAmount;
+                } else if(this.ship[i].type == 'Three'){
+                    this.shipAmount++;
+                    this.counterThree = this.shipAmount;
+                } else if(this.ship[i].type == 'Four'){
+                    this.shipAmount++;
+                    this.counterFour = this.shipAmount;
                 }
             } else if (this.ship[i].selected == false){
                 this.ship[i].strokeWeight = 1;
@@ -92,15 +101,13 @@ class Logic {
     }
 
     selectionCircle(factory){
-        for(let i = 2; i < this.ship.length; i++){
+        for(let i = 4; i < this.ship.length; i++){
             if(this.ship[i].selected == true){
                 // this.selection.push(factory.createSelection(this.ship[i].x, this.ship[i].y, this.ship[i].w + 30));
                 noFill();
                 strokeWeight(4);
                 stroke("WHITE");
                 ellipse(this.ship[i].x, this.ship[i].y, this.ship[i].w + 30, this.ship[i].h + 20);
-                
-                
             }
 
             // if(this.selection.length > 1){
@@ -111,7 +118,7 @@ class Logic {
 
     movementLogic() {
         if(mouse.pressing('Right')){
-            for(let i = 2; i < this.ship.length; i++){
+            for(let i = 4; i < this.ship.length; i++){
                 if(this.ship[i].selected == true){
                     this.ship[i].moveTo(mouseX, mouseY, 5);
                     this.ship[i].visible = true;
@@ -134,7 +141,7 @@ class Logic {
 
     resourceCollectionLogic() {
         for(let i = 0; i < this.resource.length; i++){
-            for(let j = 2; j < this.ship.length; j++){
+            for(let j = 4; j < this.ship.length; j++){
                 // this.ship[j].overlaps(this.resource[i]);
                 // this.ship[j].overlaps(this.base);
 
@@ -143,7 +150,7 @@ class Logic {
                 // COLLECTING RESOURCE FROM RESOURCE NODE
                 // console.log("------------------------");
                 if(this.ship[j].colliding(this.resource[i])){
-                    console.log("COLLECT RESOURCE");
+                    // console.log("COLLECT RESOURCE");
                     this.ship[j].visible = true;
 
                     if(this.ship[j].visible == true){ 

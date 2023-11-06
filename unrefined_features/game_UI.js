@@ -37,6 +37,8 @@ class UI {
         this.resource.push(factory.createBigResource(300, H / 4));
         this.ship.push(factory.createShipOne(10000, 10000));
         this.ship.push(factory.createShipTwo(10000, 10000));
+        this.ship.push(factory.createShipThree(10000, 10000));
+        this.ship.push(factory.createShipFour(10000, 10000));
         this.ship.push(factory.createShipOne(800, H/2));
     }
     
