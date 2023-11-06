@@ -5,7 +5,8 @@ class Logic {
         this.bigResource;
         this.ship;
         this.resource;
-        this.selection
+        this.selection;
+        // this.distance = new Array ();
 
         this.shipAmount = 0;
         this.counterOne = 0;
@@ -41,6 +42,7 @@ class Logic {
     draw(factory) {
         strokeWeight(1);
         this.movementLogic(this.ship);
+        this.shipRotate();
         this.selectLogic('One', '1');
         this.selectLogic('Two', '2');
         this.selectLogic('Three', '3');
@@ -53,8 +55,10 @@ class Logic {
         // console.log(this.selection.length);
         // allSprites.debug = true;
         // console.log("REGEN TIMER: " + this.regenTimer, "REGEN VALUE: " + this.regenValue)
-        console.log("COUNTER ONE: " + this.counterOne, "COUNTER TWO: " + this.counterTwo, 
-        "COUNTER Three: " + this.counterThree, "COUNTER FOUR: " + this.counterFour, "SHIP AMOUNT: " + this.shipAmount);
+        // console.log("COUNTER ONE: " + this.counterOne, "COUNTER TWO: " + this.counterTwo, 
+        // "COUNTER Three: " + this.counterThree, "COUNTER FOUR: " + this.counterFour, "SHIP AMOUNT: " + this.shipAmount);
+
+        
         
     }
 
@@ -76,7 +80,7 @@ class Logic {
             }
 
             if(this.ship[i].selected == true){
-                console.log("ship selected")
+                // console.log("ship selected")
                 // this.ship[i].strokeWeight = 4;
                 // this.ship[i].stroke = "RED";
                 if(this.ship[i].type == 'One'){
@@ -120,6 +124,7 @@ class Logic {
             for(let i = 4; i < this.ship.length; i++){
                 if(this.ship[i].selected == true){
                     this.ship[i].moveTo(mouseX, mouseY, 5);
+                    this.ship[i].direction = this.ship[i].angleTo(mouse);
                     this.ship[i].visible = true;
                     this.ship[i].goCollect = false;
                 } 
@@ -156,9 +161,8 @@ class Logic {
                         // console.log("Timer to get resource / collect rate: " + this.ship[j].collectTick);
                         this.amountReduced = (this.ship[j].collectRate * this.shipAmount);
                         if(this.resource[i].resourcePool < this.amountReduced){
-                            // console.log("This is a writing");
                             if(frameCount % this.ship[j].collectTick == 0){
-                                console.log("REMAINING AMOUNT: " + this.resource[i].remainingAmount);
+                                // console.log("REMAINING AMOUNT: " + this.resource[i].remainingAmount);
                                 this.resource[i].remainingAmount = this.resource[i].resourcePool;
                                 this.resource[i].resourcePool -= this.resource[i].remainingAmount;
                                 // this.ship[j].shipBag += this.resource[i].remainingAmount;
@@ -170,8 +174,8 @@ class Logic {
                         } else {
                             // console.log("This is a writing too")
                             if(frameCount % this.ship[j].collectTick == 0){
-                                console.log(this.amountReduced);
-                                console.log("SHIP IS COLLECTING");
+                                // console.log(this.amountReduced);
+                                // console.log("SHIP IS COLLECTING");
                                 this.resource[i].resourcePool -= this.amountReduced;
                                 this.ship[j].shipBag += this.ship[j].collectRate;
                                 this.ship[j].collectTimer--; 
@@ -225,17 +229,21 @@ class Logic {
             this.burstFire = true;
         }
 
-        for (let i = 0; i < this.ship.length; i++) {
-            this.ship[i].shootingTimer--
+        for (let i = 4; i < this.ship.length; i++) {
+            this.ship[i].shootingTimer--;
+            // console.log(this.ship[i].shootingTimer)
             for (let k = 0; k < this.resource.length; k++) { // for distance check below
+                strokeWeight(5);
                 this.distance = dist(this.resource[k].x, this.resource[k].y, this.ship[i].x, this.ship[i].y);
+                line(this.resource[k].x, this.resource[k].y, this.ship[i].x, this.ship[i].y)
                 if (this.distance <= 200) { // create player bullet sprites (change this.resource to this.enemy or whatever when it gets added)
                     if (this.ship[i].shootingTimer <= 0) {
                         if (this.singleShot === true) { // for above boolean if statement (toggled after 'q' key press)
                             this.singleBulletGroup.push(this.createSingleShot(this.ship[i].x, this.ship[i].y));
                             for (let s = 0; s < this.singleBulletGroup.length; s++) { // direction and collision for the current bullet
+                                console.log("PEW PEW PEW")
                                 this.singleBulletGroup.direction = this.singleBulletGroup[s].angleTo(this.resource[k]);
-                                this.singleBulletGroup.speed = 4;
+                                this.singleBulletGroup.speed = 20;
                                 this.singleBulletGroup.overlaps(this.ship[i]);
                             }
                         } else if (this.burstFire === true) { // creates three sprites spread out toggle after a 'w' key press
@@ -244,7 +252,7 @@ class Logic {
                             this.burstBulletGroup.push(this.createBurstBullet(this.ship[i].x, this.ship[i].y + 15));
                             for (let a = 0; a < this.burstBulletGroup.length; a++) { // parameters for player burst shot
                                 this.burstBulletGroup.direction = this.burstBulletGroup[a].angleTo(this.resource[k]);
-                                this.burstBulletGroup.speed = 5;
+                                this.burstBulletGroup.speed = 20;
                                 this.burstBulletGroup.overlaps(this.ship[i]);
                             }
                         }
@@ -269,6 +277,7 @@ class Logic {
         let tempBullet = new Sprite(x, y);
         tempBullet.diameter = 10;
         tempBullet.color = 'yellow';
+        tempBullet.shoot = false;
         return tempBullet;
     }
 
@@ -276,6 +285,28 @@ class Logic {
         let tempBurst = new Sprite(x, y);
         tempBurst.diameter = 5;
         tempBurst.color = 'orange';
+        tempBurst.shoot = false;
         return tempBurst;
     }
+
+    rotateDirection(object) {
+        object.rotation = object.direction;
+    }
+
+    shipRotate(){
+        for(let i = 4; i < this.ship.length; i++){
+            this.rotateDirection(this.ship[i]);
+        }
+    }
 }
+
+
+                // this.distance.push(dist(this.resource[k].x, this.resource[k].y, this.ship[i].x, this.ship[i].y));
+
+                // if(this.distance.length > this.resource.length){
+                //     this.distance.shift();
+                // }
+
+                // for(let z = 0; z < this.distance.length; z++){
+                //     console.log(this.distance)
+                // }

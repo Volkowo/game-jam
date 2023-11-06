@@ -72,6 +72,7 @@ class Factory {
         tempShip.collectTimer = 3;
         tempShip.drag = 0.5;
         tempShip.bounciness = 0;
+        tempShip.direction = 90;
         tempShip.rotationLock = true;
         tempShip.layer = 2;
         return tempShip;
@@ -101,6 +102,7 @@ class Factory {
         tempShip.goldCollected = false;
         tempShip.singleShot = true;
         tempShip.burstFire = false;
+        tempShip.shoot = false;
         return tempShip;
     }
 
@@ -129,6 +131,7 @@ class Factory {
         tempShip.goldCollected = false;
         tempShip.singleShot = true;
         tempShip.burstFire = false;
+        tempShip.shoot = false;
         return tempShip;
     }
 
@@ -156,6 +159,7 @@ class Factory {
         tempShip.goldCollected = false;
         tempShip.singleShot = true;
         tempShip.burstFire = false;
+        tempShip.shoot = false;
         return tempShip;
     }
 
@@ -183,6 +187,7 @@ class Factory {
         tempShip.goldCollected = false;
         tempShip.singleShot = true;
         tempShip.burstFire = false;
+        tempShip.shoot = true;
         return tempShip;
     }
 
@@ -196,5 +201,5 @@ class Factory {
         selection.stroke = "RED"
         selection.layer = 1;
         return selection;
-    }
+    }   
 }
