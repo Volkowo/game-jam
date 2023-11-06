@@ -247,7 +247,15 @@ class Logic {
                                 this.burstBulletGroup.overlaps(this.ship[i]);
                             }
                         }
-                        this.ship[i].shootingTimer = 50;
+                        if (this.ship[i].type == "One") { // sets shooting cooldown timer for each ship type
+                            this.ship[i].shootingTimer = 50;
+                        } else if (this.ship[i].type == "Two") {
+                            this.ship[i].shootingTimer = 100;
+                        } else if (this.ship[i].type == "Three") {
+                            this.ship[i].shootingTimer = 150;
+                        } else if (this.ship[i].type == "Four") {
+                            this.ship[i].shootingTimer = 200;
+                        }
                     }      
                 }
                 for (let s = 0; s < this.singleBulletGroup.length; s++) { // collision for player single shot (needs to be outisde of the if statement so its always active)
