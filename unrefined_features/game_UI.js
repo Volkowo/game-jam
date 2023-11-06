@@ -227,19 +227,19 @@ class UI {
             //     }
             // }
             if(this.startBuildingShipOne == true){
-                let length = this.ship[0].buildTime/1.57894737;
+                let length = (this.ship[0].buildTime)/(300/190);
                 rect(-95,-370,length,10);
             }
             if(this.startBuildingShipTwo == true){
-                let length = (this.ship[1].buildTime)/3.15789474;
+                let length = (this.ship[1].buildTime)/(600/190);
                 rect(-95,-172,length,10);
             }
             if(this.startBuildingShipThree == true){
-                let length = (this.ship[2].buildTime)/3.15789474;
+                let length = (this.ship[2].buildTime)/(600/190);
                 rect(-95, 25,length,10);
             }
             if(this.startBuildingShipFour == true){
-                let length = (this.ship[3].buildTime)/7.89473684;
+                let length = (this.ship[3].buildTime)/(1500/190);
                 rect(-95,223,length,10);
             }
         }
