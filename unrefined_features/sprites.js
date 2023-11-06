@@ -20,6 +20,7 @@ class Factory {
         tempBase.w = 80;
         tempBase.h = 80;
         tempBase.baseBag = 50;
+        tempBase.collider = 'k'
         tempBase.selected = false;
         tempBase.canBeMoved = false;
         return tempBase;
@@ -53,23 +54,13 @@ class Factory {
         tempResource.collider = 's';
         tempResource.remainingAmount = 0;
         tempResource.bounciness = 0;
-        tempResource.resourcePool = Math.floor(random(30, 50));
+        tempResource.resourcePool = Math.floor(random(100, 150));
+        tempResource.resourceCap = 500;
 
         tempResource.selected = false;
         tempResource.canBeMoved = false;
         return tempResource;
     }
-
-    // ADD -> collectTick, collectTimer
-
-    // resourceCollected -> goldCollected (ship)
-    // collectedAmount -> remainingAmount (resource)
-    // goldTick -> collectTick (ship)
-    // collectingTimer -> collectTimer (ship)
-    // goCollect -> same (ship)
-    // collectRate -> same (ship)
-    // baseBag -> same
-    // shipBag -> same
 
     createShip(x, y, type) {
         let tempShip = new Sprite(x, y);
@@ -86,34 +77,103 @@ class Factory {
         let tempShip = this.createShip(x, y, "One");
         tempShip.color = 'YELLOW';
         tempShip.w = 20;
-        tempShip.h = 20;
+        tempShip.h = 60;
+
+        // STATS
+        tempShip.hitPoint = 20;
+        tempShip.attack = 5;
+        tempShip.movementSpeed = 5;
         tempShip.collectRate = 2;
         tempShip.cost = 5;
-        tempShip.shipBag = 0;
         tempShip.buildTime = 10;
+        tempShip.shipBag = 0;
+        tempShip.shootingTimer = 50;
         
         // BOOLEAN-RELATED
         tempShip.selected = false;
         tempShip.canBeMoved = true;
         tempShip.goCollect = false;
         tempShip.goldCollected = false;
+        tempShip.singleShot = true;
+        tempShip.burstFire = false;
         return tempShip;
     }
 
     createShipTwo(x, y) {
         let tempShip = this.createShip(x, y, "Two");
         tempShip.color = 'ORANGE';
-        tempShip.w = 40;
-        tempShip.h = 40;
+        tempShip.w = 30;
+        tempShip.h = 60;
+
+        // STATS
+        tempShip.hitPoint = 30;
+        tempShip.attack = 8;
+        tempShip.movementSpeed = 4;
         tempShip.collectRate = 5;
         tempShip.cost = 10;
+        tempShip.buildTime = 10;
         tempShip.shipBag = 0;
+        tempShip.shootingTimer = 50;
 
         // BOOLEAN-RELATED
         tempShip.selected = false;
         tempShip.canBeMoved = true;
         tempShip.goCollect = false;
         tempShip.goldCollected = false;
+        tempShip.singleShot = true;
+        tempShip.burstFire = false;
+        return tempShip;
+    }
+
+    createShipThree(x, y) {
+        let tempShip = this.createShip(x, y, "Three");
+        tempShip.color = 'BROWN';
+        tempShip.w = 50;
+        tempShip.h = 60;
+
+        // STATS
+        tempShip.hitPoint = 50;
+        tempShip.attack = 5;
+        tempShip.movementSpeed = 3;
+        tempShip.collectRate = 5;
+        tempShip.cost = 25;
+        tempShip.buildTime = 10;
+        tempShip.shipBag = 0;
+        tempShip.shootingTimer = 50;
+
+        // BOOLEAN-RELATED
+        tempShip.selected = false;
+        tempShip.canBeMoved = true;
+        tempShip.goCollect = false;
+        tempShip.goldCollected = false;
+        tempShip.singleShot = true;
+        tempShip.burstFire = false;
+        return tempShip;
+    }
+
+    createShipFour(x, y) {
+        let tempShip = this.createShip(x, y, "Four");
+        tempShip.color = 'BROWN';
+        tempShip.w = 60;
+        tempShip.h = 75;
+
+        // STATS
+        tempShip.hitPoint = 80;
+        tempShip.attack = 10;
+        tempShip.movementSpeed = 2;
+        tempShip.collectRate = 1;
+        tempShip.cost = 35;
+        tempShip.buildTime = 30;
+        tempShip.shipBag = 0;
+        tempShip.shootingTimer = 50;
+
+        // BOOLEAN-RELATED
+        tempShip.selected = false;
+        tempShip.canBeMoved = true;
+        tempShip.goCollect = false;
+        tempShip.goldCollected = false;
+        tempShip.singleShot = true;
+        tempShip.burstFire = false;
         return tempShip;
     }
 }

@@ -33,11 +33,12 @@ class UI {
         this.base = factory.createBase(1000, H / 2 - 50);
         this.resource.push(factory.createSmallResource(1000, H / 2 - 200));
         this.resource.push(factory.createBigResource(300, H / 4));
-        this.ship.push(factory.createShipOne(800, H / 2 - 100));
-        // this.ship.push(factory.createShipTwo(1000, H/2 - 100));
+        this.ship.push(factory.createShipOne(10000, 10000));
+        this.ship.push(factory.createShipTwo(10000, 10000));
+        this.ship.push(factory.createShipOne(800, H/2));
     }
     
-    draw(logic) {
+    draw() {
         textFont(this.gameFont);
         this.spawnShip();
         this.notificationManager();
@@ -370,6 +371,7 @@ class UI {
     buildShipOne() {
         if (this.base.baseBag >= 10){ //need to implement the ship.cost from factory class
             this.base.baseBag -= 10;
+            // console.log(this.factory.createShipOne(500, H / 2 - 100))
             this.ship.push(this.factory.createShipOne(500, H / 2 - 100));
             this.shipBuilt.counter = 100;
             this.shipBuilt.startCounter = true;

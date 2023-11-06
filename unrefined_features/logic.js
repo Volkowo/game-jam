@@ -11,6 +11,13 @@ class Logic {
         this.counterTwo = 0;
         this.amountReduced = 0;
 
+        this.regenTimer = 0;
+        this.regenValue = 0;
+
+        this.singleShot = true;
+        this.burstFire = false;
+        this.shootingTimer = 50;
+
         /*
             1. Spawn ships with resources
             2. Cooldown(?)
@@ -24,7 +31,8 @@ class Logic {
     }
     
     setup(factory) {
-
+        this.singleBulletGroup = new Group();
+        this.burstBulletGroup = new Group();
     }
 
     draw(factory) {
@@ -33,6 +41,11 @@ class Logic {
         this.selectLogic('One', '1');
         this.selectLogic('Two', '2');
         this.resourceCollectionLogic();
+        this.shootingLogic();
+
+        this.resourceRegeneration();
+
+        // console.log("REGEN TIMER: " + this.regenTimer, "REGEN VALUE: " + this.regenValue)
 
         // console.log("COUNTER ONE: " + this.counterOne, "COUNTER TWO: " + this.counterTwo, "SHIP AMOUNT: " + this.shipAmount);
         
@@ -48,7 +61,7 @@ class Logic {
 
     // Check's which ship is currently being selected through the keyboard input
     checkShip(type){
-        for(let i = 0; i < this.ship.length; i++){
+        for(let i = 2; i < this.ship.length; i++){
             if(this.ship[i].type == type){
                 this.ship[i].selected = true;
             } else {
@@ -74,7 +87,7 @@ class Logic {
 
     movementLogic() {
         if(mouse.pressing('Right')){
-            for(let i = 0; i < this.ship.length; i++){
+            for(let i = 2; i < this.ship.length; i++){
                 if(this.ship[i].selected == true){
                     this.ship[i].moveTo(mouseX, mouseY, 5);
                     this.ship[i].visible = true;
@@ -97,15 +110,16 @@ class Logic {
 
     resourceCollectionLogic() {
         for(let i = 0; i < this.resource.length; i++){
-            for(let j = 0; j < this.ship.length; j++){
+            for(let j = 2; j < this.ship.length; j++){
                 // this.ship[j].overlaps(this.resource[i]);
                 // this.ship[j].overlaps(this.base);
 
                 // console.log(this.ship[j].collectTimer);
 
                 // COLLECTING RESOURCE FROM RESOURCE NODE
+                console.log("------------------------");
                 if(this.ship[j].colliding(this.resource[i])){
-                    // console.log("Timer inside the resource: " + this.ship[j].collectTimer);
+                    console.log("COLLECT RESOURCE");
                     this.ship[j].visible = true;
 
                     if(this.ship[j].visible == true){ 
@@ -126,6 +140,8 @@ class Logic {
                         } else {
                             // console.log("This is a writing too")
                             if(frameCount % this.ship[j].collectTick == 0){
+                                console.log(this.amountReduced);
+                                console.log("SHIP IS COLLECTING");
                                 this.resource[i].resourcePool -= this.amountReduced;
                                 this.ship[j].shipBag += this.ship[j].collectRate;
                                 this.ship[j].collectTimer--; 
@@ -137,28 +153,6 @@ class Logic {
                         }
                         // console.log("resource node: " + this.resource[0].resourcePool, "ship inventory: " + this.ship[j].shipBag);
                     }
-
-                    // if(this.ship[j].collectTimer <= 0 || this.resource[i].resourcePool <= 0){
-                    //     // console.log("test")
-                    //     this.ship[j].moveTo(this.base, 5);
-                    //     this.ship[j].visible = true;
-                    // }
-                }
-
-                // RETURN TO BASE AFTER RESOURCE COLLECTION
-                if (this.ship[j].overlaps(this.base) && this.ship[j].goldCollected == true) {
-                    if (this.resource[i].resourcePool !== 0) {
-                        this.ship[j].moveTo(this.resource[i]);
-                    }
-                    this.ship[j].goCollect = true;
-                    this.ship[j].goldCollected = false;
-                    this.ship[j].collectTimer = 3;
-                    this.base.baseBag = this.base.baseBag + this.ship[j].shipBag;
-                    this.ship[j].shipBag = 0;
-                    // console.log('base inventory: ' + this.base.baseBag);
-                }
-                if (this.resource[i].resourcePool <= 0) {
-                    this.resource[i].color = "RED";
                 }
         
                 this.displayText();
@@ -168,10 +162,90 @@ class Logic {
         }
     }
 
+    resourceRegeneration(){
+        for(let i = 0; i < this.resource.length; i++){
+            if(this.resource[i].size == "Big"){
+                if(this.resource[i].resourcePool < this.resource[i].resourceCap){
+                    this.regenTimer = Math.floor(random(20, 60));
+                    this.regenValue = Math.floor(random(0, 10));
+                    if(frameCount % this.regenTimer == 0){
+                        // console.log("REGEN ON")
+                        this.resource[i].resourcePool += this.regenValue;
+                    }
+                }
+            }
+        }
+    }
+
     displayText(){
         // console.log("Calling the method")
         this.base.text = this.base.baseBag;
         // console.log("Values before return: ", this.base.text, this.base.baseBag)
         return this.base.baseBag;
+    }
+
+    // ------- SHOOTING
+
+    shootingLogic() {      
+        if (kb.presses('q')) { // firing mode (single)
+            this.singleShot = true;
+            this.burstFire = false;
+        } else if (kb.presses('w')) { // burst mode
+            this.singleShot = false;
+            this.burstFire = true;
+        }
+
+        this.shootingTimer--
+
+        for (let i = 0; i < this.ship.length; i++) { 
+            for (let k = 0; k < this.resource.length; k++) {
+                if (dist(this.resource[k].x, this.resource[k].y, this.ship[i].x, this.ship[i].y) <= 200) { // create player bullet sprites (change this.resource to this.enemy or whatever when it gets added)
+                    if (this.shootingTimer <= 0) {
+                        if (this.singleShot === true) {
+                            this.singleBulletGroup.push(this.createSingleShot(this.ship[i].x, this.ship[i].y));
+                            for (let s = 0; s < this.singleBulletGroup.length; s++) { // direction for player single shot
+                                this.singleBulletGroup.direction = this.singleBulletGroup[s].angleTo(this.resource[k]);
+                                this.singleBulletGroup.speed = 4;
+                                this.singleBulletGroup.overlaps(this.ship[i]);
+                            }
+                        } else if (this.burstFire === true) {
+                            this.burstBulletGroup.push(this.createBurstBullet(this.ship[i].x, this.ship[i].y - 15));
+                            this.burstBulletGroup.push(this.createBurstBullet(this.ship[i].x, this.ship[i].y));
+                            this.burstBulletGroup.push(this.createBurstBullet(this.ship[i].x, this.ship[i].y + 15));
+                            for (let a = 0; a <this.burstBulletGroup.length; a++) { // direction for player burst shot
+                                this.burstBulletGroup.direction = this.burstBulletGroup[a].angleTo(this.resource[k]);
+                                this.burstBulletGroup.speed = 5;
+                                this.burstBulletGroup.overlaps(this.ship[i]);
+                            }
+                        }
+                        this.shootingTimer = 50;
+                    }
+                }
+                for (let s = 0; s < this.singleBulletGroup.length; s++) { // collision for player single shot
+                    if (this.singleBulletGroup[s].collides(this.resource[k])) {
+                        this.singleBulletGroup[s].remove();
+                    }
+                }
+                for (let a = 0; a <this.burstBulletGroup.length; a++) { // collision for player burst shot
+                    if (this.burstBulletGroup[a].collides(this.resource[k])) {
+                        this.burstBulletGroup[a].remove();
+                    }
+                }
+            }
+        }
+    }
+
+    createSingleShot(x, y) { // single boolets
+        let tempBullet = new Sprite(x, y);
+        tempBullet.diameter = 10;
+        tempBullet.color = 'yellow';
+        return tempBullet;
+    }
+
+    createBurstBullet(x, y) { // burst ones
+        let tempBurst = new Sprite(x, y);
+        tempBurst.diameter = 5;
+        tempBurst.color = 'orange';
+        return tempBurst;
     }
 }

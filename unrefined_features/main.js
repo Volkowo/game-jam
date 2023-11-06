@@ -118,7 +118,7 @@ function drawGameScreen() { // game screen code
 
     spriteLogic.draw();
 
-    gameUI.draw(spriteLogic);
+    gameUI.draw(createSprite);
 }
 
 function drawCreditsScreen() { // leaderboard screen code
