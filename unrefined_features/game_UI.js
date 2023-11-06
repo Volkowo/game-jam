@@ -16,6 +16,7 @@ class UI {
         this.startBuildingShipThree = false;
         this.startBuildingShipFour = false;
         
+        this.enemy;
         this.ship;
         this.factory;
         this.resource;
@@ -36,7 +37,8 @@ class UI {
     setup(factory) {
         this.ship = new Group();
         this.resource = new Group();
-        
+        this.enemy = new Group();
+
         this.gameButtons();
         this.UI_Sprites();
         
@@ -55,6 +57,9 @@ class UI {
         this.ship.push(factory.createShipTwo(800, H/2 + 100));
         this.ship.push(factory.createShipThree(800, H/2 + 200));
         this.ship.push(factory.createShipFour(800, H/2 + 300));
+
+        // ENEMY TESTING
+        
 
         //start
         this.trainingTime = 0;
