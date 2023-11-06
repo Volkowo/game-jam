@@ -116,6 +116,7 @@ function drawGameScreen() { // game screen code
     // spriteLogic.selection = gameUI.selection;
     spriteLogic.ship = gameUI.ship;
     spriteLogic.base = gameUI.base;
+    // spriteLogic.enemy = gameUI.enemy;
 
     spriteLogic.draw(createSprite);
 

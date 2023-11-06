@@ -6,8 +6,11 @@ class Logic {
         this.ship;
         this.resource;
         this.selection;
+        this.enemy;
         // this.distance = new Array ();
 
+        this.enemyX = 0;
+        this.enemyY = 0;
         this.shipAmount = 0;
         this.counterOne = 0;
         this.counterTwo = 0;
@@ -37,10 +40,16 @@ class Logic {
         this.singleBulletGroup = new Group();
         this.burstBulletGroup = new Group();
         this.selection = new Group();
+        this.enemy = new Group();
+
+        this.enemy.push(factory.createEnemyOne(350, 240));
+        this.enemy.push(factory.createEnemyOne(380, 240));
+        this.enemyRandomSequence();
     }
 
     draw(factory) {
         strokeWeight(1);
+        this.displayCoordinates();
         this.movementLogic(this.ship);
         this.shipRotate();
         this.selectLogic('One', '1');
@@ -51,15 +60,13 @@ class Logic {
         this.shootingLogic();
         this.selectionCircle(factory);
 
+        
         this.resourceRegeneration();
         // console.log(this.selection.length);
         // allSprites.debug = true;
         // console.log("REGEN TIMER: " + this.regenTimer, "REGEN VALUE: " + this.regenValue)
         // console.log("COUNTER ONE: " + this.counterOne, "COUNTER TWO: " + this.counterTwo, 
         // "COUNTER Three: " + this.counterThree, "COUNTER FOUR: " + this.counterFour, "SHIP AMOUNT: " + this.shipAmount);
-
-        
-        
     }
 
     selectLogic(type, binding) {
@@ -210,11 +217,26 @@ class Logic {
         }
     }
 
+    displayCoordinates(){
+        text("X: " + mouseX + " Y: " + mouseY, mouseX - 40, mouseY - 5)
+    }
+
     displayText() {
         // console.log("Calling the method")
         this.base.text = this.base.baseBag;
         // console.log("Values before return: ", this.base.text, this.base.baseBag)
         return this.base.baseBag;
+    }
+
+    // ------- ENEMIES
+    async enemyRandomSequence(){
+        for(let i = 0; i < this.enemy.length; i++){
+            this.enemyX = random(250, 1500);
+            this.enemyY = random(240, 820);
+            await this.enemy[i].rotateTo(this.enemyX, this.enemyY, 5);
+            await this.enemy[i].moveTo(this.enemyX, this.enemyY, 3);
+        }
+        this.enemyRandomSequence();
     }
 
     // ------- SHOOTING
