@@ -124,7 +124,6 @@ class Logic {
             for(let i = 4; i < this.ship.length; i++){
                 if(this.ship[i].selected == true){
                     this.ship[i].moveTo(mouseX, mouseY, 5);
-                    this.ship[i].direction = this.ship[i].angleTo(mouse);
                     this.ship[i].visible = true;
                     this.ship[i].goCollect = false;
                 } 
