@@ -13,9 +13,9 @@ class UI {
 
         this.ship;
         this.factory;
-        this.logic;
         this.resource;
         this.base;
+        this.logic;
     }
 
     preload() {
@@ -507,7 +507,7 @@ class UI {
     }
 
     selectShipOne() {
-        //this.logic.selectLogic('One', '1');
+        this.logic.selectLogic('One', '1');
         console.log('select ship one');
     }
     selectShipTwo() {

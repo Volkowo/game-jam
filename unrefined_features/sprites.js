@@ -3,10 +3,10 @@ class Factory {
         
     }
     preload() {
-        this.shipOne = loadImage("assets/img/ship_img/schooner_player.png");
-        this.shipTwo = loadImage("assets/img/ship_img/galleon_player.png");
-        this.shipThree = loadImage("assets/img/ship_img/frigate_player.png");
-        this.shipFour = loadImage("assets/img/ship_img/manowar_player.png");
+        this.shipOne = loadImage("assets/img/ship_sprites/schooner_player.png");
+        this.shipTwo = loadImage("assets/img/ship_sprites/galleon_player.png");
+        this.shipThree = loadImage("assets/img/ship_sprites/frigate_player.png");
+        this.shipFour = loadImage("assets/img/ship_sprites/manowar_player.png");
     }
 
     setup() {
