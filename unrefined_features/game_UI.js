@@ -20,6 +20,7 @@ class UI {
         this.playerFrigate = loadImage("assets/img/ship_img/frigate_player.png");
         this.playerManOWar = loadImage("assets/img/ship_img/manowar_player.png");
         this.goldFrame = loadImage("assets/UI/gold_display_frame.png");
+        this.woodenUI = loadImage("assets/UI/UI_background.png");
         this.gameFont = loadFont("assets/font/new_rodin_pro.otf");
     }
 
@@ -64,13 +65,14 @@ class UI {
         this.backgroundUI.h = H;
         this.backgroundUI.draw =()=> {
             noStroke();
-            fill(60, 74, 107);
+            fill(173, 112, 62);
             rect(-52.5, 0, 105, H);
-            fill(44, 62, 80);
+            fill(115, 60, 15);
             rect(52.5, 0, 105, H);
 
             //UI Background Image
-
+            tint(255,100);
+            image(this.woodenUI, 0, 0);
         }
         this.backgroundUI.collider = "s";
         this.backgroundUI.visible = true;
@@ -83,7 +85,7 @@ class UI {
         this.upgradeDisplay.draw = function () {
             //Frame
             noStroke();
-            fill(154, 244, 252);
+            fill(115, 60, 15);
             rect(0, -7.5, 200, 800);
 
             textAlign(CENTER,CENTER);
@@ -103,11 +105,11 @@ class UI {
         this.buildDisplay.draw =()=> {
             //Frame
             noStroke();
-            fill(154, 244, 252);
+            fill(115, 60, 15);
             rect(0, -7.5, 200, 800);
             
             //Background
-            fill(9, 76, 82);
+            fill(246,238,227);
             rect(0, -300, 195, 195);
             rect(0, -102.5, 195, 195);
             rect(0, 95, 195, 195);
@@ -115,7 +117,7 @@ class UI {
             
             //Ship Type Background
             rectMode(CORNER);
-            fill(154, 244, 252);
+            fill(115, 60, 15);
             rect(-95,-395, 100, 25);
             rect(-95,-197, 100, 25);
             rect(-95, 0, 100, 25);
@@ -124,9 +126,9 @@ class UI {
             //Ship Type Display
             textAlign(CENTER, CENTER);
             strokeWeight(1);
-            stroke(9, 76, 82);
-            fill(9, 76, 82);
-            textSize(15);
+            stroke(246,238,227);
+            fill(246,238,227);
+            textSize(14);
             text("Schooner", -45,-383.5);
             text("Galleon", -45,-185.5);
             text("Frigate", -45,11);
@@ -134,50 +136,50 @@ class UI {
             
             //Stat Display              //need to implement the ship.stats from factory class
             strokeWeight(0.5);
-            stroke('white');
-            fill('white');
-            textSize(10);
+            stroke(71, 40, 14);
+            fill(71, 40, 14);
+            textSize(10.5);
             textAlign(LEFT, CENTER);
             //Ship One
-            text("Hit Point : 20", 0, -350);
-            text("Attack : 5", 0, -325);
-            text("Speed : 5", 0, -300);
-            text("Collect Rate : " + this.ship[0].collectRate + "/s", 0, -275); //ideal code
-            text("Gold Cost : 10", 0, -250);
-            text("Build Time : 5s", 0, -225);
+            text("Hit Point : 20", -10, -350);
+            text("Attack : 5", -10, -325);
+            text("Speed : 5", -10, -300);
+            text("Collect Rate : " + this.ship[0].collectRate + "/s", -10, -275); //ideal code
+            text("Gold Cost : 10", -10, -250);
+            text("Build Time : 5s", -10, -225);
             //Ship Two
-            text("Hit Point : 30", 0, -117.5);
-            text("Attack : 8", 0, 102.5);
-            text("Speed : 4", 0, -87.5);
-            text("Collect Rate : 5/s", 0, -72.5);
-            text("Gold Cost : 20", 0, -57.5);
-            text("Build Time : 10s", 0, -42.5);
+            text("Hit Point : 30", -10, -152.5);
+            text("Attack : 8", -10, -127.5);
+            text("Speed : 4", -10, -102.5);
+            text("Collect Rate : 5/s", -10, -77.5);
+            text("Gold Cost : 20", -10, -52.5);
+            text("Build Time : 10s", -10, -27.5);
             //Ship Three
-            text("Hit Point : 50", 0, 80);
-            text("Attack : 5", 0, 95);
-            text("Speed : 3", 0, 110);
-            text("Collect Rate : 5/s", 0, 125);
-            text("Gold Cost : 25", 0, 140);
-            text("Build Time : 10s", 0, 155);
+            text("Hit Point : 50", -10, 45);
+            text("Attack : 5", -10, 70);
+            text("Speed : 3", -10, 95);
+            text("Collect Rate : 5/s", -10, 120);
+            text("Gold Cost : 25", -10, 145);
+            text("Build Time : 10s", -10, 170);
             //Ship Four
-            text("Hit Point : 80", 0, 277.5);
-            text("Attack : 10", 0, 292.5);
-            text("Speed : 2", 0, 307.5);
-            text("Collect Rate : 1/s", 0, 322.5);
-            text("Gold Cost : ", 0, 337.5);
-            text("Build Time : 30s", 0, 352.5);
+            text("Hit Point : 80", -10, 242.5);
+            text("Attack : 10", -10, 267.5);
+            text("Speed : 2", -10, 292.5);
+            text("Collect Rate : 1/s", -10, 317.5);
+            text("Gold Cost : ", -10, 342.5);
+            text("Build Time : 30s", -10, 367.5);
 
             //Ship Profile Images
-            image(this.playerSchooner,0,0);
-            image(this.playerGalleon,0,0);
-            image(this.playerFrigate,0,0);
-            image(this.playerManOWar,0,250);
+            image(this.playerSchooner,-55,-285);
+            image(this.playerGalleon,-55,-80);
+            image(this.playerFrigate,-55,110);
+            image(this.playerManOWar,-55,310);
         }
         this.buildDisplay.collider = 'n';
         this.buildDisplay.visible = true;
 
         //Resource Display Frame
-        this.resourceDisplayBackground = new Sprite(85,25);
+        this.resourceDisplayBackground = new Sprite(105,25);
         this.resourceDisplayBackground.w = 160;
         this.resourceDisplayBackground.h = 40;
         this.resourceDisplayBackground.color = 'white';
@@ -187,12 +189,12 @@ class UI {
             // fill('white');
             // rect(0,0,160,40);
 
-            image(this.goldFrame,0,0,170,45);
+            image(this.goldFrame,0,0,200,45);
 
             textAlign(CENTER, CENTER);
             strokeWeight(1);
-            stroke('white');
-            fill('white');
+            stroke(71, 40, 14);
+            fill(71, 40, 14);
             textSize(20);
             text("Gold: " + this.base.baseBag, 0, 0);
         }
@@ -200,7 +202,7 @@ class UI {
         this.resourceDisplayBackground.layer = 1000;
 
         //______________________Notification pop-ups_________________________//
-        this.noGold = new Sprite(320,50);
+        this.noGold = new Sprite(360,50);
         this.noGold.draw = function() {
             noStroke();
             fill(0,0,0, 80);
@@ -218,7 +220,7 @@ class UI {
         this.noGold.visible = false;
         this.noGold.collider = 'n';
         
-        this.shipBuilt = new Sprite(320,50);
+        this.shipBuilt = new Sprite(360,50);
         this.shipBuilt.draw = function() {
             noStroke();
             fill(0,0,0, 80);
@@ -242,45 +244,45 @@ class UI {
         this.buildButton = createButton("Build");
         this.buildButton.position(13, 58);
         this.buildButton.mouseClicked(() => {this.buildMode()});
-        this.buildButton.style("width", "81px");
+        this.buildButton.style("width", "101px");
         this.buildButton.style("height", "30px");
-        this.buildButton.style("background-color", "#094c52");
-        this.buildButton.style("border-color", "#094c52");
-        this.buildButton.style("color", "white");
+        this.buildButton.style("background-color", "#f6eee3");
+        this.buildButton.style("border-color", "#f6eee3");
+        this.buildButton.style("color", "#47280e");
         this.buildButton.style("font-size", "15px");
         this.buildButton.hide();
 
         this.upgradeButton = createButton("Upgrade");
-        this.upgradeButton.position(92, 58);
+        this.upgradeButton.position(113, 58);
         this.upgradeButton.mouseClicked(() => {this.upgradeMode()});
-        this.upgradeButton.style("width", "81px");
+        this.upgradeButton.style("width", "101px");
         this.upgradeButton.style("height", "30px");
-        this.upgradeButton.style("background-color", "#094c52");
-        this.upgradeButton.style("border-color", "#094c52");
-        this.upgradeButton.style("color", "white");
+        this.upgradeButton.style("background-color", "#f6eee3");
+        this.upgradeButton.style("border-color", "#f6eee3");
+        this.upgradeButton.style("color", "#47280e");
         this.upgradeButton.style("font-size", "15px");
         //this.upgradeButton.hide();
 
         this.buildButtonClone = createButton("Build");
         this.buildButtonClone.position(13, 58);
         //this.buildButtonClone.mouseClicked();
-        this.buildButtonClone.style("width", "81px");
+        this.buildButtonClone.style("width", "101px");
         this.buildButtonClone.style("height", "30px");
-        this.buildButtonClone.style("background-color", "#9af4fc");
-        this.buildButtonClone.style("border-color", "#9af4fc");
-        this.buildButtonClone.style("color", "Black");
+        this.buildButtonClone.style("background-color", "#733c0f");
+        this.buildButtonClone.style("border-color", "#733c0f");
+        this.buildButtonClone.style("color", "#f6eee3");
         this.buildButtonClone.style("font-size", "15px");
         this.buildButtonClone.show();
         this.buildButtonClone.attribute("disabled", "");
         
         this.upgradeButtonClone = createButton("Upgrade");
-        this.upgradeButtonClone.position(92, 58);
+        this.upgradeButtonClone.position(112, 58);
         //this.upgradeButtonClone.mouseClicked();
-        this.upgradeButtonClone.style("width", "81px");
+        this.upgradeButtonClone.style("width", "101px");
         this.upgradeButtonClone.style("height", "30px");
-        this.upgradeButtonClone.style("background-color", "#9af4fc");
-        this.upgradeButtonClone.style("border-color", "#9af4fc");
-        this.upgradeButtonClone.style("color", "Black");
+        this.upgradeButtonClone.style("background-color", "#733c0f");
+        this.upgradeButtonClone.style("border-color", "#733c0f");
+        this.upgradeButtonClone.style("color", "#f6eee3");
         this.upgradeButtonClone.style("font-size", "15px");
         this.upgradeButtonClone.hide();
         this.upgradeButtonClone.attribute("disabled", "");
@@ -291,9 +293,9 @@ class UI {
         // this.shipOne.mouseOver(() => {this.hoverShipOne()});
         this.shipOne.style("width", "90px");
         this.shipOne.style("height", "25px");
-        this.shipOne.style("background-color", "#094c52");
-        this.shipOne.style("border-color", "#9af4fc");
-        this.shipOne.style("color", "white");
+        this.shipOne.style("background-color", "#f6eee3");
+        this.shipOne.style("border-color", "#733c0f");
+        this.shipOne.style("color", "#47280e");
         this.shipOne.style("font-size", "15px");
         // this.shipOne.style("border-radius", "10px");
         this.shipOne.show();
@@ -304,9 +306,9 @@ class UI {
         // this.shipTwo.mouseOver(() => {this.hoverShipTwo()});
         this.shipTwo.style("width", "90px");
         this.shipTwo.style("height", "25px");
-        this.shipTwo.style("background-color", "#094c52");
-        this.shipTwo.style("border-color", "#9af4fc");
-        this.shipTwo.style("color", "white");
+        this.shipTwo.style("background-color", "#f6eee3");
+        this.shipTwo.style("border-color", "#733c0f");
+        this.shipTwo.style("color", "#47280e");
         this.shipTwo.style("font-size", "15px");
         // this.shipTwo.style("border-radius", "10px");
         this.shipTwo.show();
@@ -317,9 +319,9 @@ class UI {
         // this.shipThree.mouseOver(() => {this.hoverShipThree()});
         this.shipThree.style("width", "90px");
         this.shipThree.style("height", "25px");
-        this.shipThree.style("background-color", "#094c52");
-        this.shipThree.style("border-color", "#9af4fc");
-        this.shipThree.style("color", "white");
+        this.shipThree.style("background-color", "#f6eee3");
+        this.shipThree.style("border-color", "#733c0f");
+        this.shipThree.style("color", "#47280e");
         this.shipThree.style("font-size", "15px");
         // this.shipThree.style("border-radius", "10px");
         this.shipThree.show();
@@ -330,9 +332,9 @@ class UI {
         // this.shipFour.mouseOver(() => {this.hoverShipFour()});
         this.shipFour.style("width", "90px");
         this.shipFour.style("height", "25px");
-        this.shipFour.style("background-color", "#094c52");
-        this.shipFour.style("border-color", "#9af4fc");
-        this.shipFour.style("color", "white");
+        this.shipFour.style("background-color", "#f6eee3");
+        this.shipFour.style("border-color", "#733c0f");
+        this.shipFour.style("color", "#47280e");
         this.shipFour.style("font-size", "15px");
         // this.shipFour.style("border-radius", "10px");
         this.shipFour.show();
@@ -369,8 +371,8 @@ class UI {
     }
 
     buildShipOne() {
-        if (this.base.baseBag >= 10){ //need to implement the ship.cost from factory class
-            this.base.baseBag -= 10;
+        if (this.base.baseBag >= 5){ //need to implement the ship.cost from factory class
+            this.base.baseBag -= 5;
             // console.log(this.factory.createShipOne(500, H / 2 - 100))
             this.ship.push(this.factory.createShipOne(500, H / 2 - 100));
             this.shipBuilt.counter = 100;
@@ -383,9 +385,9 @@ class UI {
     }
     
     buildShipTwo() {
-        if (this.base.baseBag >= 20){ //need to implement the ship.cost from factory class
-            this.base.baseBag -= 20;
-            this.ship.push(this.factory.createShipTwo(500, H / 2 - 400));
+        if (this.base.baseBag >= 10){ //need to implement the ship.cost from factory class
+            this.base.baseBag -= 10;
+            this.ship.push(this.factory.createShipTwo(500, H / 2 - 200));
             this.shipBuilt.counter = 100;
             this.shipBuilt.startCounter = true;
         } else {
@@ -396,11 +398,29 @@ class UI {
     }
     
     buildShipThree() {
-        console.log('nothing here use other buttons');
+        if (this.base.baseBag >= 25){ //need to implement the ship.cost from factory class
+            this.base.baseBag -= 25;
+            this.ship.push(this.factory.createShipThree(500, H / 2 - 300));
+            this.shipBuilt.counter = 100;
+            this.shipBuilt.startCounter = true;
+        } else {
+            //if there's no gold enough to buy ship show the warning
+            this.noGold.counter = 100;
+            this.noGold.startCounter = true;
+        }
     }
     
     buildShipFour() {
-        console.log('nothing here use other buttons');
+        if (this.base.baseBag >= 35){ //need to implement the ship.cost from factory class
+            this.base.baseBag -= 35;
+            this.ship.push(this.factory.createShipFour(500, H / 2 - 400));
+            this.shipBuilt.counter = 100;
+            this.shipBuilt.startCounter = true;
+        } else {
+            //if there's no gold enough to buy ship show the warning
+            this.noGold.counter = 100;
+            this.noGold.startCounter = true;
+        }
     }
 
     hoverShipOne() {
