@@ -77,6 +77,7 @@ class Factory {
         tempShip.collectTick = 60;
         tempShip.collectTimer = 3;
         tempShip.drag = 0.5;
+        // tempShip.collider = 'k'
         tempShip.bounciness = 0;
         tempShip.direction = 90;
         tempShip.rotationLock = true;
@@ -206,6 +207,17 @@ class Factory {
         tempEnemy.type = type;
         tempEnemy.behavior = behavior;
         tempEnemy.angle = 0;
+        tempEnemy.detectShip = false;
+        // tempEnemy.collider = 'k'
+
+        tempEnemy.distanceOne = 0;
+        tempEnemy.detectShipOne = false;
+        tempEnemy.distanceTwo = 0;
+        tempEnemy.detectShipTwo = false;
+        tempEnemy.distanceThree = 0;
+        tempEnemy.detectShipThree = false;
+        tempEnemy.distanceFour = 0;
+        tempEnemy.detectShipFour = false;
 
         tempEnemy.collectTick = 60;
         tempEnemy.collectTimer = 3;

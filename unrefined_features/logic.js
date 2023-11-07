@@ -47,7 +47,7 @@ class Logic {
         this.enemy = new Group();
 
         this.enemy.push(factory.createEnemyOne(450, 240));
-        this.enemy.push(factory.createEnemyOne(380, 240));
+        this.enemy.push(factory.createEnemyOne(580, 280));
         // this.enemyRandomSequence();
     }
 
@@ -62,12 +62,13 @@ class Logic {
         this.selectLogic('Four', '4');
         this.resourceCollectionLogic();
         this.shootingLogic();
-        this.enemyShootingLogic();
+        // this.enemyShootingLogic();
         this.selectionCircle(factory);
 
         this.randomEnemyBehavior();
         this.assignEnemyBehavior();
 
+        this.detectionLogic();
 
         this.resourceRegeneration();
         // console.log(this.selection.length);
@@ -236,25 +237,14 @@ class Logic {
         return this.base.baseBag;
     }
 
-    // ------- ENEMIES
-    // async enemyRandomSequence(){
-    //     for(let i = 0; i < this.enemy.length; i++){
-    //         this.enemyX = random(250, 1500);
-    //         this.enemyY = random(240, 820);
-    //         await this.enemy[i].rotateTo(this.enemyX, this.enemyY, 5);
-    //         await this.enemy[i].moveTo(this.enemyX, this.enemyY, 3);
-    //     }
-    //     this.enemyRandomSequence();
-    // }
-
     enemyRandomType() {
         for (let i = 0; i < this.enemy.length; i++) {
             this.enemyX = random(250, 1500);
             this.enemyY = random(240, 820);
             this.enemy[i].rotation = this.enemy[i].direction;
-            if (frameCount % 25 == 0 && this.enemy[i].behavior == "Random") {
+            if (frameCount % 25 == 0 && this.enemy[i].behavior == "Random" && this.enemy[i].detectShip == false) {
                 this.enemy[i].rotateTo(this.enemyX, this.enemyY, 5);
-            } else if (frameCount % 40 == 0 && this.enemy[i].behavior == "Random") {
+            } else if (frameCount % 40 == 0 && this.enemy[i].behavior == "Random" && this.enemy[i].detectShip == false) {
                 this.enemy[i].moveTo(this.enemyX, this.enemyY, 3);
             }
         }
@@ -262,7 +252,7 @@ class Logic {
 
     enemyHuntBase() {
         for (let i = 0; i < this.enemy.length; i++) {
-            if (this.enemy[i].behavior == "Hunting") {
+            if (this.enemy[i].behavior == "Hunting" && this.enemy[i].detectShip == false) {
                 this.enemy[i].rotateTo(this.base.x, this.base.y, 5);
                 this.enemy[i].moveTo(this.base.x, this.base.y, 3);
             }
@@ -270,32 +260,47 @@ class Logic {
     }
 
 
-    enemySurroundResource(){
+    enemySurroundResource() {
         for (let i = 0; i < this.enemy.length; i++) {
-            for(let k = 0; k < this.resource.length; k++){
-                if(this.resource[k].size == "Big"){
+            for (let k = 0; k < this.resource.length; k++) {
+                if (this.resource[k].size == "Big") {
                     this.enemyX = random(this.resource[k].x - 80, this.resource[k].x + 80);
                     this.enemyY = random(this.resource[k].y - 80, this.resource[k].y + 80);
 
-                    if(this.enemyX > this.resource[k].x - 20 && this.enemyX < this.resource[k].x + this.resource[k].w + 20){
-                        console.log("X was between the values " + "X Values: " + this.enemyX);
+                    if (this.enemyX > this.resource[k].x - 20 && this.enemyX < this.resource[k].x + this.resource[k].w + 20) {
+                        // console.log("X was between the values " + "X Values: " + this.enemyX);
                         this.enemyX = random(this.resource[k].x - 80, this.resource[k].x + 80);
                     }
 
-                    if(this.enemyY > this.resource[k].y - 20 && this.enemyY < this.resource[k].y + this.resource[k].h + 20){
+                    if (this.enemyY > this.resource[k].y - 20 && this.enemyY < this.resource[k].y + this.resource[k].h + 20) {
                         // console.log("Y was between the values")
                         this.enemyY = random(this.resource[k].y - 80, this.resource[k].y + 80);
                     }
 
                     this.enemy[i].rotation = this.enemy[i].direction;
-                    if (frameCount % 25 == 0 && this.enemy[i].behavior == "Guard") {
+                    if (frameCount % 25 == 0 && this.enemy[i].behavior == "Guard" && this.enemy[i].detectShip == false) {
                         this.enemy[i].rotateTo(this.enemyX, this.enemyY, 5);
-                    } else if (frameCount % 30 == 0 && this.enemy[i].behavior == "Guard") {
+                    } else if (frameCount % 30 == 0 && this.enemy[i].behavior == "Guard" && this.enemy[i].detectShip == false) {
                         this.enemy[i].moveTo(this.enemyX, this.enemyY, 3);
                     }
                 }
             }
         }
+    }
+
+    enemySurroundResourceNew() {
+        for (let i = 0; i < this.enemy.length; i++) {
+            for (let k = 0; k < this.resource.length; k++) {
+                if (this.resource[k].size == "Big" && this.enemy[i].behavior == "Guard") {
+
+                    this.enemy[i].attractTo(this.resource[k], 5)
+                }
+            }
+        }
+    }
+
+    enemyAttackShip() {
+
     }
 
     randomEnemyBehavior() {
@@ -314,31 +319,80 @@ class Logic {
             this.enemyRandomType();
             this.enemyHuntBase();
             this.enemySurroundResource();
+
+
         }
+    }
+
+    checkDistance(shipType, distance, detect) {
+        for (let i = 4; i < this.ship.length; i++) {
+            for (let k = 0; k < this.enemy.length; k++) {
+                if (this.ship[i].type == shipType) {
+                    distance = dist(this.ship[i].x, this.ship[i].y, this.enemy[k].x, this.enemy[k].y);
+                    if (distance <= 200) {
+                        detect = true;
+                    } else if (distance >= 220) {
+                        detect = false;
+                    }
+
+                    if (detect == true) {
+                        this.enemy[k].moveTo(this.enemy[k].x, this.enemy[k].y, 0);
+                        this.enemyShootingLogic();
+                    }
+                }
+            }
+        }
+    }
+
+    detectionLogic() {
+        for (let i = 0; i < this.enemy.length; i++) {
+            this.enemy[i].shootingTimer--;
+            this.checkDistance("One", this.enemy[i].distanceOne, this.enemy[i].detectShipOne);
+            // this.checkDistance("Two", this.enemy[i].distanceTwo, this.enemy[i].detectShipTwo);
+            // this.checkDistance("Three", this.enemy[i].distanceThree, this.enemy[i].detectShipThree);
+            // this.checkDistance("Four", this.enemy[i].distanceFour, this.enemy[i].detectShipFour);
+
+
+        }
+        // console.log(this.enemy[0].detectShipOne, this.enemy[1].detectShipOne)
+
+
     }
 
     enemyShootingLogic() {
         for (let i = 0; i < this.enemy.length; i++) {
-            this.enemy[i].shootingTimer--
-            if (this.enemy[i].shootingTimer <= 0) {
-                for (let k = 0; k < this.ship.length; k++) { // for distance check below
-                    this.distance = dist(this.ship[k].x, this.ship[k].y, this.enemy[i].x, this.enemy[i].y);
-                    if (this.distance <= 200) { // create player bullet sprites (change this.enemy to this.enemy or whatever when it gets added)
-                        this.enemyBulletGroup.push(this.enemyBullets(this.enemy[i].x, this.enemy[i].y, this.ship[k]));
-                        if (this.enemy[i].type == "One") { // sets shooting cooldown timer for each enemy type
-                            this.enemy[i].shootingTimer = 50;
-                        } else if (this.enemy[i].type == "Two") {
-                            this.enemy[i].shootingTimer = 100;
-                        } else if (this.enemy[i].type == "Three") {
-                            this.enemy[i].shootingTimer = 150;
-                        } else if (this.enemy[i].type == "Four") {
-                            this.enemy[i].shootingTimer = 200;
-                        }
+            // console.log(this.enemy[0].shootingTimer, this.enemy[1].shootingTimer)
+            for (let k = 4; k < this.ship.length; k++) { // for distance check below
+                // this.distance = dist(this.ship[k].x, this.ship[k].y, this.enemy[i].x, this.enemy[i].y);
+                // console.log(this.distance)
+                
+                console.log(this.enemy[i].shootingTimer)
+
+                // console.log(this.enemy[0].detectShip)
+
+                if (this.enemy[i].shootingTimer <= 0) {
+                    console.log("Test")
+                    // create player bullet sprites (change this.enemy to this.enemy or whatever when it gets added)
+                    this.enemyBulletGroup.push(this.enemyBullets(this.enemy[i].x, this.enemy[i].y, this.ship[k]));
+                    if (this.enemy[i].type == "One") { // sets shooting cooldown timer for each enemy type
+                        this.enemy[i].shootingTimer = 50;
+                    } else if (this.enemy[i].type == "Two") {
+                        this.enemy[i].shootingTimer = 100;
+                    } else if (this.enemy[i].type == "Three") {
+                        this.enemy[i].shootingTimer = 150;
+                    } else if (this.enemy[i].type == "Four") {
+                        this.enemy[i].shootingTimer = 200;
                     }
+
                     for (let s = 0; s < this.enemyBulletGroup.length; s++) { // collision for player single shot (needs to be outisde of the if statement so its always active)
-                        if (this.enemyBulletGroup[s].collides(this.ship[k])) {
+                        // console.log("function working", this.enemyBulletGroup[s], this.enemyBulletGroup.length, this.ship[k]);
+                        // console.log("function working", this.enemyBulletGroup[s].overlaps(this.ship[k]), 
+                        // this.enemyBulletGroup[s].overlapping(this.ship[k]), this.ship[k]);
+                        this.enemyBulletGroup[s].debug = true;
+                        // this.ship[k].debug = true;
+                        if (this.enemyBulletGroup[s].overlaps(this.ship[k]) || this.enemyBulletGroup[s].overlapping(this.ship[k])) {
                             this.enemyBulletGroup[s].remove();
-                            console.log('i got hit');
+                            // console.log('i got hit');
                         }
                     }
                 }
@@ -368,7 +422,7 @@ class Logic {
             this.burstFire = true;
         }
 
-        for (let i = 0; i < this.ship.length; i++) {
+        for (let i = 4; i < this.ship.length; i++) {
             this.ship[i].shootingTimer--
             if (this.ship[i].shootingTimer <= 0) {
                 for (let k = 0; k < this.enemy.length; k++) { // for distance check below
@@ -392,12 +446,12 @@ class Logic {
                         }
                     }
                     for (let s = 0; s < this.singleBulletGroup.length; s++) { // collision for player single shot (needs to be outisde of the if statement so its always active)
-                        if (this.singleBulletGroup[s].collides(this.enemy[k])) {
+                        if (this.singleBulletGroup[s].overlaps(this.enemy[k])) {
                             this.singleBulletGroup[s].remove();
                         }
                     }
                     for (let a = 0; a < this.burstBulletGroup.length; a++) { // same collision detection for player burst shot
-                        if (this.burstBulletGroup[a].collides(this.enemy[k])) {
+                        if (this.burstBulletGroup[a].overlaps(this.enemy[k])) {
                             this.burstBulletGroup[a].remove();
                         }
                     }
@@ -411,7 +465,9 @@ class Logic {
         tempBullet.diameter = 10;
         tempBullet.color = 'yellow';
         tempBullet.life = 60;
-        tempBullet.overlaps(this.ship);
+        // tempBullet.overlaps(allSprites);
+
+        // tempBullet.collider = "k"
         tempBullet.direction = tempBullet.angleTo(angle);
         tempBullet.speed = 4;
         return tempBullet;
@@ -422,7 +478,8 @@ class Logic {
         tempBurst.diameter = 5;
         tempBurst.color = 'orange';
         tempBurst.life = 60;
-        tempBurst.overlaps(this.ship);
+        // tempBurst.collider = "k"
+        // tempBurst.overlaps(allSprites);
         tempBurst.direction = tempBurst.angleTo(angle);
         tempBurst.speed = 4;
         return tempBurst;
