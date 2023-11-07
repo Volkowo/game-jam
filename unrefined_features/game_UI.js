@@ -276,7 +276,7 @@ class UI {
 
         }
         this.upgradeDisplay.collider = 'n';
-        this.upgradeDisplay.visible = true;
+        this.upgradeDisplay.visible = false;
 
         //Build Display
         this.buildDisplay = new Sprite(105, 502.5);
@@ -374,7 +374,7 @@ class UI {
             }
         }
         this.buildDisplay.collider = 'n';
-        this.buildDisplay.visible = false;
+        this.buildDisplay.visible = true;
 
 
         //______________________Notification pop-ups_________________________//
@@ -425,7 +425,7 @@ class UI {
         this.buildButton.style("border-color", "#f6eee3");
         this.buildButton.style("color", "#47280e");
         this.buildButton.style("font-size", "15px");
-        this.buildButton.show();
+        this.buildButton.hide();
 
         this.upgradeButton = createButton("Upgrade");
         this.upgradeButton.position(110, 80.5);
@@ -436,7 +436,7 @@ class UI {
         this.upgradeButton.style("border-color", "#f6eee3");
         this.upgradeButton.style("color", "#47280e");
         this.upgradeButton.style("font-size", "15px");
-        this.upgradeButton.hide();
+        this.upgradeButton.show();
 
         this.buildButtonClone = createButton("Build");
         this.buildButtonClone.position(13, 80.5);
@@ -447,7 +447,7 @@ class UI {
         this.buildButtonClone.style("border-color", "#733c0f");
         this.buildButtonClone.style("color", "#f6eee3");
         this.buildButtonClone.style("font-size", "15px");
-        this.buildButtonClone.hide();
+        this.buildButtonClone.show();
         this.buildButtonClone.attribute("disabled", "");
 
         this.upgradeButtonClone = createButton("Upgrade");
@@ -459,7 +459,7 @@ class UI {
         this.upgradeButtonClone.style("border-color", "#733c0f");
         this.upgradeButtonClone.style("color", "#f6eee3");
         this.upgradeButtonClone.style("font-size", "15px");
-        this.upgradeButtonClone.show();
+        this.upgradeButtonClone.hide();
         this.upgradeButtonClone.attribute("disabled", "");
 
         this.shipOne = createButton("Build");
@@ -472,7 +472,7 @@ class UI {
         this.shipOne.style("border-color", "#733c0f");
         this.shipOne.style("color", "#47280e");
         this.shipOne.style("font-size", "15px");
-        this.shipOne.hide();
+        this.shipOne.show();
 
         this.shipTwo = createButton("Build");
         this.shipTwo.position(118, 313);
@@ -484,7 +484,7 @@ class UI {
         this.shipTwo.style("border-color", "#733c0f");
         this.shipTwo.style("color", "#47280e");
         this.shipTwo.style("font-size", "15px");
-        this.shipTwo.hide();
+        this.shipTwo.show();
 
         this.shipThree = createButton("Build");
         this.shipThree.position(118, 510);
@@ -496,7 +496,7 @@ class UI {
         this.shipThree.style("border-color", "#733c0f");
         this.shipThree.style("color", "#47280e");
         this.shipThree.style("font-size", "15px");
-        this.shipThree.hide();
+        this.shipThree.show();
 
         this.shipFour = createButton("Build");
         this.shipFour.position(118, 708);
@@ -508,7 +508,7 @@ class UI {
         this.shipFour.style("border-color", "#733c0f");
         this.shipFour.style("color", "#47280e");
         this.shipFour.style("font-size", "15px");
-        this.shipFour.hide();
+        this.shipFour.show();
 
         //Selection Buttons
         this.selectButtonOne = createButton('1');
@@ -564,7 +564,7 @@ class UI {
         this.upgradeOne.style("border-color", "#733c0f");
         this.upgradeOne.style("color", "#47280e");
         this.upgradeOne.style("font-size", "15px");
-        this.upgradeOne.show();
+        this.upgradeOne.hide();
         
         this.upgradeTwo = createButton('Buy');
         this.upgradeTwo.position(93.5,315);
@@ -574,7 +574,7 @@ class UI {
         this.upgradeTwo.style("border-color", "#733c0f");
         this.upgradeTwo.style("color", "#47280e");
         this.upgradeTwo.style("font-size", "15px");
-        this.upgradeTwo.show();
+        this.upgradeTwo.hide();
 
         this.upgradeThree = createButton('Buy');
         this.upgradeThree.position(93.5,472.5);
@@ -584,7 +584,7 @@ class UI {
         this.upgradeThree.style("border-color", "#733c0f");
         this.upgradeThree.style("color", "#47280e");
         this.upgradeThree.style("font-size", "15px");
-        this.upgradeThree.show();
+        this.upgradeThree.hide();
 
         this.upgradeFour = createButton('Buy');
         this.upgradeFour.position(93.5,630);
@@ -594,7 +594,7 @@ class UI {
         this.upgradeFour.style("border-color", "#733c0f");
         this.upgradeFour.style("color", "#47280e");
         this.upgradeFour.style("font-size", "15px");
-        this.upgradeFour.show();
+        this.upgradeFour.hide();
 
         this.upgradeFive = createButton('Buy');
         this.upgradeFive.position(93.5,787.5);
@@ -604,7 +604,7 @@ class UI {
         this.upgradeFive.style("border-color", "#733c0f");
         this.upgradeFive.style("color", "#47280e");
         this.upgradeFive.style("font-size", "15px");
-        this.upgradeFive.show();
+        this.upgradeFive.hide();
     }
 
     buildMode() {
