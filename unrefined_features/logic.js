@@ -203,7 +203,7 @@ class Logic {
 
                 this.displayText();
                 this.resource[i].text = this.resource[i].resourcePool;
-                this.ship[j].text = this.ship[j].shipBag;
+                // this.ship[j].text = this.ship[j].shipBag;
             }
         }
     }
