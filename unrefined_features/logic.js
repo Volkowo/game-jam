@@ -361,9 +361,10 @@ class Logic {
 
     enemyShootingLogic() {
         for (let i = 0; i < this.enemy.length; i++) {
-            this.enemy[i].shootingTimer--
+            this.enemy[i].shootingTimer--;
             if (this.enemy[i].shootingTimer <= 0) {
                 for (let k = 0; k < this.ship.length; k++) { // for distance check below
+                    console.log(this.enemy[i].shootingTimer)
                     this.distance = dist(this.ship[k].x, this.ship[k].y, this.enemy[i].x, this.enemy[i].y);
                     if (this.distance <= 200) { // create enemy bullet sprites)
                         this.enemyBulletGroup.push(this.enemyBullets(this.enemy[i].x, this.enemy[i].y, this.ship[k]));
@@ -378,7 +379,7 @@ class Logic {
                         }
                     }
                     for (let s = 0; s < this.enemyBulletGroup.length; s++) { // collision for enemy single shot (needs to be outisde of the if statement so its always active)
-                        if (this.enemyBulletGroup[s].collides(this.ship[k])) {
+                        if (this.enemyBulletGroup[s].overlaps(this.ship[k])) {
                             this.enemyBulletGroup[s].remove();
                             // console.log('i got hit');
                         }
