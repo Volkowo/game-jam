@@ -206,6 +206,8 @@ class Factory {
         let tempEnemy = new Sprite(x, y);
         tempEnemy.type = type;
         tempEnemy.behavior = behavior;
+        tempEnemy.angle = 0;
+
         tempEnemy.collectTick = 60;
         tempEnemy.collectTimer = 3;
         tempEnemy.drag = 0.5;

@@ -46,7 +46,7 @@ class Logic {
         this.selection = new Group();
         this.enemy = new Group();
 
-        this.enemy.push(factory.createEnemyOne(350, 240));
+        this.enemy.push(factory.createEnemyOne(450, 240));
         this.enemy.push(factory.createEnemyOne(380, 240));
         // this.enemyRandomSequence();
     }
@@ -269,13 +269,42 @@ class Logic {
         }
     }
 
+
+    enemySurroundResource(){
+        for (let i = 0; i < this.enemy.length; i++) {
+            for(let k = 0; k < this.resource.length; k++){
+                if(this.resource[k].size == "Big"){
+                    this.enemyX = random(this.resource[k].x - 80, this.resource[k].x + 80);
+                    this.enemyY = random(this.resource[k].y - 80, this.resource[k].y + 80);
+
+                    if(this.enemyX > this.resource[k].x - 20 && this.enemyX < this.resource[k].x + this.resource[k].w + 20){
+                        console.log("X was between the values " + "X Values: " + this.enemyX);
+                        this.enemyX = random(this.resource[k].x - 80, this.resource[k].x + 80);
+                    }
+
+                    if(this.enemyY > this.resource[k].y - 20 && this.enemyY < this.resource[k].y + this.resource[k].h + 20){
+                        // console.log("Y was between the values")
+                        this.enemyY = random(this.resource[k].y - 80, this.resource[k].y + 80);
+                    }
+
+                    this.enemy[i].rotation = this.enemy[i].direction;
+                    if (frameCount % 25 == 0 && this.enemy[i].behavior == "Guard") {
+                        this.enemy[i].rotateTo(this.enemyX, this.enemyY, 5);
+                    } else if (frameCount % 30 == 0 && this.enemy[i].behavior == "Guard") {
+                        this.enemy[i].moveTo(this.enemyX, this.enemyY, 3);
+                    }
+                }
+            }
+        }
+    }
+
     randomEnemyBehavior() {
         for (let i = 0; i < this.enemy.length; i++) {
             // console.log(i)
             if (i % 2 == 0) {
                 this.enemy[i].behavior = "Random";
             } else {
-                this.enemy[i].behavior = "Hunting";
+                this.enemy[i].behavior = "Guard";
             }
         }
     }
@@ -284,6 +313,7 @@ class Logic {
         for (let i = 0; i < this.enemy.length; i++) {
             this.enemyRandomType();
             this.enemyHuntBase();
+            this.enemySurroundResource();
         }
     }
 
