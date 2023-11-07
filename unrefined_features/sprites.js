@@ -201,9 +201,10 @@ class Factory {
         return tempShip;
     }
 
-    createEnemy(x, y, type) {
+    createEnemy(x, y, type, behavior) {
         let tempEnemy = new Sprite(x, y);
         tempEnemy.type = type;
+        tempEnemy.behavior = behavior;
         tempEnemy.collectTick = 60;
         tempEnemy.collectTimer = 3;
         tempEnemy.drag = 0.5;
@@ -215,7 +216,7 @@ class Factory {
     }
     
     createEnemyOne(x, y) {
-        let tempEnemy = this.createEnemy(x, y, "One");
+        let tempEnemy = this.createEnemy(x, y, "One", "");
         tempEnemy.color = 'YELLOW';
         tempEnemy.w = 20;
         tempEnemy.h = 35;
@@ -241,7 +242,7 @@ class Factory {
     }
 
     createEnemyTwo(x, y) {
-        let tempEnemy = this.createEnemy(x, y, "Two");
+        let tempEnemy = this.createEnemy(x, y, "Two", "");
         tempEnemy.color = 'ORANGE';
         tempEnemy.w = 33;
         tempEnemy.h = 63;
@@ -267,7 +268,7 @@ class Factory {
     }
     
     createEnemyThree(x, y) {
-        let tempEnemy = this.createEnemy(x, y, "Three");
+        let tempEnemy = this.createEnemy(x, y, "Three", "");
         tempEnemy.color = 'BROWN';
         tempEnemy.w = 43;
         tempEnemy.h = 63;
@@ -293,7 +294,7 @@ class Factory {
     }
     
     createEnemyFour(x, y) {
-        let tempEnemy = this.createEnemy(x, y, "Four");
+        let tempEnemy = this.createEnemy(x, y, "Four", "");
         tempEnemy.color = 'BROWN';
         tempEnemy.w = 60;
         tempEnemy.h = 85;

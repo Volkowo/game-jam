@@ -24,6 +24,9 @@ class Logic {
         this.singleShot = true;
         this.burstFire = false;
 
+        this.rotate = true;
+        this.move = false;
+
         /*
             1. Spawn ships with resources
             2. Cooldown(?)
@@ -44,7 +47,7 @@ class Logic {
 
         this.enemy.push(factory.createEnemyOne(350, 240));
         this.enemy.push(factory.createEnemyOne(380, 240));
-        this.enemyRandomSequence();
+        // this.enemyRandomSequence();
     }
 
     draw(factory) {
@@ -60,7 +63,10 @@ class Logic {
         this.shootingLogic();
         this.selectionCircle(factory);
 
-        
+        this.randomEnemyBehavior();
+        this.assignEnemyBehavior();
+
+
         this.resourceRegeneration();
         // console.log(this.selection.length);
         // allSprites.debug = true;
@@ -86,7 +92,7 @@ class Logic {
                 this.ship[i].selected = false;
             }
 
-            if(this.ship[i].selected == true){
+            if (this.ship[i].selected == true) {
                 // console.log("ship selected")
                 // this.ship[i].strokeWeight = 4;
                 // this.ship[i].stroke = "RED";
@@ -166,8 +172,8 @@ class Logic {
                     if (this.ship[j].visible == true) {
                         // console.log("Timer to get resource / collect rate: " + this.ship[j].collectTick);
                         this.amountReduced = (this.ship[j].collectRate * this.shipAmount);
-                        if(this.resource[i].resourcePool < this.amountReduced){
-                            if(frameCount % this.ship[j].collectTick == 0){
+                        if (this.resource[i].resourcePool < this.amountReduced) {
+                            if (frameCount % this.ship[j].collectTick == 0) {
                                 // console.log("REMAINING AMOUNT: " + this.resource[i].remainingAmount);
                                 this.resource[i].remainingAmount = this.resource[i].resourcePool;
                                 this.resource[i].resourcePool -= this.resource[i].remainingAmount;
@@ -179,7 +185,7 @@ class Logic {
                             this.ship[j].text = this.ship[j].shipBag;
                         } else {
                             // console.log("This is a writing too")
-                            if(frameCount % this.ship[j].collectTick == 0){
+                            if (frameCount % this.ship[j].collectTick == 0) {
                                 // console.log(this.amountReduced);
                                 // console.log("SHIP IS COLLECTING");
                                 this.resource[i].resourcePool -= this.amountReduced;
@@ -217,7 +223,7 @@ class Logic {
         }
     }
 
-    displayCoordinates(){
+    displayCoordinates() {
         text("X: " + mouseX + " Y: " + mouseY, mouseX - 40, mouseY - 5)
     }
 
@@ -229,18 +235,59 @@ class Logic {
     }
 
     // ------- ENEMIES
-    async enemyRandomSequence(){
-        for(let i = 0; i < this.enemy.length; i++){
+    // async enemyRandomSequence(){
+    //     for(let i = 0; i < this.enemy.length; i++){
+    //         this.enemyX = random(250, 1500);
+    //         this.enemyY = random(240, 820);
+    //         await this.enemy[i].rotateTo(this.enemyX, this.enemyY, 5);
+    //         await this.enemy[i].moveTo(this.enemyX, this.enemyY, 3);
+    //     }
+    //     this.enemyRandomSequence();
+    // }
+
+    enemyRandomType() {
+        for (let i = 0; i < this.enemy.length; i++) {
             this.enemyX = random(250, 1500);
             this.enemyY = random(240, 820);
-            await this.enemy[i].rotateTo(this.enemyX, this.enemyY, 5);
-            await this.enemy[i].moveTo(this.enemyX, this.enemyY, 3);
+            this.enemy[i].rotation = this.enemy[i].direction;
+            if (frameCount % 25 == 0 && this.enemy[i].behavior == "Random") {
+                this.enemy[i].rotateTo(this.enemyX, this.enemyY, 5);
+            } else if (frameCount % 40 == 0 && this.enemy[i].behavior == "Random") {
+                this.enemy[i].moveTo(this.enemyX, this.enemyY, 3);
+            }
         }
-        this.enemyRandomSequence();
     }
 
-    // ------- SHOOTING
+    enemyHuntBase() {
+        for (let i = 0; i < this.enemy.length; i++) {
+            if (this.enemy[i].behavior == "Hunting") {
+                this.enemy[i].rotateTo(this.base.x, this.base.y, 5);
+                this.enemy[i].moveTo(this.base.x, this.base.y, 3);
+            }
+        }
+    }
 
+    randomEnemyBehavior() {
+        for (let i = 0; i < this.enemy.length; i++) {
+            // console.log(i)
+            if (i % 2 == 0) {
+                this.enemy[i].behavior = "Random";
+            } else {
+                this.enemy[i].behavior = "Hunting";
+            }
+        }
+    }
+
+    assignEnemyBehavior() {
+        for (let i = 0; i < this.enemy.length; i++) {
+            this.enemyRandomType();
+            this.enemyHuntBase();
+        }
+    }
+
+
+
+    // ------- SHOOTING
     shootingLogic() {
         if (kb.presses('q')) { // firing mode (single)
             this.singleShot = true;
@@ -314,20 +361,9 @@ class Logic {
         object.rotation = object.direction;
     }
 
-    shipRotate(){
-        for(let i = 4; i < this.ship.length; i++){
+    shipRotate() {
+        for (let i = 4; i < this.ship.length; i++) {
             this.rotateDirection(this.ship[i]);
         }
     }
 }
-
-
-                // this.distance.push(dist(this.resource[k].x, this.resource[k].y, this.ship[i].x, this.ship[i].y));
-
-                // if(this.distance.length > this.resource.length){
-                //     this.distance.shift();
-                // }
-
-                // for(let z = 0; z < this.distance.length; z++){
-                //     console.log(this.distance)
-                // }
