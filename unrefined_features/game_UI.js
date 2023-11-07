@@ -42,6 +42,10 @@ class UI {
         //UI Images
         this.goldFrame = loadImage("assets/UI/gold_display_frame.png");
         this.woodenUI = loadImage("assets/UI/UI_background.png");
+        this.selectButtonImg = loadImage("assets/UI/select_button_bg.png");
+        this.menuButtonImg = loadImage("assets/UI/menu_button.png");
+        this.ropeImg1 = loadImage("assets/UI/rope1.png");
+        this.ropeImg2 = loadImage("assets/UI/rope2.png");
 
         //UI Font
         this.gameFont = loadFont("assets/font/new_rodin_pro.otf");
@@ -376,38 +380,64 @@ class UI {
         this.buildDisplay.collider = 'n';
         this.buildDisplay.visible = true;
 
+        this.selectBar = new Sprite(330,20);
+        this.selectBar.w = 330;
+        this.selectBar.h = 50;
+        this.selectBar.draw = () => {
+            stroke(115, 60, 15);
+            strokeWeight(7);
+            fill(246, 238, 227);
+            quad(-200, -25, 200, -25, 160, 25, -200, 25);
+
+            image(this.selectButtonImg,-15,0,45,45);
+            image(this.selectButtonImg,35,0,45,45);
+            image(this.selectButtonImg,85,0,45,45);
+            image(this.selectButtonImg,135,0,45,45);
+            // image(this.menuButtonImg,-80,0,50,50);
+        }
+        this.selectBar.collider = 's';
+        this.selectBar.layer = 100;
 
         //______________________Notification pop-ups_________________________//
-        this.noGold = new Sprite(360, 50);
-        this.noGold.draw = function () {
+        this.noGold = new Sprite(350, 98);
+        this.noGold.draw = () => {
             noStroke();
-            fill(0, 0, 0, 80);
-            rect(0, 0, 300, 100);
+            fill(115, 60, 15, 100);
+            rect(0, 0, 250, 100);
 
+            image(this.ropeImg1, 125, 12.5, 18,125);
+            image(this.ropeImg2, -125, 12.5, 18,125);
+
+            textAlign(CENTER,CENTER);
             strokeWeight(1);
-            stroke('red');
-            fill('red');
-            textSize(25);
-            text("You are broke, Bro.", -120, -10);
-            text("Get some Gold!", -100, 25);
+            stroke(71, 40, 14);
+            fill(71, 40, 14);
+            textSize(20);
+            text("You are broke, Bro.", 0, -15);
+            text("Get some Gold!", 0, 15);
+
         }
         this.noGold.startCounter = false;
         this.noGold.counter = 0;
         this.noGold.visible = false;
         this.noGold.collider = 'n';
-
-        this.shipBuilt = new Sprite(360, 50);
-        this.shipBuilt.draw = function () {
+        
+        this.shipBuilt = new Sprite(350, 98);
+        this.shipBuilt.draw = () => {
             noStroke();
-            fill(0, 0, 0, 80);
-            rect(0, 0, 300, 100);
+            fill(115, 60, 15, 100);
+            rect(0, 0, 250, 100);
+            
+            image(this.ropeImg1, 125, 12.5, 18,125);
+            image(this.ropeImg2, -125, 12.5, 18,125);
 
+            textAlign(CENTER,CENTER);
             strokeWeight(1);
-            stroke('red');
-            fill('red');
-            textSize(25);
-            text("Congrats", -120, -10);
-            text("You got a ship!", -100, 25);
+            stroke(71, 40, 14);
+            fill(71, 40, 14);
+            textSize(20);
+            text("Congrats", 0, -15);
+            text("You got a ship!", 0, 15);
         }
         this.shipBuilt.startCounter = false;
         this.shipBuilt.counter = 0;
@@ -417,7 +447,7 @@ class UI {
 
     gameButtons() {
         this.buildButton = createButton("Build");
-        this.buildButton.position(13, 80.5);
+        this.buildButton.position(5, 72);
         this.buildButton.mouseClicked(() => { this.buildMode() });
         this.buildButton.style("width", "101px");
         this.buildButton.style("height", "30px");
@@ -428,7 +458,7 @@ class UI {
         this.buildButton.hide();
 
         this.upgradeButton = createButton("Upgrade");
-        this.upgradeButton.position(110, 80.5);
+        this.upgradeButton.position(102, 72);
         this.upgradeButton.mouseClicked(() => { this.upgradeMode() });
         this.upgradeButton.style("width", "101px");
         this.upgradeButton.style("height", "30px");
@@ -439,7 +469,7 @@ class UI {
         this.upgradeButton.show();
 
         this.buildButtonClone = createButton("Build");
-        this.buildButtonClone.position(13, 80.5);
+        this.buildButtonClone.position(5, 72);
         //this.buildButtonClone.mouseClicked();
         this.buildButtonClone.style("width", "101px");
         this.buildButtonClone.style("height", "30px");
@@ -451,7 +481,7 @@ class UI {
         this.buildButtonClone.attribute("disabled", "");
 
         this.upgradeButtonClone = createButton("Upgrade");
-        this.upgradeButtonClone.position(112, 80.5);
+        this.upgradeButtonClone.position(103, 72);
         //this.upgradeButtonClone.mouseClicked();
         this.upgradeButtonClone.style("width", "101px");
         this.upgradeButtonClone.style("height", "30px");
@@ -463,7 +493,7 @@ class UI {
         this.upgradeButtonClone.attribute("disabled", "");
 
         this.shipOne = createButton("Build");
-        this.shipOne.position(118, 115);
+        this.shipOne.position(110, 107.5);
         this.shipOne.mouseClicked(() => { this.buildShip('One') });
         // this.shipOne.mouseOver(() => {this.hoverShipOne()});
         this.shipOne.style("width", "90px");
@@ -475,7 +505,7 @@ class UI {
         this.shipOne.show();
 
         this.shipTwo = createButton("Build");
-        this.shipTwo.position(118, 313);
+        this.shipTwo.position(110, 305.5);
         this.shipTwo.mouseClicked(() => { this.buildShip('Two') });
         // this.shipTwo.mouseOver(() => {this.hoverShipTwo()});
         this.shipTwo.style("width", "90px");
@@ -487,7 +517,7 @@ class UI {
         this.shipTwo.show();
 
         this.shipThree = createButton("Build");
-        this.shipThree.position(118, 510);
+        this.shipThree.position(110, 502.5);
         this.shipThree.mouseClicked(() => { this.buildShip('Three') });
         // this.shipThree.mouseOver(() => {this.hoverShipThree()});
         this.shipThree.style("width", "90px");
@@ -499,7 +529,7 @@ class UI {
         this.shipThree.show();
 
         this.shipFour = createButton("Build");
-        this.shipFour.position(118, 708);
+        this.shipFour.position(110, 700.5);
         this.shipFour.mouseClicked(() => { this.buildShip('Four') });
         // this.shipFour.mouseOver(() => {this.hoverShipFour()});
         this.shipFour.style("width", "90px");
@@ -512,52 +542,56 @@ class UI {
 
         //Selection Buttons
         this.selectButtonOne = createButton('1');
-        this.selectButtonOne.position(1300, 30);
+        this.selectButtonOne.position(301, 6);
         this.selectButtonOne.mouseClicked(() => { this.selectShipOne() });
-        this.selectButtonOne.style("width", "30px");
-        this.selectButtonOne.style("height", "30px");
+        this.selectButtonOne.style("width", "28px");
+        this.selectButtonOne.style("height", "28px");
         this.selectButtonOne.style("background-color", "#f6eee3");
         this.selectButtonOne.style("border-color", "#733c0f");
         this.selectButtonOne.style("color", "#47280e");
-        this.selectButtonOne.style("font-size", "15px");
+        this.selectButtonOne.style("font-size", "18px");
+        this.selectButtonOne.style("border-radius", "20px");
         this.selectButtonOne.show();
-
+        
         this.selectButtonTwo = createButton('2');
-        this.selectButtonTwo.position(1350, 30);
+        this.selectButtonTwo.position(351, 6);
         this.selectButtonTwo.mouseClicked(() => { this.selectShipTwo() });
-        this.selectButtonTwo.style("width", "30px");
-        this.selectButtonTwo.style("height", "30px");
+        this.selectButtonTwo.style("width", "28px");
+        this.selectButtonTwo.style("height", "28px");
         this.selectButtonTwo.style("background-color", "#f6eee3");
         this.selectButtonTwo.style("border-color", "#733c0f");
         this.selectButtonTwo.style("color", "#47280e");
-        this.selectButtonTwo.style("font-size", "15px");
+        this.selectButtonTwo.style("font-size", "18px");
+        this.selectButtonTwo.style("border-radius", "20px");
         this.selectButtonTwo.show();
-
+        
         this.selectButtonThree = createButton('3');
-        this.selectButtonThree.position(1400, 30);
+        this.selectButtonThree.position(401, 6);
         this.selectButtonThree.mouseClicked(() => { this.selectShipThree() });
-        this.selectButtonThree.style("width", "30px");
-        this.selectButtonThree.style("height", "30px");
+        this.selectButtonThree.style("width", "28px");
+        this.selectButtonThree.style("height", "28px");
         this.selectButtonThree.style("background-color", "#f6eee3");
         this.selectButtonThree.style("border-color", "#733c0f");
         this.selectButtonThree.style("color", "#47280e");
-        this.selectButtonThree.style("font-size", "15px");
+        this.selectButtonThree.style("font-size", "18px");
+        this.selectButtonThree.style("border-radius", "20px");
         this.selectButtonThree.show();
-
+        
         this.selectButtonFour = createButton('4');
-        this.selectButtonFour.position(1450, 30);
+        this.selectButtonFour.position(451, 6);
         this.selectButtonFour.mouseClicked(() => { this.selectShipFour() });
-        this.selectButtonFour.style("width", "30px");
-        this.selectButtonFour.style("height", "30px");
+        this.selectButtonFour.style("width", "28px");
+        this.selectButtonFour.style("height", "28px");
         this.selectButtonFour.style("background-color", "#f6eee3");
         this.selectButtonFour.style("border-color", "#733c0f");
         this.selectButtonFour.style("color", "#47280e");
-        this.selectButtonFour.style("font-size", "15px");
+        this.selectButtonFour.style("font-size", "18px");
+        this.selectButtonFour.style("border-radius", "20px");
         this.selectButtonFour.show();
-
+        
         //Upgrades Buttons              // Neeed to add functionalities on these buttons
         this.upgradeOne = createButton('Buy');
-        this.upgradeOne.position(93.5,157.5);
+        this.upgradeOne.position(86,150); //157.5
         this.upgradeOne.style("width", "100px");
         this.upgradeOne.style("height", "30px");
         this.upgradeOne.style("background-color", "#f6eee3");
@@ -567,7 +601,7 @@ class UI {
         this.upgradeOne.hide();
         
         this.upgradeTwo = createButton('Buy');
-        this.upgradeTwo.position(93.5,315);
+        this.upgradeTwo.position(86,307);
         this.upgradeTwo.style("width", "100px");
         this.upgradeTwo.style("height", "30px");
         this.upgradeTwo.style("background-color", "#f6eee3");
@@ -577,7 +611,7 @@ class UI {
         this.upgradeTwo.hide();
 
         this.upgradeThree = createButton('Buy');
-        this.upgradeThree.position(93.5,472.5);
+        this.upgradeThree.position(86,465);
         this.upgradeThree.style("width", "100px");
         this.upgradeThree.style("height", "30px");
         this.upgradeThree.style("background-color", "#f6eee3");
@@ -587,7 +621,7 @@ class UI {
         this.upgradeThree.hide();
 
         this.upgradeFour = createButton('Buy');
-        this.upgradeFour.position(93.5,630);
+        this.upgradeFour.position(86,622);
         this.upgradeFour.style("width", "100px");
         this.upgradeFour.style("height", "30px");
         this.upgradeFour.style("background-color", "#f6eee3");
@@ -597,7 +631,7 @@ class UI {
         this.upgradeFour.hide();
 
         this.upgradeFive = createButton('Buy');
-        this.upgradeFive.position(93.5,787.5);
+        this.upgradeFive.position(86,780);
         this.upgradeFive.style("width", "100px");
         this.upgradeFive.style("height", "30px");
         this.upgradeFive.style("background-color", "#f6eee3");
@@ -654,19 +688,24 @@ class UI {
     buildShip(type) {
         if (type == 'One') {
             this.shipType = 0;
-            this.startBuildingShipOne = true;
         } else if (type == 'Two') {
             this.shipType = 1;
-            this.startBuildingShipTwo = true;
         } else if (type == 'Three') {
             this.shipType = 2;
-            this.startBuildingShipThree = true;
         } else if (type == 'Four') {
             this.shipType = 3;
-            this.startBuildingShipFour = true;
         }
         if (this.base.baseBag >= this.ship[this.shipType].cost) {
             this.base.baseBag -= this.ship[this.shipType].cost;
+            if (this.shipType == 0) {
+                this.startBuildingShipOne = true;
+            } else if (this.shipType == 1) {
+                this.startBuildingShipTwo = true;
+            } else if (this.shipType == 2) {
+                this.startBuildingShipThree = true;
+            } else if (this.shipType == 3) {
+                this.startBuildingShipFour = true;
+            }
         } else {
             //if there's no gold enough to buy ship show the warning
             this.noGold.counter = 100;

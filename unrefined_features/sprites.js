@@ -12,6 +12,9 @@ class Factory {
         this.enemyTwo = loadImage("assets/img/ship_sprites/galleon_enemy.png");
         this.enemyThree = loadImage("assets/img/ship_sprites/frigate_enemy.png");
         this.enemyFour = loadImage("assets/img/ship_sprites/manowar_enemy.png");
+
+        this.baseImg = loadImage("assets/img/islands/base.png");
+        this.bigResourceImg = loadImage("assets/img/islands/big_resource.png");
     }
 
 
@@ -28,21 +31,25 @@ class Factory {
         tempBase.color = 'RED';
         tempBase.w = 80;
         tempBase.h = 80;
-        tempBase.baseBag = 500;
+        tempBase.baseBag = 0;
         tempBase.hitPoint = 100;
         tempBase.collider = 'k'
         tempBase.selected = false;
         tempBase.canBeMoved = false;
+        tempBase.fiction = 0;
+        // tempBase.img = this.baseImg;
+        // tempBase.scale = 0.08;
+        tempBase.layer = 1;
         return tempBase;
     }
-
+    
     createResource(x, y, size) {
         let tempResource = new Sprite(x, y);
         tempResource.size = size;
         tempResource.collider = 's'
         return tempResource;
     }
-
+    
     createSmallResource(x, y) {
         let tempResource = this.createResource(x, y, "Small");
         tempResource.color = 'GREEN';
@@ -50,12 +57,12 @@ class Factory {
         tempResource.remainingAmount = 0;
         tempResource.bounciness = 0;
         tempResource.resourcePool = Math.floor(random(30, 50));
-
+        
         tempResource.selected = false;
         tempResource.canBeMoved = false;
         return tempResource;
     }
-
+    
     createBigResource(x, y) {
         let tempResource = this.createResource(x, y, "Big");
         tempResource.color = 'GREEN';
@@ -66,7 +73,9 @@ class Factory {
         tempResource.bounciness = 0;
         tempResource.resourcePool = Math.floor(random(100, 150));
         tempResource.resourceCap = 500;
-
+        // tempResource.img = this.bigResourceImg;
+        // tempResource.scale = 0.08;
+        
         tempResource.selected = false;
         tempResource.canBeMoved = false;
         return tempResource;
@@ -81,17 +90,19 @@ class Factory {
         tempShip.bounciness = 0;
         tempShip.direction = 90;
         tempShip.rotationLock = true;
-        tempShip.layer = 2;
+        tempShip.layer = 3;
+        tempShip.fiction =0;
         return tempShip;
     }
     
     createShipOne(x, y) {
         let tempShip = this.createShip(x, y, "One");
         tempShip.color = 'YELLOW';
-        tempShip.w = 20;
-        tempShip.h = 35;
+        tempShip.w = 30;
+        tempShip.h = 20;
         tempShip.scale = 0.7;
         tempShip.img = this.shipOne;
+        // tempShip.debug = true;
         
         // STATS
         tempShip.hitPoint = 20;
@@ -114,14 +125,15 @@ class Factory {
         tempShip.shoot = false;
         return tempShip;
     }
-
+    
     createShipTwo(x, y) {
         let tempShip = this.createShip(x, y, "Two");
         tempShip.color = 'ORANGE';
-        tempShip.w = 33;
-        tempShip.h = 63;
+        tempShip.w = 53;
+        tempShip.h = 33;
         tempShip.scale = 0.7;
         tempShip.img = this.shipTwo;
+        // tempShip.debug = true;
         
         // STATS
         tempShip.hitPoint = 30;
@@ -147,10 +159,11 @@ class Factory {
     createShipThree(x, y) {
         let tempShip = this.createShip(x, y, "Three");
         tempShip.color = 'BROWN';
-        tempShip.w = 43;
-        tempShip.h = 63;
+        tempShip.w = 63;
+        tempShip.h = 33;
         tempShip.scale = 0.7;
         tempShip.img = this.shipThree;
+        // tempShip.debug = true;
         
         // STATS
         tempShip.hitPoint = 50;
@@ -176,11 +189,12 @@ class Factory {
     createShipFour(x, y) {
         let tempShip = this.createShip(x, y, "Four");
         tempShip.color = 'BROWN';
-        tempShip.w = 60;
-        tempShip.h = 85;
+        tempShip.w = 85;
+        tempShip.h = 40;
         tempShip.scale = 0.7;
         tempShip.img = this.shipFour;
-
+        // tempShip.debug = true;
+        
         // STATS
         tempShip.hitPoint = 80;
         tempShip.attack = 10;

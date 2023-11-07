@@ -27,6 +27,9 @@ class Logic {
         this.rotate = true;
         this.move = false;
 
+        this.dragSelect;
+        this.startingX;
+        this.startingY;
         /*
             1. Spawn ships with resources
             2. Cooldown(?)
@@ -45,6 +48,7 @@ class Logic {
         this.enemyBulletGroup = new Group();
         this.selection = new Group();
         this.enemy = new Group();
+        this.dragSelection();
 
         this.enemy.push(factory.createEnemyOne(450, 240));
         this.enemy.push(factory.createEnemyOne(380, 240));
@@ -68,7 +72,7 @@ class Logic {
         this.randomEnemyBehavior();
         this.assignEnemyBehavior();
 
-
+        this.clickDrag();
         this.resourceRegeneration();
         // console.log(this.selection.length);
         // allSprites.debug = true;
@@ -123,9 +127,9 @@ class Logic {
             if (this.ship[i].selected == true) {
                 // this.selection.push(factory.createSelection(this.ship[i].x, this.ship[i].y, this.ship[i].w + 30));
                 noFill();
-                strokeWeight(4);
-                stroke("WHITE");
-                ellipse(this.ship[i].x, this.ship[i].y, this.ship[i].w + 30, this.ship[i].h + 20);
+                strokeWeight(2);
+                stroke("green");
+                ellipse(this.ship[i].x, this.ship[i].y, 50);
             }
 
             // if(this.selection.length > 1){
@@ -278,7 +282,7 @@ class Logic {
                     this.enemyY = random(this.resource[k].y - 80, this.resource[k].y + 80);
 
                     if (this.enemyX > this.resource[k].x - 20 && this.enemyX < this.resource[k].x + this.resource[k].w + 20) {
-                        console.log("X was between the values " + "X Values: " + this.enemyX);
+                        //console.log("X was between the values " + "X Values: " + this.enemyX);
                         this.enemyX = random(this.resource[k].x - 80, this.resource[k].x + 80);
                     }
 
@@ -339,7 +343,7 @@ class Logic {
                     for (let s = 0; s < this.enemyBulletGroup.length; s++) { // collision for enemy single shot (needs to be outisde of the if statement so its always active)
                         if (this.enemyBulletGroup[s].collides(this.ship[k])) {
                             this.enemyBulletGroup[s].remove();
-                            console.log('i got hit');
+                            // console.log('i got hit');
                         }
                     }
                 }
@@ -414,7 +418,8 @@ class Logic {
         tempBullet.diameter = 10;
         tempBullet.color = 'yellow';
         tempBullet.life = 60;
-        tempBullet.overlaps(this.ship);
+        tempBullet.collider = 'k';
+        tempBullet.overlaps(allSprites);
         tempBullet.direction = tempBullet.angleTo(angle);
         tempBullet.speed = 4;
         return tempBullet;
@@ -425,7 +430,7 @@ class Logic {
         tempBurst.diameter = 5;
         tempBurst.color = 'orange';
         tempBurst.life = 60;
-        tempBurst.overlaps(this.ship);
+        tempBurst.overlaps(allSprites);
         tempBurst.direction = tempBurst.angleTo(angle);
         tempBurst.speed = 4;
         return tempBurst;
@@ -438,6 +443,70 @@ class Logic {
     shipRotate() {
         for (let i = 4; i < this.ship.length; i++) {
             this.rotateDirection(this.ship[i]);
+        }
+    }
+
+    dragSelection() { // select box sprite
+        this.dragSelect = new Sprite();
+        this.dragSelect.stroke = 'green';
+        this.dragSelect.strokeWeight = 3;
+        this.dragSelect.color.setAlpha(0);
+        this.dragSelect.overlapping(allSprites);
+    }
+    
+    clickDrag() {
+        if (mouse.presses('left')) {
+            //set the startingX and startingY on mouse presses
+            this.startingX = mouseX;
+            this.startingY = mouseY;
+        }
+        if (mouse.pressing('left')) {
+            if (mouseX > this.startingX) {
+                // +1 cuz it doesnt work if the w is 0
+                this.dragSelect.w = (mouseX - this.startingX) + 1;
+                //get average between startingX and mouseX cuz the sprites.x exist in the middle of the sprite
+                this.dragSelect.x = (this.startingX + mouseX) / 2; 
+            }
+            if (mouseY > this.startingY) {
+                // +1 cuz it doesnt work if the h is 0
+                this.dragSelect.h = (mouseY - this.startingY) + 1;
+                //get average between startingY and mouseY cuz the sprites.y exist in the middle of the sprite
+                this.dragSelect.y = (this.startingY + mouseY) / 2;
+            }
+
+            //For reverse select box
+            if (mouseX < this.startingX) {
+                // +1 cuz it doesnt work if the w is 0
+                this.dragSelect.w = (this.startingX - mouseX) + 1;
+                //get average then add mouseX
+                this.dragSelect.x = ((this.startingX - mouseX) / 2) + mouseX;
+            }
+            if (mouseY < this.startingY) {
+                // +1 cuz it doesnt work if the h is 0
+                this.dragSelect.h = (this.startingY - mouseY) + 1; 
+                //get average then add mouseY
+                this.dragSelect.y = ((this.startingY - mouseY) / 2) + mouseY;
+            }
+        } else {
+            //dont know why but adding this here preventing glitching
+            this.startingX = mouseX;
+            this.startingY = mouseY;
+
+            //put the select box offscreen if not pressing
+            this.dragSelect.w = 1;
+            this.dragSelect.h = 1;
+            this.dragSelect.x = -100;
+            this.dragSelect.y = -100;
+        }
+        if (mouse.released('left') && mouseX > 200 && mouseY > 50) {
+            for (let i = 0; i < this.ship.length; i++) {
+                let shipToSelect = this.ship[i];
+                if (this.dragSelect.overlapping(shipToSelect)) {
+                    shipToSelect.selected = true;
+                } else {
+                    shipToSelect.selected = false;
+                }
+            }
         }
     }
 }

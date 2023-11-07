@@ -5,9 +5,6 @@ body {
     font-family:monospace;
 }
 
-#container {
-    /* css that effects the container holding main. */
-    display:flex;
-    justify-content:center;
-    align-items:center;
+button {
+    font-weight: bold;
 }
