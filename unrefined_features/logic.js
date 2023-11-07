@@ -206,7 +206,7 @@ class Logic {
 
                 this.displayText();
                 this.resource[i].text = this.resource[i].resourcePool;
-                this.ship[j].text = this.ship[j].shipBag;
+                // this.ship[j].text = this.ship[j].shipBag;
             }
         }
     }
@@ -361,36 +361,24 @@ class Logic {
 
     enemyShootingLogic() {
         for (let i = 0; i < this.enemy.length; i++) {
-            // console.log(this.enemy[0].shootingTimer, this.enemy[1].shootingTimer)
-            for (let k = 4; k < this.ship.length; k++) { // for distance check below
-                // this.distance = dist(this.ship[k].x, this.ship[k].y, this.enemy[i].x, this.enemy[i].y);
-                // console.log(this.distance)
-                
-                console.log(this.enemy[i].shootingTimer)
-
-                // console.log(this.enemy[0].detectShip)
-
-                if (this.enemy[i].shootingTimer <= 0) {
-                    console.log("Test")
-                    // create player bullet sprites (change this.enemy to this.enemy or whatever when it gets added)
-                    this.enemyBulletGroup.push(this.enemyBullets(this.enemy[i].x, this.enemy[i].y, this.ship[k]));
-                    if (this.enemy[i].type == "One") { // sets shooting cooldown timer for each enemy type
-                        this.enemy[i].shootingTimer = 50;
-                    } else if (this.enemy[i].type == "Two") {
-                        this.enemy[i].shootingTimer = 100;
-                    } else if (this.enemy[i].type == "Three") {
-                        this.enemy[i].shootingTimer = 150;
-                    } else if (this.enemy[i].type == "Four") {
-                        this.enemy[i].shootingTimer = 200;
+            this.enemy[i].shootingTimer--
+            if (this.enemy[i].shootingTimer <= 0) {
+                for (let k = 0; k < this.ship.length; k++) { // for distance check below
+                    this.distance = dist(this.ship[k].x, this.ship[k].y, this.enemy[i].x, this.enemy[i].y);
+                    if (this.distance <= 200) { // create enemy bullet sprites)
+                        this.enemyBulletGroup.push(this.enemyBullets(this.enemy[i].x, this.enemy[i].y, this.ship[k]));
+                        if (this.enemy[i].type == "One") { // sets shooting cooldown timer for each enemy type
+                            this.enemy[i].shootingTimer = 50;
+                        } else if (this.enemy[i].type == "Two") {
+                            this.enemy[i].shootingTimer = 100;
+                        } else if (this.enemy[i].type == "Three") {
+                            this.enemy[i].shootingTimer = 150;
+                        } else if (this.enemy[i].type == "Four") {
+                            this.enemy[i].shootingTimer = 200;
+                        }
                     }
-
-                    for (let s = 0; s < this.enemyBulletGroup.length; s++) { // collision for player single shot (needs to be outisde of the if statement so its always active)
-                        // console.log("function working", this.enemyBulletGroup[s], this.enemyBulletGroup.length, this.ship[k]);
-                        // console.log("function working", this.enemyBulletGroup[s].overlaps(this.ship[k]), 
-                        // this.enemyBulletGroup[s].overlapping(this.ship[k]), this.ship[k]);
-                        this.enemyBulletGroup[s].debug = true;
-                        // this.ship[k].debug = true;
-                        if (this.enemyBulletGroup[s].overlaps(this.ship[k]) || this.enemyBulletGroup[s].overlapping(this.ship[k])) {
+                    for (let s = 0; s < this.enemyBulletGroup.length; s++) { // collision for enemy single shot (needs to be outisde of the if statement so its always active)
+                        if (this.enemyBulletGroup[s].collides(this.ship[k])) {
                             this.enemyBulletGroup[s].remove();
                             // console.log('i got hit');
                         }
@@ -407,12 +395,14 @@ class Logic {
         tempBullet.life = 60;
         tempBullet.overlaps(this.enemy);
         tempBullet.overlaps(this.singleBulletGroup);
+        tempBullet.overlaps(this.burstBulletGroup);
+        tempBullet.overlaps(this.enemyBulletGroup);
         tempBullet.direction = tempBullet.angleTo(angle);
         tempBullet.speed = 4;
         return tempBullet;
     }
 
-    // ------- SHOOTING
+    // ------- PLAYER SHOOTING
     shootingLogic() {
         if (kb.presses('q')) { // firing mode (single)
             this.singleShot = true;
@@ -427,7 +417,7 @@ class Logic {
             if (this.ship[i].shootingTimer <= 0) {
                 for (let k = 0; k < this.enemy.length; k++) { // for distance check below
                     this.distance = dist(this.enemy[k].x, this.enemy[k].y, this.ship[i].x, this.ship[i].y);
-                    if (this.distance <= 200) { // create player bullet sprites (change this.enemy to this.enemy or whatever when it gets added)
+                    if (this.distance <= 200) { // create player bullet sprites
                         if (this.singleShot === true) { // for above boolean if statement (toggled after 'q' key press)
                             this.singleBulletGroup.push(this.createSingleShot(this.ship[i].x, this.ship[i].y, this.enemy[k]));
                         } else if (this.burstFire === true) { // creates three sprites spread out toggle after a 'w' key press

@@ -29,6 +29,7 @@ class Factory {
         tempBase.w = 80;
         tempBase.h = 80;
         tempBase.baseBag = 500;
+        tempBase.hitPoint = 100;
         tempBase.collider = 'k'
         tempBase.selected = false;
         tempBase.canBeMoved = false;
