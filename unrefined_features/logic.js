@@ -303,10 +303,7 @@ class Logic {
         }
     }
 
-    enemyAttackShip() {
-
-    }
-
+    
     randomEnemyBehavior() {
         for (let i = 0; i < this.enemy.length; i++) {
             // console.log(i)
@@ -317,31 +314,27 @@ class Logic {
             }
         }
     }
-
+    
     assignEnemyBehavior() {
         for (let i = 0; i < this.enemy.length; i++) {
             this.enemyRandomType();
             this.enemyHuntBase();
             this.enemySurroundResource();
-
-
+            
+            
         }
     }
 
-    checkDistance(shipType, distance, detect) {
+    checkDistance(shipType) {
         for (let i = 4; i < this.ship.length; i++) {
             for (let k = 0; k < this.enemy.length; k++) {
                 if (this.ship[i].type == shipType) {
-                    distance = dist(this.ship[i].x, this.ship[i].y, this.enemy[k].x, this.enemy[k].y);
-                    if (distance <= 200) {
-                        detect = true;
-                    } else if (distance >= 220) {
-                        detect = false;
-                    }
-
-                    if (detect == true) {
-                        this.enemy[k].moveTo(this.enemy[k].x, this.enemy[k].y, 0);
-                        this.enemyShootingLogic();
+                    let distance = dist(this.ship[i].x, this.ship[i].y, this.enemy[k].x, this.enemy[k].y);
+                    if (distance < 200) {
+                        this.enemyAttackShip();
+                        return true;
+                    } else if (distance > 200) {
+                        return false;
                     }
                 }
             }
@@ -351,24 +344,27 @@ class Logic {
     detectionLogic() {
         for (let i = 0; i < this.enemy.length; i++) {
             this.enemy[i].shootingTimer--;
-            this.checkDistance("One", this.enemy[i].distanceOne, this.enemy[i].detectShipOne);
-            // this.checkDistance("Two", this.enemy[i].distanceTwo, this.enemy[i].detectShipTwo);
-            // this.checkDistance("Three", this.enemy[i].distanceThree, this.enemy[i].detectShipThree);
-            // this.checkDistance("Four", this.enemy[i].distanceFour, this.enemy[i].detectShipFour);
-
-
+            // this.enemy[i].shootingTimer--;
+            this.checkDistance("One");
+            this.checkDistance("Two");
+            this.checkDistance("Three");
+            this.checkDistance("Four");
         }
-        // console.log(this.enemy[0].detectShipOne, this.enemy[1].detectShipOne)
-
-
     }
+
+    enemyAttackShip() {
+        for(let i = 0; i < this.enemy.length; i++){
+            this.enemy[i].moveTo(this.enemy[i].x, this.enemy[i].y, 0);
+            this.enemyShootingLogic();
+        }
+    }
+
 
     enemyShootingLogic() {
         for (let i = 0; i < this.enemy.length; i++) {
-            this.enemy[i].shootingTimer--;
+            console.log(this.enemy[0].shootingTimer)
             if (this.enemy[i].shootingTimer <= 0) {
                 for (let k = 0; k < this.ship.length; k++) { // for distance check below
-                    console.log(this.enemy[i].shootingTimer)
                     this.distance = dist(this.ship[k].x, this.ship[k].y, this.enemy[i].x, this.enemy[i].y);
                     if (this.distance <= 200) { // create enemy bullet sprites)
                         this.enemyBulletGroup.push(this.enemyBullets(this.enemy[i].x, this.enemy[i].y, this.ship[k]));
