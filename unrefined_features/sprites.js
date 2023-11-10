@@ -71,13 +71,15 @@ class Factory {
         tempResource.collider = 's';
         tempResource.remainingAmount = 0;
         tempResource.bounciness = 0;
-        tempResource.resourcePool = Math.floor(random(100, 150));
+        tempResource.resourcePool = Math.floor(random(450, 480));
         tempResource.resourceCap = 500;
+        tempResource.cooldown = Math.floor(random(480, 600));
         // tempResource.img = this.bigResourceImg;
         // tempResource.scale = 0.08;
         
         tempResource.selected = false;
         tempResource.canBeMoved = false;
+        tempResource.spawnEnemy = false;
         return tempResource;
     }
 

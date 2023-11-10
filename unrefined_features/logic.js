@@ -7,6 +7,7 @@ class Logic {
         this.resource;
         this.selection;
         this.enemy;
+        this.time = 0;
         // this.distance = new Array ();
 
         this.enemyX = 0;
@@ -63,6 +64,7 @@ class Logic {
 
     draw(factory) {
         strokeWeight(1);
+        this.gameTimer();
         this.displayCoordinates();
         this.movementLogic(this.ship);
         this.shipRotate();
@@ -73,6 +75,8 @@ class Logic {
         this.resourceCollectionLogic();
         this.shootingLogic();
         this.checkShipAmount();
+
+        this.spawnEnemyAtResource(factory);
 
         // this.checkShipAmount();
 
@@ -90,6 +94,17 @@ class Logic {
         // console.log("REGEN TIMER: " + this.regenTimer, "REGEN VALUE: " + this.regenValue)
         // console.log("COUNTER ONE: " + this.counterOne, "COUNTER TWO: " + this.counterTwo,
         //     "COUNTER Three: " + this.counterThree, "COUNTER FOUR: " + this.counterFour, "SHIP AMOUNT: " + this.shipAmount);
+    }
+
+    gameTimer(){
+        if(frameCount % 60 == 0){
+            this.time++;
+            // console.log(this.time)
+
+            // if(this.time == 60){
+            //     console.log("A Minute has passed")
+            // }
+        }
     }
 
     selectLogic(type, binding) {
@@ -217,7 +232,7 @@ class Logic {
                             // console.log(this.amountReducedFour);
                         }
 
-                        console.log(this.amountReducedOne, this.amountReducedTwo, this.amountReducedThree, this.amountReducedFour)
+                        // console.log(this.amountReducedOne, this.amountReducedTwo, this.amountReducedThree, this.amountReducedFour)
                         this.amountReduced = this.amountReducedOne + this.amountReducedTwo + this.amountReducedThree + this.amountReducedFour;
                         // this.amountReduced = this.ship[j].collectRate * this.shipAmount;
                         if (this.resource[i].resourcePool < this.amountReduced) {
@@ -235,7 +250,7 @@ class Logic {
                         } else {
                             // console.log("This is a writing too")
                             if (frameCount % this.ship[j].collectTick == 0) {
-                                console.log(this.amountReduced);
+                                // console.log(this.amountReduced);
                                 // console.log("SHIP IS COLLECTING");
                                 this.resource[i].resourcePool -= this.amountReduced;
                                 this.ship[j].shipBag += this.ship[j].collectRate;
@@ -257,6 +272,8 @@ class Logic {
         }
     }
 
+
+    // --------- RESOURCE
     resourceRegeneration() {
         for (let i = 0; i < this.resource.length; i++) {
             if (this.resource[i].size == "Big") {
@@ -276,6 +293,38 @@ class Logic {
         text("X: " + mouseX + " Y: " + mouseY, mouseX - 40, mouseY - 5)
     }
 
+    // this is for the big resource. It will change spawnEnemy to true when said resource reaches the cap.
+    // this will allow the big resource to spawn enemies
+    checkSpawnEnemy(){
+        for(let i = 0; i < this.resource.length; i++){
+            // console.log("BEFORE: " + this.resource[5].spawnEnemy, this.resource[6].spawnEnemy);
+            if(this.resource[i].resourcePool >= this.resource[i].resourceCap && this.resource[i].size == "Big"){
+                this.resource[i].spawnEnemy = true;
+            } else {
+                this.resource[i].spawnEnemy = false;
+            }
+            // console.log("AFTER: " + this.resource[5].spawnEnemy, this.resource[6].spawnEnemy);
+        }
+    }
+
+    spawnEnemyAtResource(factory){
+        this.checkSpawnEnemy();
+
+        for(let i = 0; i < this.resource.length; i++){
+            if(this.resource[i].spawnEnemy == true){
+                if(this.resource[i].cooldown > 0){
+                    this.resource[i].cooldown--
+                } else {
+                    this.enemy.push(factory.createEnemyOne(this.resource[i].x, this.resource[i].y + 50));
+                    this.enemy.push(factory.createEnemyOne(this.resource[i].x + 50, this.resource[i].y + 50));
+
+                    this.resource[i].cooldown = Math.floor(random(480, 600));
+                }
+
+            }
+        }
+    }
+
     displayText() {
         // console.log("Calling the method")
         this.base.text = this.base.baseBag;
@@ -283,6 +332,8 @@ class Logic {
         return this.base.baseBag;
     }
 
+
+    // -------- ENEMY-RELATED STUFF
     enemyRandomType() {
         for (let i = 0; i < this.enemy.length; i++) {
             this.enemyX = random(250, 1500);
@@ -397,10 +448,29 @@ class Logic {
                     }
                 }
                 for (let s = 0; s < this.enemyBulletGroup.length; s++) { // collision for enemy single shot (needs to be outisde of the if statement so its always active)
-                    console.log(this.enemyBulletGroup.length)
                     if (this.enemyBulletGroup[s].collide(this.ship[k])) {
                         this.enemyBulletGroup[s].remove();
-
+                        if (this.ship[k].type == "One") { // damage when hitting ship type 1
+                            this.ship[k].hitPoint -= 10;
+                            if (this.ship[k].hitPoint <= 0) {
+                                this.ship[k].remove();
+                            }
+                        } else if (this.ship[k].type == "Two") { // damage when hitting ship type 2
+                            this.ship[k].hitPoint -= 10;
+                            if (this.ship[k].hitPoint <= 0) {
+                                this.ship[k].remove();
+                            }
+                        } else if (this.ship[k].type == "Three") { // damage when hitting ship type 3 
+                            this.ship[k].hitPoint -= 10;
+                            if (this.ship[k].hitPoint <= 0) {
+                                this.ship[k].remove();
+                            }
+                        } else if (this.ship[k].type == "Four") { // damage when hitting ship type 4
+                            this.ship[k].hitPoint -= 10;
+                            if (this.ship[k].hitPoint <= 0) {
+                                this.ship[k].remove();
+                            }
+                        }
                     }
                 }
             }
@@ -470,11 +540,53 @@ class Logic {
                     for (let s = 0; s < this.singleBulletGroup.length; s++) { // collision for player single shot (needs to be outisde of the if statement so its always active)
                         if (this.singleBulletGroup[s].collide(this.enemy[k])) {
                             this.singleBulletGroup[s].remove();
+                            if (this.enemy[k].type == "One") { // damage when hitting enemy type 1
+                                this.enemy[k].hitPoint -= 10;
+                                if (this.enemy[k].hitPoint <= 0) {
+                                    this.enemy[k].remove();
+                                }
+                            } else if (this.enemy[k].type == "Two") { // damage when hitting enemy type 2
+                                this.enemy[k].hitPoint -= 10;
+                                if (this.enemy[k].hitPoint <= 0) {
+                                    this.enemy[k].remove();
+                                }
+                            } else if (this.enemy[k].type == "Three") { // damage when hitting enemy type 3 
+                                this.enemy[k].hitPoint -= 10;
+                                if (this.enemy[k].hitPoint <= 0) {
+                                    this.enemy[k].remove();
+                                }
+                            } else if (this.enemy[k].type == "Four") { // damage when hitting enemy type 4
+                                this.enemy[k].hitPoint -= 10;
+                                if (this.enemy[k].hitPoint <= 0) {
+                                    this.enemy[k].remove();
+                                }
+                            }
                         }
                     }
                     for (let a = 0; a < this.burstBulletGroup.length; a++) { // same collision detection for player burst shot
                         if (this.burstBulletGroup[a].collide(this.enemy[k])) {
                             this.burstBulletGroup[a].remove();
+                            if (this.enemy[k].type == "One") { // damage when hitting enemy type 1 with burst
+                                this.enemy[k].hitPoint -= 10;
+                                if (this.enemy[k].hitPoint <= 0) {
+                                    this.enemy[k].remove();
+                                }
+                            } else if (this.enemy[k].type == "Two") { // damage when hitting enemy type 2 with burst
+                                this.enemy[k].hitPoint -= 10;
+                                if (this.enemy[k].hitPoint <= 0) {
+                                    this.enemy[k].remove();
+                                }
+                            } else if (this.enemy[k].type == "Three") { // damage when hitting enemy type 3 with burst
+                                this.enemy[k].hitPoint -= 10;
+                                if (this.enemy[k].hitPoint <= 0) {
+                                    this.enemy[k].remove();
+                                }
+                            } else if (this.enemy[k].type == "Four") { // damage when hitting enemy type 4 with burst
+                                this.enemy[k].hitPoint -= 10;
+                                if (this.enemy[k].hitPoint <= 0) {
+                                    this.enemy[k].remove();
+                                }
+                            }
                         }
                     }
                 }
@@ -525,6 +637,9 @@ class Logic {
         }
     }
 
+
+
+    // ------------ SELECTION WITH MOUSE
     dragSelection() { // select box sprite
         this.dragSelect = new Sprite();
         this.dragSelect.stroke = 'green';
