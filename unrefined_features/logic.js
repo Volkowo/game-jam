@@ -91,7 +91,7 @@ class Logic {
         if (kb.presses(binding)) {
             // console.log("Test")
             this.checkShip(type);
-            
+
         }
     }
 
@@ -363,13 +363,29 @@ class Logic {
         for (let i = 0; i < this.enemy.length; i++) {
             for (let k = 4; k < this.ship.length; k++) {
                 if (this.ship[k].type == shipType) {
-                    let distance = dist(this.ship[k].x, this.ship[k].y, this.enemy[i].x, this.enemy[i].y);
-                    if (distance < 200) {
+                    this.distance = dist(this.ship[k].x, this.ship[k].y, this.enemy[i].x, this.enemy[i].y);
+                    if (this.distance < 200) {
                         this.enemy[i].moveTo(this.enemy[i].x, this.enemy[i].y, 0);
-                        this.enemyShootingLogic();
-                        // this.enemyAttackShip();
+                        if (this.enemy[i].shootingTimer <= 0) {
+                            this.enemyBulletGroup.push(this.enemyBullets(this.enemy[i].x, this.enemy[i].y, this.ship[k]));
+                            if (this.enemy[i].type == "One") { // sets shooting cooldown timer for each enemy type
+                                this.enemy[i].shootingTimer = 50;
+                            } else if (this.enemy[i].type == "Two") {
+                                this.enemy[i].shootingTimer = 100;
+                            } else if (this.enemy[i].type == "Three") {
+                                this.enemy[i].shootingTimer = 150;
+                            } else if (this.enemy[i].type == "Four") {
+                                this.enemy[i].shootingTimer = 200;
+                            }
+                        }
+                        for (let s = 0; s < this.enemyBulletGroup.length; s++) { // collision for enemy single shot (needs to be outisde of the if statement so its always active)
+                            if (this.enemyBulletGroup[s].overlaps(this.ship[k])) {
+                                this.enemyBulletGroup[s].remove();
+                                // console.log('i got hit');
+                            }
+                        }
                         // return true;
-                    } else if (distance > 201) {
+                    } else if (this.distance > 201) {
                         // console.log("else")
                         this.enemy[i].behavior = "Random";
                         // return false;
@@ -389,43 +405,6 @@ class Logic {
             this.checkDistance("Two");
             this.checkDistance("Three");
             this.checkDistance("Four");
-        }
-    }
-
-    enemyAttackShip() {
-        for (let i = 0; i < this.enemy.length; i++) {
-            this.enemy[i].moveTo(this.enemy[i].x, this.enemy[i].y, 0);
-            this.enemyShootingLogic();
-        }
-    }
-
-
-    enemyShootingLogic() {
-        for (let i = 0; i < this.enemy.length; i++) {
-            // console.log(this.enemy[0].shootingTimer)
-            if (this.enemy[i].shootingTimer <= 0) {
-                for (let k = 0; k < this.ship.length; k++) { // for distance check below
-                    this.distance = dist(this.ship[k].x, this.ship[k].y, this.enemy[i].x, this.enemy[i].y);
-                    if (this.distance <= 200) { // create enemy bullet sprites)
-                        this.enemyBulletGroup.push(this.enemyBullets(this.enemy[i].x, this.enemy[i].y, this.ship[k]));
-                        if (this.enemy[i].type == "One") { // sets shooting cooldown timer for each enemy type
-                            this.enemy[i].shootingTimer = 50;
-                        } else if (this.enemy[i].type == "Two") {
-                            this.enemy[i].shootingTimer = 100;
-                        } else if (this.enemy[i].type == "Three") {
-                            this.enemy[i].shootingTimer = 150;
-                        } else if (this.enemy[i].type == "Four") {
-                            this.enemy[i].shootingTimer = 200;
-                        }
-                    }
-                    for (let s = 0; s < this.enemyBulletGroup.length; s++) { // collision for enemy single shot (needs to be outisde of the if statement so its always active)
-                        if (this.enemyBulletGroup[s].overlaps(this.ship[k])) {
-                            this.enemyBulletGroup[s].remove();
-                            // console.log('i got hit');
-                        }
-                    }
-                }
-            }
         }
     }
 
