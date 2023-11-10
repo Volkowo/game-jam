@@ -31,7 +31,6 @@ class Logic {
         this.startingX;
         this.startingY;
 
-        this.selecting == false;
         /*
             1. Spawn ships with resources
             2. Cooldown(?)
@@ -93,12 +92,6 @@ class Logic {
 
     selectLogic(type, binding) {
         if (kb.presses(binding)) {
-            this.selecting = true;
-            if (this.selecting == true) {
-                this.ship.selected = false;
-                this.selecting = false;
-            }
-            console.log(type)
             this.checkShip(type);
         }
     }
@@ -163,7 +156,7 @@ class Logic {
         if (mouse.pressing('Right')) {
             for (let i = 4; i < this.ship.length; i++) {
                 if (this.ship[i].selected == true) {
-                    this.ship[i].moveTo(mouseX, mouseY, 5);
+                    this.ship[i].moveTo(mouseX, mouseY, 2.5);
                     this.ship[i].visible = true;
                     this.ship[i].goCollect = false;
                 }
@@ -288,7 +281,7 @@ class Logic {
             if (frameCount % 25 == 0 && this.enemy[i].behavior == "Random" && this.enemy[i].detectShip == false) {
                 this.enemy[i].rotateTo(this.enemyX, this.enemyY, 5);
             } else if (frameCount % 40 == 0 && this.enemy[i].behavior == "Random" && this.enemy[i].detectShip == false) {
-                this.enemy[i].moveTo(this.enemyX, this.enemyY, 3);
+                this.enemy[i].moveTo(this.enemyX, this.enemyY, 1);
             }
         }
     }
@@ -297,7 +290,7 @@ class Logic {
         for (let i = 0; i < this.enemy.length; i++) {
             if (this.enemy[i].behavior == "Hunting" && this.enemy[i].detectShip == false) {
                 this.enemy[i].rotateTo(this.base.x, this.base.y, 5);
-                this.enemy[i].moveTo(this.base.x, this.base.y, 3);
+                this.enemy[i].moveTo(this.base.x, this.base.y, 1);
             }
         }
     }
@@ -324,7 +317,7 @@ class Logic {
                     if (frameCount % 25 == 0 && this.enemy[i].behavior == "Guard" && this.enemy[i].detectShip == false) {
                         this.enemy[i].rotateTo(this.enemyX, this.enemyY, 5);
                     } else if (frameCount % 30 == 0 && this.enemy[i].behavior == "Guard" && this.enemy[i].detectShip == false) {
-                        this.enemy[i].moveTo(this.enemyX, this.enemyY, 3);
+                        this.enemy[i].moveTo(this.enemyX, this.enemyY, 1);
                     }
                 }
             }
@@ -371,15 +364,31 @@ class Logic {
         for (let i = 0; i < this.enemy.length; i++) {
             for (let k = 4; k < this.ship.length; k++) {
                 if (this.ship[k].type == shipType) {
-                    let distance = dist(this.ship[k].x, this.ship[k].y, this.enemy[i].x, this.enemy[i].y);
-                    if (distance < 200) {
+                    this.distance = dist(this.ship[k].x, this.ship[k].y, this.enemy[i].x, this.enemy[i].y);
+                    if (this.distance < 200) {
                         this.enemy[i].moveTo(this.enemy[i].x, this.enemy[i].y, 0);
-                        this.enemyShootingLogic();
-                        // this.enemyAttackShip();
+                        if (this.enemy[i].shootingTimer <= 0) {
+                            this.enemyBulletGroup.push(this.enemyBullets(this.enemy[i].x, this.enemy[i].y, this.ship[k]));
+                            if (this.enemy[i].type == "One") { // sets shooting cooldown timer for each enemy type
+                                this.enemy[i].shootingTimer = 50;
+                            } else if (this.enemy[i].type == "Two") {
+                                this.enemy[i].shootingTimer = 100;
+                            } else if (this.enemy[i].type == "Three") {
+                                this.enemy[i].shootingTimer = 150;
+                            } else if (this.enemy[i].type == "Four") {
+                                this.enemy[i].shootingTimer = 200;
+                            }
+                        }
+                        for (let s = 0; s < this.enemyBulletGroup.length; s++) { // collision for enemy single shot (needs to be outisde of the if statement so its always active)
+                            if (this.enemyBulletGroup[s].overlaps(this.ship[k])) {
+                                this.enemyBulletGroup[s].remove();
+                                // console.log('i got hit');
+                            }
+                        }
                         // return true;
-                    } else if (distance > 201) {
+                    } else if (this.distance > 201) {
                         // console.log("else")
-                        this.enemy[i].behavior = "Random";
+                        this.assignEnemyBehavior();
                         // return false;
                     }
                 }
@@ -399,14 +408,6 @@ class Logic {
             this.checkDistance("Four");
         }
     }
-
-    enemyAttackShip() {
-        for (let i = 0; i < this.enemy.length; i++) {
-            this.enemy[i].moveTo(this.enemy[i].x, this.enemy[i].y, 0);
-            this.enemyShootingLogic();
-        }
-    }
-
 
     enemyShootingLogic() {
         for (let i = 0; i < this.enemy.length; i++) {

@@ -63,14 +63,15 @@ class UI {
         this.gameButtons();
         this.UI_Sprites();
 
-        this.base = factory.createBase(1000, H / 2 - 50);
-        this.resource.push(factory.createSmallResource(random(800, 1200), random(120, 300)));
+        this.base = factory.createBase(1300, 660);
+        this.resource.push(factory.createSmallResource(random(800, 1200), random(40, 120)));
         this.resource.push(factory.createSmallResource(random(540, 750), random(120, 300)));
-        this.resource.push(factory.createSmallResource(random(1000, 1400), random(520, 700)));
+        this.resource.push(factory.createSmallResource(random(1200, 1400), random(450, 500)));
         this.resource.push(factory.createSmallResource(random(300, 500), random(600, 820)));
-        this.resource.push(factory.createSmallResource(random(1350, 1500), random(320, 550)));
+        this.resource.push(factory.createSmallResource(random(850, 1100), random(760, 820)));
+
         this.resource.push(factory.createBigResource(random(300, 400), random(100, 200)));
-        this.resource.push(factory.createBigResource(random(1200, 1300), random(700, 800)));
+        this.resource.push(factory.createBigResource(random(1200, 1300), random(200, 300)));
 
         // For default ship stats
         this.ship.push(factory.createShipOne(10000, 10000));
