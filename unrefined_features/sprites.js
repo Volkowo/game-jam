@@ -73,7 +73,7 @@ class Factory {
         tempResource.bounciness = 0;
         tempResource.resourcePool = Math.floor(random(450, 480));
         tempResource.resourceCap = 500;
-        tempResource.cooldown = Math.floor(random(480, 600));
+        tempResource.cooldown = Math.floor(random(1200, 1500));
         // tempResource.img = this.bigResourceImg;
         // tempResource.scale = 0.08;
         

@@ -80,10 +80,8 @@ class UI {
         this.ship.push(factory.createShipFour(10000, 10000));
 
         //Starting ships
-        this.ship.push(factory.createShipOne(800, H / 2));
-        this.ship.push(factory.createShipTwo(800, H / 2 + 100));
-        this.ship.push(factory.createShipThree(800, H / 2 + 200));
-        this.ship.push(factory.createShipFour(800, H / 2 + 300));
+        this.ship.push(factory.createShipOne(this.base.x - 25, this.base.y - 50));
+        this.ship.push(factory.createShipOne(this.base.x + 25, this.base.y - 50));
 
         // ENEMY TESTING
 
