@@ -87,6 +87,7 @@ class Factory {
         tempShip.collectTick = 60;
         tempShip.collectTimer = 3;
         tempShip.drag = 0.5;
+        tempShip.mass = 100;
         // tempShip.collider = 'k'
         tempShip.bounciness = 0;
         tempShip.direction = 90;
@@ -234,6 +235,7 @@ class Factory {
         tempEnemy.distanceFour = 0;
         tempEnemy.detectShipFour = false;
 
+        tempEnemy.mass = 100;
         tempEnemy.collectTick = 60;
         tempEnemy.collectTimer = 3;
         tempEnemy.drag = 0.5;

@@ -487,6 +487,7 @@ class Logic {
         tempBullet.diameter = 10;
         tempBullet.color = 'yellow';
         tempBullet.life = 60;
+        tempBullet.mass = 0.1;
         tempBullet.overlaps(this.ship);
         tempBullet.overlaps(this.burstBulletGroup);
         tempBullet.overlaps(this.singleBulletGroup);
@@ -502,6 +503,7 @@ class Logic {
         tempBurst.diameter = 5;
         tempBurst.color = 'orange';
         tempBurst.life = 60;
+        tempBurst.mass = 0.1;
         tempBurst.overlaps(this.ship);
         tempBurst.overlaps(this.burstBulletGroup);
         tempBurst.overlaps(this.singleBulletGroup);
