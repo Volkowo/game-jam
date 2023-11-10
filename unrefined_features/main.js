@@ -10,7 +10,7 @@ const GAME = 3;
 const CREDITS = 4;
 
 // what screen is loaded upon launch/refresh
-let currentScreen = GAME;
+let currentScreen = LOADING;
 
 // button variables
 // let playButton;
