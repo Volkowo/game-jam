@@ -105,11 +105,6 @@ class Logic {
     gameTimer() {
         if (frameCount % 60 == 0) {
             this.time++;
-            // console.log(this.time)
-
-            // if(this.time == 60){
-            //     console.log("A Minute has passed")
-            // }
         }
     }
 
@@ -117,19 +112,16 @@ class Logic {
         if (kb.presses(binding)) {
             // console.log("Test")
             this.checkShip(type, ship);
-
         }
     }
 
     // Check's which ship is currently being selected through the keyboard input
     checkShip(type, ship) {
-
         if (ship.type == type) {
             ship.selected = true;
         } else {
             ship.selected = false;
         }
-
     }
 
     checkShipAmount() {
@@ -161,7 +153,6 @@ class Logic {
     }
 
     selectionCircle(ship) {
-
         if (ship.selected == true) {
             // this.selection.push(factory.createSelection(ship.x, ship.y, ship.w + 30));
             noFill();
@@ -169,11 +160,9 @@ class Logic {
             stroke("green");
             ellipse(ship.x, ship.y, 50);
         }
-
         // if(this.selection.length > 1){
         //     this.selection.shift();
         // }
-
     }
 
     movementLogic(ship) {
@@ -491,6 +480,7 @@ class Logic {
                     ship.shootingTimer = ship.reloadTimer;
                 }
                 for (let s = 0; s < this.singleBulletGroup.length; s++) { // collision for player single shot (needs to be outisde of the if statement so its always active)
+                    console.log(this.singleBulletGroup[s], this.enemy[k]);
                     if (this.singleBulletGroup[s].collides(this.enemy[k])) {
                         this.singleBulletGroup[s].remove();
                         if (this.enemy[k].type == "One") { // damage when hitting enemy type 1
