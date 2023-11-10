@@ -33,6 +33,7 @@ let movingAni = 500;
 let startMenuAni = false;
 let openSetting = false;
 let activateSetting = false;
+let loadingLink = 1;
 
 function preload() {
     screenMenu.preload();
@@ -77,8 +78,12 @@ function draw() {
 
 function keyPressed() { // change from press any key to menu
     if (currentScreen === PRESS_ANY_KEY) {
-        currentScreen = MENU;
-        screenMenu.enableMenuButtons();
+        if (loadingLink == 1) {
+            currentScreen = MENU;
+            screenMenu.enableMenuButtons();
+        } else if (loadingLink == 2) {
+            currentScreen = GAME;
+        }
     }
 }
 

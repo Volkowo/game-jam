@@ -5,9 +5,11 @@ class Loading {
 
     preload() {
         this.loadingImg = loadImage("assets/menu/loading.jpg");
+        this.gameFont = loadFont("assets/font/new_rodin_pro.otf");
     }
 
     setup() {
+        this.loadingTimer = 120;
     }
 
     draw() {
@@ -15,17 +17,22 @@ class Loading {
         image(this.loadingImg, 0, 0, W, H);
 
         //Loading Text
-        textAlign(CENTER, CENTER);
-        textSize(100);
+        textAlign(LEFT, CENTER);
+        strokeWeight(10);
+        stroke(64, 37, 15);
+        textSize(70);
+        textFont(this.gameFont);
         fill('white');
-        text('loading', W / 2, 75);
+        text('Loading . . .', 80, 790);
 
         //Revert Back to Normal
+        noStroke();
         textAlign(CENTER, CENTER);
         textSize(10);
         fill('black');
 
-        if (frameCount === 150 && currentScreen == LOADING) { // loading screen stops after 150 frames
+        this.loadingTimer--;
+        if (this.loadingTimer <= 0) { // loading screen stops after 150 frames
             currentScreen = PRESS_ANY_KEY;
         }
     }
@@ -38,6 +45,7 @@ class PressAnyKey {
 
     preload() {
         this.loadingImg = loadImage("assets/menu/loading.jpg");
+        this.gameFont = loadFont("assets/font/new_rodin_pro.otf");
     }
 
     setup() {
@@ -49,19 +57,27 @@ class PressAnyKey {
         image(this.loadingImg, 0, 0, W, H);
 
         //Loading Text
-        textAlign(CENTER, CENTER);
-        textSize(100);
+        textAlign(LEFT, CENTER);
+        strokeWeight(10);
+        stroke(64, 37, 15);
+        textSize(70);
+        textFont(this.gameFont);
         fill('white');
-        text('press any key to continue', W / 2, 75);
+        text('Press any key to continue . . .', 80, 790);
 
         //Revert Back to Normal
+        noStroke();
         textAlign(CENTER, CENTER);
         textSize(10);
         fill('black');
 
         if (mouse.presses('left') || mouse.presses('right')) {
-            currentScreen = MENU;
-            screenMenu.enableMenuButtons();
+            if (loadingLink == 1) {
+                currentScreen = MENU;
+                screenMenu.enableMenuButtons();
+            } else if (loadingLink == 2) {
+                currentScreen = GAME;
+            }
         }
     }
 }
@@ -72,6 +88,7 @@ class Menu {
     }
 
     preload() {
+        //Images
         this.menuImg = loadImage("assets/menu/menu.jpg");
         this.settingButtonImg = loadImage("assets/menu/settingButton.png");
         this.creditsButtonImg = loadImage("assets/menu/creditsButton.png");
@@ -80,6 +97,9 @@ class Menu {
         this.settingImg = loadImage("assets/menu/setting_background.png");
         this.closeSetting = loadImage("assets/menu/closeSetting.png");
         this.closeSettingHover = loadImage("assets/menu/closeSettingHover.png");
+
+        //Font
+        this.gameFont = loadFont("assets/font/new_rodin_pro.otf");
     }
 
     setup() {
@@ -92,12 +112,16 @@ class Menu {
         image(this.menuImg, 0, 0, W, H);
 
         //Game Title
-        textAlign(CENTER, CENTER);
-        textSize(100);
+        textAlign(LEFT, CENTER);
+        strokeWeight(10);
+        stroke(64, 37, 15);
+        textSize(60);
+        textFont(this.gameFont);
         fill('white');
-        text('menu screen', W / 2, 75);
+        text('very cool pirate game', 450, 75);
 
         //Revert Back to Normal
+        noStroke();
         textAlign(CENTER, CENTER);
         textSize(10);
         fill('black');
@@ -215,26 +239,26 @@ class Menu {
 
             // Sound and Music volume percentage display
             fill(86, 54, 40);
-            textSize(20)
+            textSize(20);
             
             if (this.musicCheck.checked()) {
                 // introMusic.setVolume(0);
                 // add all musics like above
-                text('0%', 30, -102 + popUpPos);
+                text('0%', 30, -105 + popUpPos);
             } else {
                 // introMusic.setVolume(this.musicSlider.value());
                 // add all musics like above
-                text(Math.floor(this.musicSlider.value() * 100) + "%", 30, -102 + popUpPos);
+                text(Math.floor(this.musicSlider.value() * 100) + "%", 30, -105 + popUpPos);
             }
 
             if (this.soundCheck.checked()) {
                 // Soundfx.setVolume(0);
                 // add all sounds like above
-                text('0%', 30, 23 + popUpPos);
+                text('0%', 30, 20 + popUpPos);
             } else {
                 // Soundfx.setVolume(this.soundSlider.value());
                 // add all sounds like above
-                text(Math.floor(this.soundSlider.value() * 100) + "%", 30, 23 + popUpPos);
+                text(Math.floor(this.soundSlider.value() * 100) + "%", 30, 20 + popUpPos);
             }
         }
         this.settingPopUp.collider = 'n';
@@ -365,8 +389,9 @@ class Menu {
     }
 
     playButtonClicked() {
-        currentScreen = GAME;
-
+        loadingLink = 2;
+        screenLoading.loadingTimer = 120;
+        currentScreen = LOADING;
         // Old Buttons
         // this.playButton.hide();
         // this.settingButton.hide();
