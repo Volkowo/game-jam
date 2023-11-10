@@ -116,6 +116,7 @@ class Factory {
         tempShip.cost = 5;
         tempShip.buildTime = 300;
         tempShip.shipBag = 0;
+        tempShip.reloadTimer = 50;
         tempShip.shootingTimer = 50;
         tempShip.rotation = tempShip.direction;
         
@@ -147,7 +148,8 @@ class Factory {
         tempShip.cost = 10;
         tempShip.buildTime = 600;
         tempShip.shipBag = 0;
-        tempShip.shootingTimer = 50;
+        tempShip.reloadTimer = 100;
+        tempShip.shootingTimer = 100;
         
         // BOOLEAN-RELATED
         tempShip.selected = false;
@@ -177,7 +179,8 @@ class Factory {
         tempShip.cost = 25;
         tempShip.buildTime = 600;
         tempShip.shipBag = 0;
-        tempShip.shootingTimer = 50;
+        tempShip.reloadTimer = 150;
+        tempShip.shootingTimer = 150;
         
         // BOOLEAN-RELATED
         tempShip.selected = false;
@@ -207,7 +210,8 @@ class Factory {
         tempShip.cost = 35;
         tempShip.buildTime = 1500;
         tempShip.shipBag = 0;
-        tempShip.shootingTimer = 50;
+        tempShip.reloadTimer = 200;
+        tempShip.shootingTimer = 200;
 
         // BOOLEAN-RELATED
         tempShip.selected = false;
@@ -260,6 +264,7 @@ class Factory {
         tempEnemy.hitPoint = 20;
         tempEnemy.attack = 5;
         tempEnemy.movementSpeed = 5;
+        tempEnemy.reloadTimer = 50;
         tempEnemy.shootingTimer = 50;
         tempEnemy.rotation = tempEnemy.direction;
         
@@ -287,7 +292,8 @@ class Factory {
         tempEnemy.hitPoint = 30;
         tempEnemy.attack = 8;
         tempEnemy.movementSpeed = 4;
-        tempEnemy.shootingTimer = 50;
+        tempEnemy.reloadTimer = 100;
+        tempEnemy.shootingTimer = 100;
         
         // BOOLEAN-RELATED
         tempEnemy.selected = false;
@@ -313,7 +319,8 @@ class Factory {
         tempEnemy.hitPoint = 50;
         tempEnemy.attack = 5;
         tempEnemy.movementSpeed = 3;
-        tempEnemy.shootingTimer = 50;
+        tempEnemy.reloadTimer = 150;
+        tempEnemy.shootingTimer = 150;
         
         // BOOLEAN-RELATED
         tempEnemy.selected = false;
@@ -339,7 +346,8 @@ class Factory {
         tempEnemy.hitPoint = 80;
         tempEnemy.attack = 10;
         tempEnemy.movementSpeed = 2;
-        tempEnemy.shootingTimer = 50;
+        tempEnemy.reloadTimer = 200;
+        tempEnemy.shootingTimer = 200;
 
         // BOOLEAN-RELATED
         tempEnemy.selected = false;
