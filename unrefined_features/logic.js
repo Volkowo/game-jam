@@ -191,19 +191,19 @@ class Logic {
                     if (this.ship[j].visible == true) {
                         // console.log("Timer to get resource / collect rate: " + this.ship[j].collectTick);
 
-                        if (this.ship[j].type = 'One') {
+                        if (this.ship[j].type == 'One') {
                             this.amountReducedOne = this.ship[j].collectRate * this.counterOne;
                             // console.log(this.amountReducedOne);
                         }
-                        if (this.ship[j].type = 'Two') {
+                        if (this.ship[j].type == 'Two') {
                             this.amountReducedTwo = this.ship[j].collectRate * this.counterTwo;
                             // console.log(this.amountReducedTwo);
                         }
-                        if (this.ship[j].type = 'Three') {
+                        if (this.ship[j].type == 'Three') {
                             this.amountReducedThree = this.ship[j].collectRate * this.counterThree;
                             // console.log(this.amountReducedThree);
                         }
-                        if (this.ship[j].type = 'Four') {
+                        if (this.ship[j].type == 'Four') {
                             this.amountReducedFour = this.ship[j].collectRate * this.counterFour;
                             // console.log(this.amountReducedFour);
                         }
@@ -378,17 +378,18 @@ class Logic {
                                 this.enemy[i].shootingTimer = 200;
                             }
                         }
-                        for (let s = 0; s < this.enemyBulletGroup.length; s++) { // collision for enemy single shot (needs to be outisde of the if statement so its always active)
-                            if (this.enemyBulletGroup[s].overlaps(this.ship[k])) {
-                                this.enemyBulletGroup[s].remove();
-                                // console.log('i got hit');
-                            }
-                        }
                         // return true;
                     } else if (this.distance > 201) {
                         // console.log("else")
                         this.assignEnemyBehavior();
                         // return false;
+                    }
+                }
+                for (let s = 0; s < this.enemyBulletGroup.length; s++) { // collision for enemy single shot (needs to be outisde of the if statement so its always active)
+                    console.log(this.enemyBulletGroup.length)
+                    if (this.enemyBulletGroup[s].collide(this.ship[k])) {
+                        this.enemyBulletGroup[s].remove();
+
                     }
                 }
             }
@@ -405,35 +406,6 @@ class Logic {
             this.checkDistance("Two");
             this.checkDistance("Three");
             this.checkDistance("Four");
-        }
-    }
-
-    enemyShootingLogic() {
-        for (let i = 0; i < this.enemy.length; i++) {
-            // console.log(this.enemy[0].shootingTimer)
-            if (this.enemy[i].shootingTimer <= 0) {
-                for (let k = 0; k < this.ship.length; k++) { // for distance check below
-                    this.distance = dist(this.ship[k].x, this.ship[k].y, this.enemy[i].x, this.enemy[i].y);
-                    if (this.distance <= 200) { // create enemy bullet sprites)
-                        this.enemyBulletGroup.push(this.enemyBullets(this.enemy[i].x, this.enemy[i].y, this.ship[k]));
-                        if (this.enemy[i].type == "One") { // sets shooting cooldown timer for each enemy type
-                            this.enemy[i].shootingTimer = 50;
-                        } else if (this.enemy[i].type == "Two") {
-                            this.enemy[i].shootingTimer = 100;
-                        } else if (this.enemy[i].type == "Three") {
-                            this.enemy[i].shootingTimer = 150;
-                        } else if (this.enemy[i].type == "Four") {
-                            this.enemy[i].shootingTimer = 200;
-                        }
-                    }
-                    for (let s = 0; s < this.enemyBulletGroup.length; s++) { // collision for enemy single shot (needs to be outisde of the if statement so its always active)
-                        if (this.enemyBulletGroup[s].overlaps(this.ship[k])) {
-                            this.enemyBulletGroup[s].remove();
-                            // console.log('i got hit');
-                        }
-                    }
-                }
-            }
         }
     }
 
@@ -485,12 +457,12 @@ class Logic {
                         }
                     }
                     for (let s = 0; s < this.singleBulletGroup.length; s++) { // collision for player single shot (needs to be outisde of the if statement so its always active)
-                        if (this.singleBulletGroup[s].overlaps(this.enemy[k])) {
+                        if (this.singleBulletGroup[s].collide(this.enemy[k])) {
                             this.singleBulletGroup[s].remove();
                         }
                     }
                     for (let a = 0; a < this.burstBulletGroup.length; a++) { // same collision detection for player burst shot
-                        if (this.burstBulletGroup[a].overlaps(this.enemy[k])) {
+                        if (this.burstBulletGroup[a].collide(this.enemy[k])) {
                             this.burstBulletGroup[a].remove();
                         }
                     }
