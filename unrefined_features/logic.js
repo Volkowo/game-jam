@@ -66,6 +66,10 @@ class Logic {
         this.selectLogic('Four', '4');
         this.resourceCollectionLogic();
         this.shootingLogic();
+        this.checkShipAmount();
+
+        // this.checkShipAmount();
+
         // this.enemyShootingLogic();
         this.selectionCircle(factory);
 
@@ -78,15 +82,15 @@ class Logic {
         // console.log(this.selection.length);
         // allSprites.debug = true;
         // console.log("REGEN TIMER: " + this.regenTimer, "REGEN VALUE: " + this.regenValue)
-        // console.log("COUNTER ONE: " + this.counterOne, "COUNTER TWO: " + this.counterTwo, 
-        // "COUNTER Three: " + this.counterThree, "COUNTER FOUR: " + this.counterFour, "SHIP AMOUNT: " + this.shipAmount);
+        console.log("COUNTER ONE: " + this.counterOne, "COUNTER TWO: " + this.counterTwo,
+            "COUNTER Three: " + this.counterThree, "COUNTER FOUR: " + this.counterFour, "SHIP AMOUNT: " + this.shipAmount);
     }
 
     selectLogic(type, binding) {
         if (kb.presses(binding)) {
             // console.log("Test")
-            this.shipAmount = 0;
             this.checkShip(type);
+            
         }
     }
 
@@ -98,29 +102,36 @@ class Logic {
             } else {
                 this.ship[i].selected = false;
             }
+        }
+    }
 
-            if (this.ship[i].selected == true) {
-                // console.log("ship selected")
-                // this.ship[i].strokeWeight = 4;
-                // this.ship[i].stroke = "RED";
+    checkShipAmount() {
+        let tempCount = 0;
+        this.counterOne = 0;
+        this.counterTwo = 0;
+        this.counterThree = 0;
+        this.counterFour = 0;
+
+        for (let i = 4; i < this.ship.length; i++) {
+            if (this.ship[i].selected == true && this.shipAmount < this.ship.length) {
                 if (this.ship[i].type == 'One') {
                     this.shipAmount++;
-                    this.counterOne = this.shipAmount;
-                } else if (this.ship[i].type == 'Two') {
+                    this.counterOne++;
+                } if (this.ship[i].type == 'Two') {
                     this.shipAmount++;
-                    this.counterTwo = this.shipAmount;
-                } else if (this.ship[i].type == 'Three') {
+                    this.counterTwo++;
+                } if (this.ship[i].type == 'Three') {
                     this.shipAmount++;
-                    this.counterThree = this.shipAmount;
-                } else if (this.ship[i].type == 'Four') {
+                    this.counterThree++;
+                } if (this.ship[i].type == 'Four') {
                     this.shipAmount++;
-                    this.counterFour = this.shipAmount;
+                    this.counterFour++;
+                } else {
+                    this.shipAmount = 0;
                 }
-            } else if (this.ship[i].selected == false) {
-                this.ship[i].strokeWeight = 1;
-                this.ship[i].stroke = "BLACK";
             }
         }
+
     }
 
     selectionCircle(factory) {
@@ -178,7 +189,26 @@ class Logic {
 
                     if (this.ship[j].visible == true) {
                         // console.log("Timer to get resource / collect rate: " + this.ship[j].collectTick);
-                        this.amountReduced = (this.ship[j].collectRate * this.shipAmount);
+
+                        if (this.ship[j].type = 'One') {
+                            this.amountReducedOne = this.ship[j].collectRate * this.counterOne;
+                            // console.log(this.amountReducedOne);
+                        }
+                        if (this.ship[j].type = 'Two') {
+                            this.amountReducedTwo = this.ship[j].collectRate * this.counterTwo;
+                            // console.log(this.amountReducedTwo);
+                        }
+                        if (this.ship[j].type = 'Three') {
+                            this.amountReducedThree = this.ship[j].collectRate * this.counterThree;
+                            // console.log(this.amountReducedThree);
+                        }
+                        if (this.ship[j].type = 'Four') {
+                            this.amountReducedFour = this.ship[j].collectRate * this.counterFour;
+                            // console.log(this.amountReducedFour);
+                        }
+
+                        this.amountReduced = this.amountReducedOne + this.amountReducedTwo + this.amountReducedThree + this.amountReducedFour;
+                        // this.amountReduced = this.ship[j].collectRate * this.shipAmount;
                         if (this.resource[i].resourcePool < this.amountReduced) {
                             if (frameCount % this.ship[j].collectTick == 0) {
                                 // console.log("REMAINING AMOUNT: " + this.resource[i].remainingAmount);
@@ -303,7 +333,7 @@ class Logic {
         }
     }
 
-    
+
     randomEnemyBehavior() {
         for (let i = 0; i < this.enemy.length; i++) {
             // console.log(i)
@@ -314,17 +344,20 @@ class Logic {
             }
         }
     }
-    
+
     assignEnemyBehavior() {
         for (let i = 0; i < this.enemy.length; i++) {
             this.enemyRandomType();
             this.enemyHuntBase();
             this.enemySurroundResource();
-            
-            
+
+
         }
     }
 
+    // Checks the distance between the enemy ship and each type of player's ship. 
+    // shipType is, well, the ship type of the player ship
+    // i = 4 because there are 4 ships that are spawned off-screen to get the stats for the UI board.
     checkDistance(shipType) {
         for (let i = 4; i < this.ship.length; i++) {
             for (let k = 0; k < this.enemy.length; k++) {
@@ -341,6 +374,7 @@ class Logic {
         }
     }
 
+    // does the actual detection
     detectionLogic() {
         for (let i = 0; i < this.enemy.length; i++) {
             this.enemy[i].shootingTimer--;
@@ -353,7 +387,7 @@ class Logic {
     }
 
     enemyAttackShip() {
-        for(let i = 0; i < this.enemy.length; i++){
+        for (let i = 0; i < this.enemy.length; i++) {
             this.enemy[i].moveTo(this.enemy[i].x, this.enemy[i].y, 0);
             this.enemyShootingLogic();
         }
@@ -362,7 +396,7 @@ class Logic {
 
     enemyShootingLogic() {
         for (let i = 0; i < this.enemy.length; i++) {
-            console.log(this.enemy[0].shootingTimer)
+            // console.log(this.enemy[0].shootingTimer)
             if (this.enemy[i].shootingTimer <= 0) {
                 for (let k = 0; k < this.ship.length; k++) { // for distance check below
                     this.distance = dist(this.ship[k].x, this.ship[k].y, this.enemy[i].x, this.enemy[i].y);
@@ -456,7 +490,9 @@ class Logic {
         tempBullet.diameter = 10;
         tempBullet.color = 'yellow';
         tempBullet.life = 60;
-        // tempBullet.overlaps(allSprites);
+        tempBullet.overlaps(this.ship);
+        tempBullet.overlaps(this.burstBulletGroup);
+        tempBullet.overlaps(this.singleBulletGroup);
 
         // tempBullet.collider = "k"
         tempBullet.direction = tempBullet.angleTo(angle);
@@ -469,6 +505,10 @@ class Logic {
         tempBurst.diameter = 5;
         tempBurst.color = 'orange';
         tempBurst.life = 60;
+        tempBurst.overlaps(this.ship);
+        tempBurst.overlaps(this.burstBulletGroup);
+        tempBurst.overlaps(this.singleBulletGroup);
+
         // tempBurst.collider = "k"
         // tempBurst.overlaps(allSprites);
         tempBurst.direction = tempBurst.angleTo(angle);
@@ -490,10 +530,10 @@ class Logic {
         this.dragSelect = new Sprite();
         this.dragSelect.stroke = 'green';
         this.dragSelect.strokeWeight = 3;
-        this.dragSelect.color.setAlpha(0);
+        this.dragSelect.color.setAlpha(0.6);
         this.dragSelect.overlapping(allSprites);
     }
-    
+
     clickDrag() {
         if (mouse.presses('left')) {
             //set the startingX and startingY on mouse presses
@@ -505,7 +545,7 @@ class Logic {
                 // +1 cuz it doesnt work if the w is 0
                 this.dragSelect.w = (mouseX - this.startingX) + 1;
                 //get average between startingX and mouseX cuz the sprites.x exist in the middle of the sprite
-                this.dragSelect.x = (this.startingX + mouseX) / 2; 
+                this.dragSelect.x = (this.startingX + mouseX) / 2;
             }
             if (mouseY > this.startingY) {
                 // +1 cuz it doesnt work if the h is 0
@@ -523,7 +563,7 @@ class Logic {
             }
             if (mouseY < this.startingY) {
                 // +1 cuz it doesnt work if the h is 0
-                this.dragSelect.h = (this.startingY - mouseY) + 1; 
+                this.dragSelect.h = (this.startingY - mouseY) + 1;
                 //get average then add mouseY
                 this.dragSelect.y = ((this.startingY - mouseY) / 2) + mouseY;
             }
@@ -539,7 +579,7 @@ class Logic {
             this.dragSelect.y = -100;
         }
         if (mouse.released('left') && mouseX > 200 && mouseY > 50) {
-            for (let i = 0; i < this.ship.length; i++) {
+            for (let i = 4; i < this.ship.length; i++) {
                 let shipToSelect = this.ship[i];
                 if (this.dragSelect.overlapping(shipToSelect)) {
                     shipToSelect.selected = true;
@@ -548,5 +588,8 @@ class Logic {
                 }
             }
         }
+
+        this.shipAmount = 0;
+        this.checkShipAmount();
     }
 }
