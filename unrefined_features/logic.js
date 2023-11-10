@@ -18,6 +18,11 @@ class Logic {
         this.counterFour = 0;
         this.amountReduced = 0;
 
+        this.amountReducedOne = 0;
+        this.amountReducedTwo = 0;
+        this.amountReducedThree = 0;
+        this.amountReducedFour = 0;
+
         this.regenTimer = 0;
         this.regenValue = 0;
 
@@ -81,7 +86,7 @@ class Logic {
         this.detectionLogic();
         this.clickDrag();
         this.resourceRegeneration();
-        // console.log(this.selection.length);
+        // console.log(this.amountReduced);
         // allSprites.debug = true;
         // console.log("REGEN TIMER: " + this.regenTimer, "REGEN VALUE: " + this.regenValue)
         // console.log("COUNTER ONE: " + this.counterOne, "COUNTER TWO: " + this.counterTwo,
@@ -108,7 +113,6 @@ class Logic {
     }
 
     checkShipAmount() {
-        let tempCount = 0;
         this.counterOne = 0;
         this.counterTwo = 0;
         this.counterThree = 0;
@@ -156,7 +160,7 @@ class Logic {
         if (mouse.pressing('Right')) {
             for (let i = 4; i < this.ship.length; i++) {
                 if (this.ship[i].selected == true) {
-                    this.ship[i].moveTo(mouseX, mouseY, 2.5);
+                    this.ship[i].moveTo(mouseX, mouseY, 4.5);
                     this.ship[i].visible = true;
                     this.ship[i].goCollect = false;
                 }
@@ -176,6 +180,11 @@ class Logic {
     }
 
     resourceCollectionLogic() {
+        this.amountReducedOne = 0;
+        this.amountReducedTwo = 0;
+        this.amountReducedThree = 0;
+        this.amountReducedFour = 0;
+        
         for (let i = 0; i < this.resource.length; i++) {
             for (let j = 4; j < this.ship.length; j++) {
                 // this.ship[j].overlaps(this.resource[i]);
@@ -196,23 +205,25 @@ class Logic {
                             this.amountReducedOne = this.ship[j].collectRate * this.counterOne;
                             // console.log(this.amountReducedOne);
                         }
-                        if (this.ship[j].type == 'Two') {
+                        else if (this.ship[j].type == 'Two') {
                             this.amountReducedTwo = this.ship[j].collectRate * this.counterTwo;
                             // console.log(this.amountReducedTwo);
                         }
-                        if (this.ship[j].type == 'Three') {
+                        else if (this.ship[j].type == 'Three') {
                             this.amountReducedThree = this.ship[j].collectRate * this.counterThree;
                             // console.log(this.amountReducedThree);
                         }
-                        if (this.ship[j].type == 'Four') {
+                        else if (this.ship[j].type == 'Four') {
                             this.amountReducedFour = this.ship[j].collectRate * this.counterFour;
                             // console.log(this.amountReducedFour);
                         }
 
+                        console.log(this.amountReducedOne, this.amountReducedTwo, this.amountReducedThree, this.amountReducedFour)
                         this.amountReduced = this.amountReducedOne + this.amountReducedTwo + this.amountReducedThree + this.amountReducedFour;
                         // this.amountReduced = this.ship[j].collectRate * this.shipAmount;
                         if (this.resource[i].resourcePool < this.amountReduced) {
                             if (frameCount % this.ship[j].collectTick == 0) {
+                                console.log("Amount Reduced > resource pool")
                                 // console.log("REMAINING AMOUNT: " + this.resource[i].remainingAmount);
                                 this.resource[i].remainingAmount = this.resource[i].resourcePool;
                                 this.resource[i].resourcePool -= this.resource[i].remainingAmount;
@@ -225,7 +236,7 @@ class Logic {
                         } else {
                             // console.log("This is a writing too")
                             if (frameCount % this.ship[j].collectTick == 0) {
-                                // console.log(this.amountReduced);
+                                console.log(this.amountReduced);
                                 // console.log("SHIP IS COLLECTING");
                                 this.resource[i].resourcePool -= this.amountReduced;
                                 this.ship[j].shipBag += this.ship[j].collectRate;
