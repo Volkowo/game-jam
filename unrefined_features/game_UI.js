@@ -68,8 +68,9 @@ class UI {
         this.resource.push(factory.createSmallResource(random(540, 750), random(120, 300)));
         this.resource.push(factory.createSmallResource(random(1000, 1400), random(520, 700)));
         this.resource.push(factory.createSmallResource(random(300, 500), random(600, 820)));
-        this.resource.push(factory.createSmallResource(random(1300, 1500), random(320, 550)));
-        this.resource.push(factory.createBigResource(300, H / 4));
+        this.resource.push(factory.createSmallResource(random(1350, 1500), random(320, 550)));
+        this.resource.push(factory.createBigResource(random(300, 400), random(100, 200)));
+        this.resource.push(factory.createBigResource(random(1200, 1300), random(700, 800)));
 
         // For default ship stats
         this.ship.push(factory.createShipOne(10000, 10000));

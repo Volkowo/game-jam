@@ -52,6 +52,7 @@ class Logic {
 
         this.enemy.push(factory.createEnemyOne(450, 240));
         this.enemy.push(factory.createEnemyOne(580, 280));
+        this.enemy.push(factory.createEnemyOne(780, 280));
         // this.enemyRandomSequence();
     }
 
@@ -82,8 +83,8 @@ class Logic {
         // console.log(this.selection.length);
         // allSprites.debug = true;
         // console.log("REGEN TIMER: " + this.regenTimer, "REGEN VALUE: " + this.regenValue)
-        console.log("COUNTER ONE: " + this.counterOne, "COUNTER TWO: " + this.counterTwo,
-            "COUNTER Three: " + this.counterThree, "COUNTER FOUR: " + this.counterFour, "SHIP AMOUNT: " + this.shipAmount);
+        // console.log("COUNTER ONE: " + this.counterOne, "COUNTER TWO: " + this.counterTwo,
+        //     "COUNTER Three: " + this.counterThree, "COUNTER FOUR: " + this.counterFour, "SHIP AMOUNT: " + this.shipAmount);
     }
 
     selectLogic(type, binding) {
@@ -359,15 +360,19 @@ class Logic {
     // shipType is, well, the ship type of the player ship
     // i = 4 because there are 4 ships that are spawned off-screen to get the stats for the UI board.
     checkDistance(shipType) {
-        for (let i = 4; i < this.ship.length; i++) {
-            for (let k = 0; k < this.enemy.length; k++) {
-                if (this.ship[i].type == shipType) {
-                    let distance = dist(this.ship[i].x, this.ship[i].y, this.enemy[k].x, this.enemy[k].y);
+        for (let i = 0; i < this.enemy.length; i++) {
+            for (let k = 4; k < this.ship.length; k++) {
+                if (this.ship[k].type == shipType) {
+                    let distance = dist(this.ship[k].x, this.ship[k].y, this.enemy[i].x, this.enemy[i].y);
                     if (distance < 200) {
-                        this.enemyAttackShip();
-                        return true;
-                    } else if (distance > 200) {
-                        return false;
+                        this.enemy[i].moveTo(this.enemy[i].x, this.enemy[i].y, 0);
+                        this.enemyShootingLogic();
+                        // this.enemyAttackShip();
+                        // return true;
+                    } else if (distance > 201) {
+                        // console.log("else")
+                        this.enemy[i].behavior = "Random";
+                        // return false;
                     }
                 }
             }
@@ -378,6 +383,7 @@ class Logic {
     detectionLogic() {
         for (let i = 0; i < this.enemy.length; i++) {
             this.enemy[i].shootingTimer--;
+            // console.log(this.enemy[1].shootingTimer)
             // this.enemy[i].shootingTimer--;
             this.checkDistance("One");
             this.checkDistance("Two");
