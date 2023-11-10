@@ -30,6 +30,8 @@ class Logic {
         this.dragSelect;
         this.startingX;
         this.startingY;
+
+        this.selecting == false;
         /*
             1. Spawn ships with resources
             2. Cooldown(?)
@@ -85,13 +87,19 @@ class Logic {
         // console.log("REGEN TIMER: " + this.regenTimer, "REGEN VALUE: " + this.regenValue)
         // console.log("COUNTER ONE: " + this.counterOne, "COUNTER TWO: " + this.counterTwo,
         //     "COUNTER Three: " + this.counterThree, "COUNTER FOUR: " + this.counterFour, "SHIP AMOUNT: " + this.shipAmount);
+    
+
     }
 
     selectLogic(type, binding) {
         if (kb.presses(binding)) {
-            // console.log("Test")
+            this.selecting = true;
+            if (this.selecting == true) {
+                this.ship.selected = false;
+                this.selecting = false;
+            }
+            console.log(type)
             this.checkShip(type);
-            
         }
     }
 
@@ -191,19 +199,19 @@ class Logic {
                     if (this.ship[j].visible == true) {
                         // console.log("Timer to get resource / collect rate: " + this.ship[j].collectTick);
 
-                        if (this.ship[j].type = 'One') {
+                        if (this.ship[j].type == 'One') {
                             this.amountReducedOne = this.ship[j].collectRate * this.counterOne;
                             // console.log(this.amountReducedOne);
                         }
-                        if (this.ship[j].type = 'Two') {
+                        if (this.ship[j].type == 'Two') {
                             this.amountReducedTwo = this.ship[j].collectRate * this.counterTwo;
                             // console.log(this.amountReducedTwo);
                         }
-                        if (this.ship[j].type = 'Three') {
+                        if (this.ship[j].type == 'Three') {
                             this.amountReducedThree = this.ship[j].collectRate * this.counterThree;
                             // console.log(this.amountReducedThree);
                         }
-                        if (this.ship[j].type = 'Four') {
+                        if (this.ship[j].type == 'Four') {
                             this.amountReducedFour = this.ship[j].collectRate * this.counterFour;
                             // console.log(this.amountReducedFour);
                         }
