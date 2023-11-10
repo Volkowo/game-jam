@@ -264,8 +264,8 @@ class Factory {
         tempEnemy.hitPoint = 20;
         tempEnemy.attack = 5;
         tempEnemy.movementSpeed = 5;
-        tempEnemy.reloadTimer = 50;
-        tempEnemy.shootingTimer = 50;
+        tempEnemy.reloadTimer = 200;
+        tempEnemy.shootingTimer = 200;
         tempEnemy.rotation = tempEnemy.direction;
         
         // BOOLEAN-RELATED
@@ -292,8 +292,8 @@ class Factory {
         tempEnemy.hitPoint = 30;
         tempEnemy.attack = 8;
         tempEnemy.movementSpeed = 4;
-        tempEnemy.reloadTimer = 100;
-        tempEnemy.shootingTimer = 100;
+        tempEnemy.reloadTimer = 250;
+        tempEnemy.shootingTimer = 250;
         
         // BOOLEAN-RELATED
         tempEnemy.selected = false;
@@ -319,8 +319,8 @@ class Factory {
         tempEnemy.hitPoint = 50;
         tempEnemy.attack = 5;
         tempEnemy.movementSpeed = 3;
-        tempEnemy.reloadTimer = 150;
-        tempEnemy.shootingTimer = 150;
+        tempEnemy.reloadTimer = 300;
+        tempEnemy.shootingTimer = 300;
         
         // BOOLEAN-RELATED
         tempEnemy.selected = false;
@@ -346,8 +346,8 @@ class Factory {
         tempEnemy.hitPoint = 80;
         tempEnemy.attack = 10;
         tempEnemy.movementSpeed = 2;
-        tempEnemy.reloadTimer = 200;
-        tempEnemy.shootingTimer = 200;
+        tempEnemy.reloadTimer = 350;
+        tempEnemy.shootingTimer = 350;
 
         // BOOLEAN-RELATED
         tempEnemy.selected = false;

@@ -85,7 +85,9 @@ class Logic {
         for (let j = 0; j < this.enemy.length; j++) {
             this.randomEnemyBehavior(this.enemy[j], j);
             this.assignEnemyBehavior(this.enemy[j]);
-            this.detectionLogic(this.enemy[j]);
+            for(let z = 4; z < this.ship.length; z++){
+                this.detectionLogic(this.enemy[j], this.ship[z]);
+            }
         }
 
         for (let k = 0; k < this.resource.length; k++) {
@@ -105,11 +107,6 @@ class Logic {
     gameTimer() {
         if (frameCount % 60 == 0) {
             this.time++;
-            // console.log(this.time)
-
-            // if(this.time == 60){
-            //     console.log("A Minute has passed")
-            // }
         }
     }
 
@@ -117,19 +114,16 @@ class Logic {
         if (kb.presses(binding)) {
             // console.log("Test")
             this.checkShip(type, ship);
-
         }
     }
 
     // Check's which ship is currently being selected through the keyboard input
     checkShip(type, ship) {
-
         if (ship.type == type) {
             ship.selected = true;
         } else {
             ship.selected = false;
         }
-
     }
 
     checkShipAmount() {
@@ -161,7 +155,6 @@ class Logic {
     }
 
     selectionCircle(ship) {
-
         if (ship.selected == true) {
             // this.selection.push(factory.createSelection(ship.x, ship.y, ship.w + 30));
             noFill();
@@ -169,11 +162,9 @@ class Logic {
             stroke("green");
             ellipse(ship.x, ship.y, 50);
         }
-
         // if(this.selection.length > 1){
         //     this.selection.shift();
         // }
-
     }
 
     movementLogic(ship) {
@@ -380,7 +371,7 @@ class Logic {
     }
 
     assignEnemyBehavior(enemy) {
-        console.log(enemy);
+        // console.log(enemy);
         this.enemyRandomType(enemy);
         this.enemyHuntBase(enemy);
         this.enemySurroundResource(enemy);
@@ -389,15 +380,13 @@ class Logic {
     // Checks the distance between the enemy ship and each type of player's ship. 
     // shipType is, well, the ship type of the player ship
     // i = 4 because there are 4 ships that are spawned off-screen to get the stats for the UI board.
-    checkDistance(shipType, enemy) {
-
-        for (let k = 4; k < this.ship.length; k++) {
-            if (this.ship[k].type == shipType) {
-                this.distance = dist(this.ship[k].x, this.ship[k].y, enemy.x, enemy.y);
+    checkDistance(shipType, enemy, ship) {
+            if (ship.type == shipType) {
+                this.distance = dist(ship.x, ship.y, enemy.x, enemy.y);
                 if (this.distance < 200) {
                     enemy.moveTo(enemy.x, enemy.y, 0);
                     if (enemy.shootingTimer <= 0) {
-                        this.enemyBulletGroup.push(this.enemyBullets(enemy.x, enemy.y, this.ship[k]));
+                        this.enemyBulletGroup.push(this.enemyBullets(enemy.x, enemy.y, ship));
                         enemy.shootingTimer = enemy.reloadTimer;
                     }
                     // return true;
@@ -407,48 +396,60 @@ class Logic {
                     // return false;
                 }
             }
+            let thingsToRemove = new Group();
+
             for (let s = 0; s < this.enemyBulletGroup.length; s++) { // collision for enemy single shot (needs to be outisde of the if statement so its always active)
-                console.log(this.enemyBulletGroup[s], this.ship[k])
-                if (this.enemyBulletGroup[s].collides(this.ship[k])) {
-                    this.enemyBulletGroup[s].remove();
-                    if (this.ship[k].type == "One") { // damage when hitting ship type 1
-                        this.ship[k].hitPoint -= 10;
-                        if (this.ship[k].hitPoint <= 0) {
-                            this.ship[k].remove();
+                // console.log(this.enemyBulletGroup[s], ship)
+                if (this.enemyBulletGroup[s].collides(ship)) {
+                    // this.enemyBulletGroup[s].remove();
+                    thingsToRemove.push(this.enemyBulletGroup[s]);
+                    if (ship.type == "One") { // damage when hitting ship type 1
+                        ship.hitPoint -= 10;
+                        if (ship.hitPoint <= 0) {
+                            // ship.remove();
+                            thingsToRemove.push(ship)
                         }
-                    } else if (this.ship[k].type == "Two") { // damage when hitting ship type 2
-                        this.ship[k].hitPoint -= 10;
-                        if (this.ship[k].hitPoint <= 0) {
-                            this.ship[k].remove();
+                    } else if (ship.type == "Two") { // damage when hitting ship type 2
+                        ship.hitPoint -= 10;
+                        if (ship.hitPoint <= 0) {
+                            // ship.remove();
+                            thingsToRemove.push(ship)
                         }
-                    } else if (this.ship[k].type == "Three") { // damage when hitting ship type 3 
-                        this.ship[k].hitPoint -= 10;
-                        if (this.ship[k].hitPoint <= 0) {
-                            this.ship[k].remove();
+                    } else if (ship.type == "Three") { // damage when hitting ship type 3 
+                        ship.hitPoint -= 10;
+                        if (ship.hitPoint <= 0) {
+                            // ship.remove();
+                            thingsToRemove.push(ship)
                         }
-                    } else if (this.ship[k].type == "Four") { // damage when hitting ship type 4
-                        this.ship[k].hitPoint -= 10;
-                        if (this.ship[k].hitPoint <= 0) {
-                            this.ship[k].remove();
+                    } else if (ship.type == "Four") { // damage when hitting ship type 4
+                        ship.hitPoint -= 10;
+                        if (ship.hitPoint <= 0) {
+                            // ship.remove();
+                            thingsToRemove.push(ship)
                         }
                     }
                 }
             }
-        }
-
+            thingsToRemove.removeAll();
     }
 
     // does the actual detection
-    detectionLogic(enemy) {
-
+    detectionLogic(enemy, ship) {
         enemy.shootingTimer--;
         // console.log(this.enemy[1].shootingTimer)
         // enemy.shootingTimer--;
-        this.checkDistance("One", enemy);
-        this.checkDistance("Two", enemy);
-        this.checkDistance("Three", enemy);
-        this.checkDistance("Four", enemy);
-
+        if(ship.type === "One"){
+            this.checkDistance("One", enemy, ship);
+        }
+        if(ship.type === "Two"){
+            this.checkDistance("Two", enemy, ship);
+        }
+        if(ship.type === "Three"){
+            this.checkDistance("Three", enemy, ship);
+        }
+        if(ship.type === "Four"){
+            this.checkDistance("Four", enemy, ship);
+        }
     }
 
     enemyBullets(x, y, angle) {
@@ -475,7 +476,6 @@ class Logic {
             this.burstFire = true;
         }
 
-
         ship.shootingTimer--
         if (ship.shootingTimer <= 0) {
             for (let k = 0; k < this.enemy.length; k++) { // for distance check below
@@ -490,54 +490,71 @@ class Logic {
                     }
                     ship.shootingTimer = ship.reloadTimer;
                 }
+
+                let thingsToRemove = new Group();
+
                 for (let s = 0; s < this.singleBulletGroup.length; s++) { // collision for player single shot (needs to be outisde of the if statement so its always active)
+                    // console.log(this.singleBulletGroup[s], this.enemy[k]);
                     if (this.singleBulletGroup[s].collides(this.enemy[k])) {
-                        this.singleBulletGroup[s].remove();
+                        // this.singleBulletGroup[s].remove();
+                        thingsToRemove.push(this.singleBulletGroup[s])
                         if (this.enemy[k].type == "One") { // damage when hitting enemy type 1
                             this.enemy[k].hitPoint -= 10;
                             if (this.enemy[k].hitPoint <= 0) {
-                                this.enemy[k].remove();
+                                // this.enemy[k].remove();
+                                thingsToRemove.push(this.enemy[k])
                             }
                         } else if (this.enemy[k].type == "Two") { // damage when hitting enemy type 2
                             this.enemy[k].hitPoint -= 10;
                             if (this.enemy[k].hitPoint <= 0) {
-                                this.enemy[k].remove();
+                                // this.enemy[k].remove();
+                                thingsToRemove.push(this.enemy[k])
                             }
                         } else if (this.enemy[k].type == "Three") { // damage when hitting enemy type 3 
                             this.enemy[k].hitPoint -= 10;
                             if (this.enemy[k].hitPoint <= 0) {
-                                this.enemy[k].remove();
+                                // this.enemy[k].remove();
+                                thingsToRemove.push(this.enemy[k])
                             }
                         } else if (this.enemy[k].type == "Four") { // damage when hitting enemy type 4
                             this.enemy[k].hitPoint -= 10;
                             if (this.enemy[k].hitPoint <= 0) {
-                                this.enemy[k].remove();
+                                // this.enemy[k].remove();
+                                thingsToRemove.push(this.enemy[k])
                             }
                         }
                     }
                 }
+
+                thingsToRemove.removeAll();
+
                 for (let a = 0; a < this.burstBulletGroup.length; a++) { // same collision detection for player burst shot
                     if (this.burstBulletGroup[a].collides(this.enemy[k])) {
-                        this.burstBulletGroup[a].remove();
+                        // this.burstBulletGroup[a].remove();
+                        thingsToRemove.push(this.burstBulletGroup[a])
                         if (this.enemy[k].type == "One") { // damage when hitting enemy type 1 with burst
                             this.enemy[k].hitPoint -= 10;
                             if (this.enemy[k].hitPoint <= 0) {
-                                this.enemy[k].remove();
+                                // this.enemy[k].remove();
+                                thingsToRemove.push(this.enemy[k])
                             }
                         } else if (this.enemy[k].type == "Two") { // damage when hitting enemy type 2 with burst
                             this.enemy[k].hitPoint -= 10;
                             if (this.enemy[k].hitPoint <= 0) {
-                                this.enemy[k].remove();
+                                // this.enemy[k].remove();
+                                thingsToRemove.push(this.enemy[k])
                             }
                         } else if (this.enemy[k].type == "Three") { // damage when hitting enemy type 3 with burst
                             this.enemy[k].hitPoint -= 10;
                             if (this.enemy[k].hitPoint <= 0) {
-                                this.enemy[k].remove();
+                                // this.enemy[k].remove();
+                                thingsToRemove.push(this.enemy[k])
                             }
                         } else if (this.enemy[k].type == "Four") { // damage when hitting enemy type 4 with burst
                             this.enemy[k].hitPoint -= 10;
                             if (this.enemy[k].hitPoint <= 0) {
-                                this.enemy[k].remove();
+                                // this.enemy[k].remove();
+                                thingsToRemove.push(this.enemy[k])
                             }
                         }
                     }
