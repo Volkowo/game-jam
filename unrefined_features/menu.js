@@ -77,12 +77,14 @@ class Menu {
         this.creditsButtonImg = loadImage("assets/menu/creditsButton.png");
         this.playButtonImg = loadImage("assets/menu/playButton.png");
         this.shadeImg = loadImage("assets/menu/buttonShade.png");
+        this.settingImg = loadImage("assets/menu/setting_background.png");
+        this.closeSetting = loadImage("assets/menu/closeSetting.png");
+        this.closeSettingHover = loadImage("assets/menu/closeSettingHover.png");
     }
 
     setup() {
         // this.buttonCreation();
         this.buttonSprites();
-        this.settingSprites();
     }
 
     draw() {
@@ -196,69 +198,93 @@ class Menu {
         this.creditsButtonSprite.visible = true;
         this.creditsButtonSprite.collider = 'n';
 
-        this.closeSettingButton = createButton('x');
-        this.closeSettingButton.position(950, 200);
-        this.closeSettingButton.mouseClicked(() => { this.closeSettingClicked() });
-        this.closeSettingButton.style("width", "50px");
-        this.closeSettingButton.style("height", "50px");
-        this.closeSettingButton.style("background-color", "#f6eee3");
-        this.closeSettingButton.style("border-color", "#f6eee3");
-        this.closeSettingButton.style("color", "#47280e");
-        this.closeSettingButton.style("font-size", "50px");
-        this.closeSettingButton.hide();
-
         this.backToMenuButton = createButton('Back to Main Menu');
         this.backToMenuButton.mouseClicked(() => { this.backToMenuButtonClicked() });
         this.backToMenuButton.size(100, 50);
         this.backToMenuButton.position(W / 2 - this.backToMenuButton.size().width / 2, (H / 2) + 200);
         this.backToMenuButton.hide();
 
-        //Setting Sliders
-        //Music Volume Control
-        this.musicSlider = createSlider(0, 1, 0.05, 0.01);
-        this.musicSlider.position(700, 460);
-        this.musicSlider.class("slider");
-        this.musicSlider.style("width", "200px");
-        this.musicSlider.style("background-color", "White");
-        this.musicSlider.hide();
-        
-        //Sound Volume Control
-        this.soundSlider = createSlider(0, 1, 0.1, 0.01);
-        this.soundSlider.position(700, 530);
-        this.soundSlider.class("slider");
-        this.soundSlider.style("width", "200px");
-        this.soundSlider.style("background-color", "White");
-        this.soundSlider.hide();
-        
-        //Setting Check Boxes
-        //Music Checker
-        this.musicCheck = createCheckbox("", false);
-        this.musicCheck.position(650, 458);
-        this.musicCheck.class("checker");
-        this.musicCheck.hide();
-        
-        //Sound Checker
-        this.soundCheck = createCheckbox("", false);
-        this.soundCheck.position(650, 528);
-        this.soundCheck.class("checker");
-        this.soundCheck.hide();
-    }
-
-    settingSprites() {
+        //Setting Popup
         this.settingPopUp = new Sprite(800, 450);
-        this.settingPopUp.w = 400;
-        this.settingPopUp.h = 500;
+        this.settingPopUp.w = 332;
+        this.settingPopUp.h = 480;
         this.settingPopUp.draw = () => {
             let popUpPos = -1000 + (movingAni * 2);
-            fill(0, 0, 0);
-            rect(0, 0 + popUpPos, 400, 500);
 
-            fill('White');
-            textSize(40);
-            text('Setting', 0, -200 + popUpPos);
+            image(this.settingImg, 0, 0 + popUpPos, 332, 480);
+
+            // Sound and Music volume percentage display
+            fill(86, 54, 40);
+            textSize(20)
+            
+            if (this.musicCheck.checked()) {
+                // introMusic.setVolume(0);
+                // add all musics like above
+                text('0%', 30, -102 + popUpPos);
+            } else {
+                // introMusic.setVolume(this.musicSlider.value());
+                // add all musics like above
+                text(Math.floor(this.musicSlider.value() * 100) + "%", 30, -102 + popUpPos);
+            }
+
+            if (this.soundCheck.checked()) {
+                // Soundfx.setVolume(0);
+                // add all sounds like above
+                text('0%', 30, 23 + popUpPos);
+            } else {
+                // Soundfx.setVolume(this.soundSlider.value());
+                // add all sounds like above
+                text(Math.floor(this.soundSlider.value() * 100) + "%", 30, 23 + popUpPos);
+            }
         }
         this.settingPopUp.collider = 'n';
         this.settingPopUp.visible = false;
+
+
+        this.closeSettingButton = new Sprite(800, 600);
+        this.closeSettingButton.w = 80;
+        this.closeSettingButton.h = 80;
+        this.closeSettingButton.draw = () => {
+            image(this.closeSetting, 0, 0, 80, 80);
+            if (mouseX > this.closeSettingButton.x - this.closeSettingButton.w / 2
+                && mouseX < this.closeSettingButton.x + this.closeSettingButton.w / 2
+                && mouseY > this.closeSettingButton.y - this.closeSettingButton.h / 2
+                && mouseY < this.closeSettingButton.y + this.closeSettingButton.h / 2) {
+                image(this.closeSettingHover, 0, 0, 80, 80);
+            }
+        }
+        this.closeSettingButton.collider = 'n';
+        this.closeSettingButton.visible = false;
+
+        //Setting Sliders
+        //Music Volume Control
+        this.musicSlider = createSlider(0, 1, 0.05, 0.01);
+        this.musicSlider.position(750, 385);
+        this.musicSlider.class("slider");
+        this.musicSlider.style("width", "150px");
+        this.musicSlider.style("background-color", "White");
+        this.musicSlider.hide();
+
+        //Sound Volume Control
+        this.soundSlider = createSlider(0, 1, 0.1, 0.01);
+        this.soundSlider.position(750, 510);
+        this.soundSlider.class("slider");
+        this.soundSlider.style("width", "150px");
+        this.soundSlider.style("background-color", "White");
+        this.soundSlider.hide();
+
+        //Setting Check Boxes
+        //Music Checker
+        this.musicCheck = createCheckbox("", false);
+        this.musicCheck.position(700, 382);
+        this.musicCheck.class("checker");
+        this.musicCheck.hide();
+
+        //Sound Checker
+        this.soundCheck = createCheckbox("", false);
+        this.soundCheck.position(700, 508);
+        this.soundCheck.class("checker");
+        this.soundCheck.hide();
     }
 
     buttonSpritesFunctions() {
@@ -270,6 +296,9 @@ class Menu {
         }
         if (this.creditsButtonSprite.mouse.presses()) {
             this.creditsButtonClicked();
+        }
+        if (this.closeSettingButton.mouse.presses()) {
+            this.closeSettingClicked();
         }
 
         //Opening and Closing Setting
@@ -295,13 +324,15 @@ class Menu {
             this.settingPopUp.visible = false;
         }
         if (openSetting == false && activateSetting == true) {
-            this.closeSettingButton.show();
+            this.closeSettingButton.visible = true;
+            this.closeSettingButton.collider = 'k';
             this.soundCheck.show();
             this.musicCheck.show();
             this.soundSlider.show();
             this.musicSlider.show();
         } else if (activateSetting == false) {
-            this.closeSettingButton.hide();
+            this.closeSettingButton.visible = false;
+            this.closeSettingButton.collider = 'n';
             this.soundCheck.hide();
             this.musicCheck.hide();
             this.soundSlider.hide();
@@ -383,6 +414,10 @@ class Menu {
         //Activate Animation
         movingAni = 0;
         openSetting = true;
+
+        this.creditsButtonSprite.collider = 'n';
+        this.playButtonSprite.collider = 'n';
+        this.settingButtonSprite.collider = 'n';
     }
 
     closeSettingClicked() {
