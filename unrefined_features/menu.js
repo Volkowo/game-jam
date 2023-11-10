@@ -154,7 +154,7 @@ class Menu {
             image(this.playButtonImg, hoverEffect, hoverEffect + movingAni, 166, 240);
         }
         this.playButtonSprite.visible = true;
-        this.playButtonSprite.collider = 'k';
+        this.playButtonSprite.collider = 'n';
 
         this.settingButtonSprite = new Sprite(W / 2, H - 150);
         this.settingButtonSprite.w = 166;
@@ -174,7 +174,7 @@ class Menu {
             image(this.settingButtonImg, hoverEffect, hoverEffect + movingAni, 166, 240);
         }
         this.settingButtonSprite.visible = true;
-        this.settingButtonSprite.collider = 'k';
+        this.settingButtonSprite.collider = 'n';
 
         this.creditsButtonSprite = new Sprite(W / 2 + 200, H - 150);
         this.creditsButtonSprite.w = 166;
@@ -194,7 +194,7 @@ class Menu {
             image(this.creditsButtonImg, hoverEffect, hoverEffect + movingAni, 166, 240);
         }
         this.creditsButtonSprite.visible = true;
-        this.creditsButtonSprite.collider = 'k';
+        this.creditsButtonSprite.collider = 'n';
 
         this.closeSettingButton = createButton('x');
         this.closeSettingButton.position(950, 150);

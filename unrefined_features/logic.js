@@ -155,7 +155,7 @@ class Logic {
         if (mouse.pressing('Right')) {
             for (let i = 4; i < this.ship.length; i++) {
                 if (this.ship[i].selected == true) {
-                    this.ship[i].moveTo(mouseX, mouseY, 5);
+                    this.ship[i].moveTo(mouseX, mouseY, 2.5);
                     this.ship[i].visible = true;
                     this.ship[i].goCollect = false;
                 }
@@ -280,7 +280,7 @@ class Logic {
             if (frameCount % 25 == 0 && this.enemy[i].behavior == "Random" && this.enemy[i].detectShip == false) {
                 this.enemy[i].rotateTo(this.enemyX, this.enemyY, 5);
             } else if (frameCount % 40 == 0 && this.enemy[i].behavior == "Random" && this.enemy[i].detectShip == false) {
-                this.enemy[i].moveTo(this.enemyX, this.enemyY, 3);
+                this.enemy[i].moveTo(this.enemyX, this.enemyY, 1);
             }
         }
     }
@@ -289,7 +289,7 @@ class Logic {
         for (let i = 0; i < this.enemy.length; i++) {
             if (this.enemy[i].behavior == "Hunting" && this.enemy[i].detectShip == false) {
                 this.enemy[i].rotateTo(this.base.x, this.base.y, 5);
-                this.enemy[i].moveTo(this.base.x, this.base.y, 3);
+                this.enemy[i].moveTo(this.base.x, this.base.y, 1);
             }
         }
     }
@@ -316,7 +316,7 @@ class Logic {
                     if (frameCount % 25 == 0 && this.enemy[i].behavior == "Guard" && this.enemy[i].detectShip == false) {
                         this.enemy[i].rotateTo(this.enemyX, this.enemyY, 5);
                     } else if (frameCount % 30 == 0 && this.enemy[i].behavior == "Guard" && this.enemy[i].detectShip == false) {
-                        this.enemy[i].moveTo(this.enemyX, this.enemyY, 3);
+                        this.enemy[i].moveTo(this.enemyX, this.enemyY, 1);
                     }
                 }
             }
@@ -367,11 +367,10 @@ class Logic {
                     if (distance < 200) {
                         this.enemy[i].moveTo(this.enemy[i].x, this.enemy[i].y, 0);
                         this.enemyShootingLogic();
-                        // this.enemyAttackShip();
                         // return true;
                     } else if (distance > 201) {
                         // console.log("else")
-                        this.enemy[i].behavior = "Random";
+                        this.assignEnemyBehavior();
                         // return false;
                     }
                 }
@@ -391,14 +390,6 @@ class Logic {
             this.checkDistance("Four");
         }
     }
-
-    enemyAttackShip() {
-        for (let i = 0; i < this.enemy.length; i++) {
-            this.enemy[i].moveTo(this.enemy[i].x, this.enemy[i].y, 0);
-            this.enemyShootingLogic();
-        }
-    }
-
 
     enemyShootingLogic() {
         for (let i = 0; i < this.enemy.length; i++) {

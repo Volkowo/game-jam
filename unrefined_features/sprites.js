@@ -56,7 +56,7 @@ class Factory {
         tempResource.d = 50;
         tempResource.remainingAmount = 0;
         tempResource.bounciness = 0;
-        tempResource.resourcePool = Math.floor(random(30, 50));
+        tempResource.resourcePool = Math.floor(random(60, 100));
         
         tempResource.selected = false;
         tempResource.canBeMoved = false;
