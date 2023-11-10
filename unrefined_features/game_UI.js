@@ -64,14 +64,14 @@ class UI {
         this.UI_Sprites();
 
         this.base = factory.createBase(1300, 660);
-        this.resource.push(factory.createSmallResource(random(800, 1200), random(40, 120)));
-        this.resource.push(factory.createSmallResource(random(540, 750), random(120, 300)));
-        this.resource.push(factory.createSmallResource(random(1200, 1400), random(450, 500)));
-        this.resource.push(factory.createSmallResource(random(300, 500), random(600, 820)));
-        this.resource.push(factory.createSmallResource(random(850, 1100), random(760, 820)));
+        this.resource.push(factory.createSmallResource(random(800, 1200), random(40, 120))); // 0
+        this.resource.push(factory.createSmallResource(random(540, 750), random(120, 300))); // 1
+        this.resource.push(factory.createSmallResource(random(1200, 1400), random(450, 500))); // 2
+        this.resource.push(factory.createSmallResource(random(300, 500), random(600, 820))); // 3
+        this.resource.push(factory.createSmallResource(random(850, 1100), random(760, 820))); // 4
 
-        this.resource.push(factory.createBigResource(random(300, 400), random(100, 200)));
-        this.resource.push(factory.createBigResource(random(1200, 1300), random(200, 300)));
+        this.resource.push(factory.createBigResource(random(300, 400), random(100, 200))); // 5
+        this.resource.push(factory.createBigResource(random(1200, 1300), random(200, 300))); // 6
 
         // For default ship stats
         this.ship.push(factory.createShipOne(10000, 10000));
