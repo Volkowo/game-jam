@@ -31,7 +31,7 @@ class Factory {
         tempBase.color = 'RED';
         tempBase.w = 80;
         tempBase.h = 80;
-        tempBase.baseBag = 0;
+        tempBase.baseBag = 500;
         tempBase.hitPoint = 100;
         tempBase.collider = 'k'
         tempBase.selected = false;
