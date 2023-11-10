@@ -197,7 +197,7 @@ class Menu {
         this.creditsButtonSprite.collider = 'n';
 
         this.closeSettingButton = createButton('x');
-        this.closeSettingButton.position(950, 150);
+        this.closeSettingButton.position(950, 200);
         this.closeSettingButton.mouseClicked(() => { this.closeSettingClicked() });
         this.closeSettingButton.style("width", "50px");
         this.closeSettingButton.style("height", "50px");
@@ -217,36 +217,45 @@ class Menu {
         //Music Volume Control
         this.musicSlider = createSlider(0, 1, 0.05, 0.01);
         this.musicSlider.position(700, 460);
+        this.musicSlider.class("slider");
         this.musicSlider.style("width", "200px");
-        this.musicSlider.style("background-color", "black");
+        this.musicSlider.style("background-color", "White");
         this.musicSlider.hide();
         
         //Sound Volume Control
         this.soundSlider = createSlider(0, 1, 0.1, 0.01);
         this.soundSlider.position(700, 530);
+        this.soundSlider.class("slider");
         this.soundSlider.style("width", "200px");
-        this.soundSlider.style("background-color", "black");
+        this.soundSlider.style("background-color", "White");
         this.soundSlider.hide();
         
         //Setting Check Boxes
         //Music Checker
         this.musicCheck = createCheckbox("", false);
-        this.musicCheck.position(650, 463);
+        this.musicCheck.position(650, 458);
+        this.musicCheck.class("checker");
         this.musicCheck.hide();
         
         //Sound Checker
         this.soundCheck = createCheckbox("", false);
-        this.soundCheck.position(650, 533);
+        this.soundCheck.position(650, 528);
+        this.soundCheck.class("checker");
         this.soundCheck.hide();
     }
 
     settingSprites() {
         this.settingPopUp = new Sprite(800, 450);
         this.settingPopUp.w = 400;
-        this.settingPopUp.h = 600;
+        this.settingPopUp.h = 500;
         this.settingPopUp.draw = () => {
-            fill(0, 0, 0, 150);
-            rect(0, -1000 + (movingAni * 2), 400, 600);
+            let popUpPos = -1000 + (movingAni * 2);
+            fill(0, 0, 0);
+            rect(0, 0 + popUpPos, 400, 500);
+
+            fill('White');
+            textSize(40);
+            text('Setting', 0, -200 + popUpPos);
         }
         this.settingPopUp.collider = 'n';
         this.settingPopUp.visible = false;
@@ -287,8 +296,16 @@ class Menu {
         }
         if (openSetting == false && activateSetting == true) {
             this.closeSettingButton.show();
+            this.soundCheck.show();
+            this.musicCheck.show();
+            this.soundSlider.show();
+            this.musicSlider.show();
         } else if (activateSetting == false) {
             this.closeSettingButton.hide();
+            this.soundCheck.hide();
+            this.musicCheck.hide();
+            this.soundSlider.hide();
+            this.musicSlider.hide();
         }
     }
 

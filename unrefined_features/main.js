@@ -55,9 +55,6 @@ function setup() {
 function draw() {
     background('lightblue');
 
-    // text(spriteLogic.currentX, 500, 100)
-    // text(spriteLogic.currentY, 600, 100)
-
     // switches screen states
     switch (currentScreen) {
         case LOADING:

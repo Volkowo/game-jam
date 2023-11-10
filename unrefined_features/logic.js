@@ -30,6 +30,7 @@ class Logic {
         this.dragSelect;
         this.startingX;
         this.startingY;
+
         /*
             1. Spawn ships with resources
             2. Cooldown(?)
@@ -85,13 +86,13 @@ class Logic {
         // console.log("REGEN TIMER: " + this.regenTimer, "REGEN VALUE: " + this.regenValue)
         // console.log("COUNTER ONE: " + this.counterOne, "COUNTER TWO: " + this.counterTwo,
         //     "COUNTER Three: " + this.counterThree, "COUNTER FOUR: " + this.counterFour, "SHIP AMOUNT: " + this.shipAmount);
+    
+
     }
 
     selectLogic(type, binding) {
         if (kb.presses(binding)) {
-            // console.log("Test")
             this.checkShip(type);
-
         }
     }
 
