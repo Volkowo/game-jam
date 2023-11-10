@@ -448,10 +448,29 @@ class Logic {
                     }
                 }
                 for (let s = 0; s < this.enemyBulletGroup.length; s++) { // collision for enemy single shot (needs to be outisde of the if statement so its always active)
-                    // console.log(this.enemyBulletGroup.length)
                     if (this.enemyBulletGroup[s].collide(this.ship[k])) {
                         this.enemyBulletGroup[s].remove();
-
+                        if (this.ship[k].type == "One") { // damage when hitting ship type 1
+                            this.ship[k].hitPoint -= 10;
+                            if (this.ship[k].hitPoint <= 0) {
+                                this.ship[k].remove();
+                            }
+                        } else if (this.ship[k].type == "Two") { // damage when hitting ship type 2
+                            this.ship[k].hitPoint -= 10;
+                            if (this.ship[k].hitPoint <= 0) {
+                                this.ship[k].remove();
+                            }
+                        } else if (this.ship[k].type == "Three") { // damage when hitting ship type 3 
+                            this.ship[k].hitPoint -= 10;
+                            if (this.ship[k].hitPoint <= 0) {
+                                this.ship[k].remove();
+                            }
+                        } else if (this.ship[k].type == "Four") { // damage when hitting ship type 4
+                            this.ship[k].hitPoint -= 10;
+                            if (this.ship[k].hitPoint <= 0) {
+                                this.ship[k].remove();
+                            }
+                        }
                     }
                 }
             }
@@ -521,11 +540,53 @@ class Logic {
                     for (let s = 0; s < this.singleBulletGroup.length; s++) { // collision for player single shot (needs to be outisde of the if statement so its always active)
                         if (this.singleBulletGroup[s].collide(this.enemy[k])) {
                             this.singleBulletGroup[s].remove();
+                            if (this.enemy[k].type == "One") { // damage when hitting enemy type 1
+                                this.enemy[k].hitPoint -= 10;
+                                if (this.enemy[k].hitPoint <= 0) {
+                                    this.enemy[k].remove();
+                                }
+                            } else if (this.enemy[k].type == "Two") { // damage when hitting enemy type 2
+                                this.enemy[k].hitPoint -= 10;
+                                if (this.enemy[k].hitPoint <= 0) {
+                                    this.enemy[k].remove();
+                                }
+                            } else if (this.enemy[k].type == "Three") { // damage when hitting enemy type 3 
+                                this.enemy[k].hitPoint -= 10;
+                                if (this.enemy[k].hitPoint <= 0) {
+                                    this.enemy[k].remove();
+                                }
+                            } else if (this.enemy[k].type == "Four") { // damage when hitting enemy type 4
+                                this.enemy[k].hitPoint -= 10;
+                                if (this.enemy[k].hitPoint <= 0) {
+                                    this.enemy[k].remove();
+                                }
+                            }
                         }
                     }
                     for (let a = 0; a < this.burstBulletGroup.length; a++) { // same collision detection for player burst shot
                         if (this.burstBulletGroup[a].collide(this.enemy[k])) {
                             this.burstBulletGroup[a].remove();
+                            if (this.enemy[k].type == "One") { // damage when hitting enemy type 1 with burst
+                                this.enemy[k].hitPoint -= 10;
+                                if (this.enemy[k].hitPoint <= 0) {
+                                    this.enemy[k].remove();
+                                }
+                            } else if (this.enemy[k].type == "Two") { // damage when hitting enemy type 2 with burst
+                                this.enemy[k].hitPoint -= 10;
+                                if (this.enemy[k].hitPoint <= 0) {
+                                    this.enemy[k].remove();
+                                }
+                            } else if (this.enemy[k].type == "Three") { // damage when hitting enemy type 3 with burst
+                                this.enemy[k].hitPoint -= 10;
+                                if (this.enemy[k].hitPoint <= 0) {
+                                    this.enemy[k].remove();
+                                }
+                            } else if (this.enemy[k].type == "Four") { // damage when hitting enemy type 4 with burst
+                                this.enemy[k].hitPoint -= 10;
+                                if (this.enemy[k].hitPoint <= 0) {
+                                    this.enemy[k].remove();
+                                }
+                            }
                         }
                     }
                 }
