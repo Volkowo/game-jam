@@ -286,7 +286,7 @@ class Menu {
 
         //Setting Sliders
         //Music Volume Control
-        this.musicSlider = createSlider(0, 1, 0.05, 0.01);
+        this.musicSlider = createSlider(0, 1, 0.1, 0.01);
         this.musicSlider.position(750, 385);
         this.musicSlider.class("slider");
         this.musicSlider.style("width", "150px");

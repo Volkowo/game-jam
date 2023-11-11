@@ -58,6 +58,8 @@ function setup() {
     screenLoading.setup();
     screenPressAnyKey.setup();
     screenCredits.setup();
+
+    setVolume();
 }
 
 function draw() {
@@ -124,4 +126,10 @@ function drawGameScreen() { // game screen code
     spriteLogic.draw(createSprite);
 
     gameUI.draw(createSprite);
+}
+
+function setVolume() {
+    gameMusic.setVolume(screenMenu.musicSlider.value());
+    menuMusic.setVolume(screenMenu.musicSlider.value());
+    buildSound.setVolume(screenMenu.musicSlider.value());
 }
