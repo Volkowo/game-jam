@@ -305,7 +305,7 @@ class Logic {
     }
 
     checkSpawnEnemy(resource) {
-        if (resource.resourcePool >= resource.resourceCap && resource.size == "Big" && this.enemy.length < 35) {
+        if (resource.resourcePool >= resource.resourceCap && resource.size == "Big" && this.enemy.length < 5) {
             resource.spawnEnemy = true;
         } else {
             resource.spawnEnemy = false;
@@ -326,6 +326,7 @@ class Logic {
     enemyProgression(factory, resource) {
         if (this.time < 60) {
             this.enemy.push(factory.createEnemyOne(resource.x, resource.y + 50));
+            this.enemy.push(factory.createEnemyOne(resource.x + 50, resource.y + 50));
             resource.cooldown = Math.floor(random(1700, 1800)); // 60 SECs
             // resource.cooldown = Math.floor(random(30, 60));
 
@@ -334,7 +335,7 @@ class Logic {
         if (this.time > 60 && this.time < 120) {
             this.enemy.push(factory.createEnemyOne(resource.x, resource.y + 50));
             this.enemy.push(factory.createEnemyOne(resource.x + 50, resource.y + 50));
-            resource.cooldown = Math.floor(random(1700, 1800));
+            resource.cooldown = Math.floor(random(1200, 1400));
             // resource.cooldown = Math.floor(random(30, 60));
         }
 
@@ -390,7 +391,6 @@ class Logic {
 
         if (this.time > 480 && this.time < 540) {
             this.enemy.push(factory.createEnemyOne(resource.x, resource.y + 50));
-            this.enemy.push(factory.createEnemyOne(resource.x + 50, resource.y + 50));
             this.enemy.push(factory.createEnemyFour(resource.x + 100, resource.y + 50));
             resource.cooldown = Math.floor(random(1700, 1800));
             // resource.cooldown = Math.floor(random(30, 60));
@@ -401,18 +401,17 @@ class Logic {
             this.enemy.push(factory.createEnemyThree(resource.x + 50, resource.y + 50));
             this.enemy.push(factory.createEnemyFour(resource.x + 100, resource.y + 50));
             this.enemy.push(factory.createEnemyTwo(resource.x + 150, resource.y + 50));
-            resource.cooldown = Math.floor(random(1700, 1800));
+            resource.cooldown = Math.floor(random(1800, 2000));
             // resource.cooldown = Math.floor(random(30, 60));
         }
 
         if (this.time > 600) {
             this.enemy.push(factory.createEnemyOne(resource.x, resource.y + 50));
             this.enemy.push(factory.createEnemyOne(resource.x + 50, resource.y + 50));
-            this.enemy.push(factory.createEnemyOne(resource.x + 100, resource.y + 50));
             this.enemy.push(factory.createEnemyThree(resource.x + 150, resource.y + 50));
             this.enemy.push(factory.createEnemyFour(resource.x + 200, resource.y + 50));
             this.enemy.push(factory.createEnemyTwo(resource.x + 250, resource.y + 50));
-            resource.cooldown = Math.floor(random(1700, 1800));
+            resource.cooldown = Math.floor(random(1800, 2000));
             // resource.cooldown = Math.floor(random(30, 60));
         }
     }
