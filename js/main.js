@@ -1,93 +1,142 @@
-let ship, resourceNodes, base;
-let resourceCounter = 0;
-let spawnBoolean = false;
-let playerSprite;
+// screen size
+const W = 1600;
+const H = 900;
 
-function preload(){
+// for screen states
+const LOADING = 0;
+const PRESS_ANY_KEY = 1;
+const MENU = 2;
+const GAME = 3;
+const CREDITS = 4;
 
-}
+// what screen is loaded upon launch/refresh
+let currentScreen = LOADING;
 
-function setup(){
-    new Canvas(800,800)
+// button variables
+// let playButton;
+// let quitButton;
+// let creditsButton;
+// let backToMenuButton;
+
+// classes
+let screenLoading = new Loading();
+let screenPressAnyKey = new PressAnyKey();
+let screenMenu = new Menu();
+let screenCredits = new Credits();
+let createSprite = new Factory();
+let gameUI = new UI();
+let spriteLogic = new Logic();
+
+// other variables
+let isGameActive = false;
+let movingAni = 500;
+let startMenuAni = false;
+let openSetting = false;
+let activateSetting = false;
+let loadingLink = 1;
+
+let gameMusic, menuMusic;
+
+function preload() {
+    screenMenu.preload();
+    screenLoading.preload();
+    screenPressAnyKey.preload();
+    screenCredits.preload();
+    createSprite.preload();
+    gameUI.preload();
+    spriteLogic.preload();
     
-    base = new Sprite(width/2, height/2);
-    base.w = 100;
-    base.h = 60;
-
-    playerSprite = new Sprite(100, 300); // sprite for the player
-    playerSprite.overlaps(base);
-
-    resourceNodes = new Group();
-    // resourceNodes.d = 50;
-    // resourceNodes.y = 50;
-    // while (resourceNodes.length < 3) {
-    //     let resourceNode = new resourceNodes.Sprite();
-    //     resourceNode.x = resourceNodes.length * 150;
-    // }
-
-    ship = new Group();
-    ship.w = 30;
-    ship.h = 50;
+    //Sound
+    menuMusic = loadSound("assets/songs/main_Game.mp3");
+    gameMusic = loadSound("assets/songs/game.mp3");
+    buildSound = loadSound("assets/sound/build_sound.mp3");
+    buttonClickFx = loadSound("assets/sound/button_pressed.wav");
+    game_soundFx = loadSound("assets/sound/oceansfx.mp3");
+    error_soundFx = loadSound("assets/sound/error.wav");
 }
 
-function draw(){
-    background(125);
+function setup() {
+    new Canvas(W, H);
+    screenMenu.setup();
+    screenLoading.setup();
+    screenPressAnyKey.setup();
+    screenCredits.setup();
 
-    textSize(22);
-    text("Resource Collected: " + resourceCounter, 50, 700);
-
-    spawnResources();
-    collectResources();
-    spawnMinions();
-    playerControls();
+    setVolume();
 }
 
-function playerControls() {
-    if (mouse.presses()) { // moves when the mouse is pressed
-        playerSprite.moveTo(mouse, 3);
+function draw() {
+    background('lightblue');
+
+    // switches screen states
+    switch (currentScreen) {
+        case LOADING:
+            screenLoading.draw();
+            break;
+        case PRESS_ANY_KEY:
+            screenPressAnyKey.draw();
+            break;
+        case MENU:
+            screenMenu.draw();
+            break;
+        case GAME:
+            drawGameScreen();
+            break;
+        case CREDITS:
+            screenCredits.draw();
+            break;
     }
-    line(playerSprite.x, playerSprite. y, mouseX, mouseY); // line that follows the cursor
 }
 
-function spawnResources(){
-    if(spawnBoolean == false){
-        for(let i = 0; resourceNodes.length < 8; i++){
-            resourceNodes.add(createResource());
-            resourceNodes[i].overlaps(playerSprite); // overlaps with the different resources
-            console.log(resourceNodes.length);
-        }
-        spawnBoolean = true;
-    } 
-}
-
-function createResource(){
-    let resourceNode = new Sprite();
-    resourceNode.d = 50;
-    resourceNode.y = 50;
-    resourceNode.x = (resourceNodes.length * 100) + 50;
-    resourceNode.collider = 'static'
-
-    return resourceNode;
-}
-
-function collectResources(){
-    for(let i = 0; i < resourceNodes.length; i++){
-        // console.log(dist(mouseX, mouseY, resourceNodes[0].x, resourceNodes[0].y))
-        if(dist(playerSprite.x, playerSprite.y, resourceNodes[i].x, resourceNodes[i].y) < resourceNodes[0].d){
-            resourceNodes[i].remove();
-            resourceCounter += 1;
-            console.log(resourceCounter);
+function keyPressed() { // change from press any key to menu
+    if (currentScreen === PRESS_ANY_KEY) {
+        if (loadingLink == 1) {
+            currentScreen = MENU;
+            screenMenu.enableMenuButtons();
+            menuMusic.play();
+            gameMusic.stop();
+        } else if (loadingLink == 2) {
+            currentScreen = GAME;
+            menuMusic.stop();
+            gameMusic.play();
+            game_soundFx.play();
         }
     }
 }
 
-let warningText = false;
-
-function spawnMinions(){
-    if (kb.presses('o') && resourceCounter >= 3){
-        new ship.Sprite(width/2, height/2-50);
-        resourceCounter -= 3;
-    } else {
-        text("You need to collect at least 3 resources to spawn a ship!", 50 , 750)
+function drawGameScreen() { // game screen code
+    if (isGameActive === false) {
+        createSprite.setup();
+        gameUI.setup(createSprite);
+        spriteLogic.setup(createSprite);
+        isGameActive = true;
     }
+
+    // class draw code here
+    createSprite.draw();
+
+    //connecting the gameUI to createSprite
+    gameUI.factory = createSprite;
+    gameUI.logic = spriteLogic;
+
+
+    //to make sure the logic is using the same groups and sprites from gameUI
+    spriteLogic.resource = gameUI.resource;
+    // spriteLogic.selection = gameUI.selection;
+    spriteLogic.ship = gameUI.ship;
+    spriteLogic.base = gameUI.base;
+    // spriteLogic.enemy = gameUI.enemy;
+
+    spriteLogic.draw(createSprite);
+
+    gameUI.draw(createSprite);
+}
+
+function setVolume() {
+    gameMusic.setVolume(screenMenu.musicSlider.value());
+    menuMusic.setVolume(screenMenu.musicSlider.value());
+    buildSound.setVolume(screenMenu.soundSlider.value());
+    buttonClickFx.setVolume(screenMenu.soundSlider.value());
+    game_soundFx.setVolume(screenMenu.soundSlider.value());
+    error_soundFx.setVolume(screenMenu.soundSlider.value());
 }

@@ -770,10 +770,12 @@ class UI {
                 this.startBuildingShipOne = true;
             } else {
                 //if there's no gold enough to buy ship show the warning
+                error_soundFx.play();
                 this.noGold.counter = 100;
                 this.noGold.startCounter = true;
             }
         } else if (type == 'One' && this.startBuildingShipOne == true) {
+            error_soundFx.play();
             this.alreadyBuilding.startCounter = true;
             this.alreadyBuilding.counter = 100;
         }
@@ -785,10 +787,12 @@ class UI {
                 this.startBuildingShipTwo = true;
             } else {
                 //if there's no gold enough to buy ship show the warning
+                error_soundFx.play();
                 this.noGold.counter = 100;
                 this.noGold.startCounter = true;
             }
         } else if (type == 'Two' && this.startBuildingShipTwo == true) {
+            error_soundFx.play();
             this.alreadyBuilding.startCounter = true;
             this.alreadyBuilding.counter = 100;
         }
@@ -800,10 +804,12 @@ class UI {
                 this.startBuildingShipThree = true;
             } else {
                 //if there's no gold enough to buy ship show the warning
+                error_soundFx.play();
                 this.noGold.counter = 100;
                 this.noGold.startCounter = true;
             }
         } else if (type == 'Three' && this.startBuildingShipThree == true) {
+            error_soundFx.play();
             this.alreadyBuilding.startCounter = true;
             this.alreadyBuilding.counter = 100;
         }
@@ -815,10 +821,12 @@ class UI {
                 this.startBuildingShipFour = true;
             } else {
                 //if there's no gold enough to buy ship show the warning
+                error_soundFx.play();
                 this.noGold.counter = 100;
                 this.noGold.startCounter = true;
             }
         } else if (type == 'Four' && this.startBuildingShipFour == true) {
+            error_soundFx.play();
             this.alreadyBuilding.startCounter = true;
             this.alreadyBuilding.counter = 100;
         }

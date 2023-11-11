@@ -246,21 +246,30 @@ class Menu {
             textSize(20);
             
             if (this.musicCheck.checked()) {
-                // introMusic.setVolume(0);
+                menuMusic.setVolume(0);
+                gameMusic.setVolume(0);
                 // add all musics like above
                 text('0%', 30, -105 + popUpPos);
             } else {
-                // introMusic.setVolume(this.musicSlider.value());
+                menuMusic.setVolume(this.musicSlider.value());
+                gameMusic.setVolume(this.musicSlider.value());
                 // add all musics like above
                 text(Math.floor(this.musicSlider.value() * 100) + "%", 30, -105 + popUpPos);
             }
 
             if (this.soundCheck.checked()) {
-                // Soundfx.setVolume(0);
+                buildSound.setVolume(0);
+                buttonClickFx.setVolume(0);
+                game_soundFx.setVolume(0);
+                error_soundFx.setVolume(0);
                 // add all sounds like above
                 text('0%', 30, 20 + popUpPos);
             } else {
-                // Soundfx.setVolume(this.soundSlider.value());
+                buildSound.setVolume(this.soundSlider.value());
+                buttonClickFx.setVolume(this.soundSlider.value());
+                game_soundFx.setVolume(this.soundSlider.value());
+                error_soundFx.setVolume(this.soundSlider.value());
+
                 // add all sounds like above
                 text(Math.floor(this.soundSlider.value() * 100) + "%", 30, 20 + popUpPos);
             }
@@ -317,15 +326,19 @@ class Menu {
 
     buttonSpritesFunctions() {
         if (this.playButtonSprite.mouse.presses()) {
+            buttonClickFx.play();
             this.playButtonClicked();
         }
         if (this.settingButtonSprite.mouse.presses()) {
+            buttonClickFx.play();
             this.settingButtonClicked();
         }
         if (this.creditsButtonSprite.mouse.presses()) {
+            buttonClickFx.play();
             this.creditsButtonClicked();
         }
         if (this.closeSettingButton.mouse.presses()) {
+            buttonClickFx.play();
             this.closeSettingClicked();
         }
 
@@ -424,13 +437,14 @@ class Menu {
         // this.settingButton.hide();
         // this.creditsButton.hide();
         // this.backToMenuButton.show();
-
+        
         // New Sprite Buttons
         this.backToMenuButton.show();
         this.disabledMenuButtons();
     }
-
+    
     backToMenuButtonClicked() {
+        buttonClickFx.play();
         currentScreen = MENU;
         this.backToMenuButton.hide();
         this.enableMenuButtons();
