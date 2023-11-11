@@ -124,7 +124,7 @@ class Factory {
         tempShip.movementSpeed = 2.5;
         tempShip.collectRate = 3;
         tempShip.range = 120;
-        tempShip.cost = 10;
+        tempShip.cost = 35;
         tempShip.buildTime = 300;
         tempShip.shipBag = 0;
         tempShip.reloadTimer = 90;
@@ -160,7 +160,7 @@ class Factory {
         tempShip.movementSpeed = 2;
         tempShip.collectRate = 2;
         tempShip.range = 150;
-        tempShip.cost = 30;
+        tempShip.cost = 80;
         tempShip.buildTime = 600;
         tempShip.shipBag = 0;
         tempShip.reloadTimer = 233;
@@ -193,7 +193,7 @@ class Factory {
         tempShip.movementSpeed = 2;
         tempShip.collectRate = 2;
         tempShip.range = 110;
-        tempShip.cost = 30;
+        tempShip.cost = 120;
         tempShip.buildTime = 600;
         tempShip.shipBag = 0;
         tempShip.reloadTimer = 350;
@@ -226,7 +226,7 @@ class Factory {
         tempShip.movementSpeed = 1.5;
         tempShip.collectRate = 1;
         tempShip.range = 150;
-        tempShip.cost = 50;
+        tempShip.cost = 180;
         tempShip.buildTime = 1500;
         tempShip.shipBag = 0;
         tempShip.reloadTimer = 116;
