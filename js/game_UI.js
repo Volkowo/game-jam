@@ -445,10 +445,10 @@ class UI {
             fill(246, 238, 227);
             quad(-200, -25, 200, -25, 160, 25, -200, 25);
 
-            image(this.selectButtonImg, -15, 0, 45, 45);
-            image(this.selectButtonImg, 35, 0, 45, 45);
-            image(this.selectButtonImg, 85, 0, 45, 45);
-            image(this.selectButtonImg, 135, 0, 45, 45);
+            image(this.selectButtonImg, -40, 0, 45, 45);
+            image(this.selectButtonImg, 10, 0, 45, 45);
+            image(this.selectButtonImg, 60, 0, 45, 45);
+            image(this.selectButtonImg, 110, 0, 45, 45);
             // image(this.menuButtonImg,-80,0,50,50);
         }
         this.selectBar.collider = 's';
@@ -623,7 +623,7 @@ class UI {
 
         //Selection Buttons
         this.selectButtonOne = createButton('1');
-        this.selectButtonOne.position(301, 6);
+        this.selectButtonOne.position(276, 6);
         this.selectButtonOne.mouseClicked(() => { this.selectShipOne() });
         this.selectButtonOne.style("width", "28px");
         this.selectButtonOne.style("height", "28px");
@@ -635,7 +635,7 @@ class UI {
         this.selectButtonOne.show();
 
         this.selectButtonTwo = createButton('2');
-        this.selectButtonTwo.position(351, 6);
+        this.selectButtonTwo.position(326, 6);
         this.selectButtonTwo.mouseClicked(() => { this.selectShipTwo() });
         this.selectButtonTwo.style("width", "28px");
         this.selectButtonTwo.style("height", "28px");
@@ -647,7 +647,7 @@ class UI {
         this.selectButtonTwo.show();
 
         this.selectButtonThree = createButton('3');
-        this.selectButtonThree.position(401, 6);
+        this.selectButtonThree.position(376, 6);
         this.selectButtonThree.mouseClicked(() => { this.selectShipThree() });
         this.selectButtonThree.style("width", "28px");
         this.selectButtonThree.style("height", "28px");
@@ -659,7 +659,7 @@ class UI {
         this.selectButtonThree.show();
         
         this.selectButtonFour = createButton('4');
-        this.selectButtonFour.position(451, 6);
+        this.selectButtonFour.position(426, 6);
         this.selectButtonFour.mouseClicked(() => { this.selectShipFour() });
         this.selectButtonFour.style("width", "28px");
         this.selectButtonFour.style("height", "28px");
