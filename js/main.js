@@ -10,7 +10,7 @@ const GAME = 3;
 const CREDITS = 4;
 
 // what screen is loaded upon launch/refresh
-let currentScreen = LOADING;
+let currentScreen = GAME;
 
 // button variables
 // let playButton;
@@ -98,11 +98,13 @@ function keyPressed() { // change from press any key to menu
             currentScreen = MENU;
             screenMenu.enableMenuButtons();
             menuMusic.play();
+            menuMusic.loop();
             gameMusic.stop();
         } else if (loadingLink == 2) {
             currentScreen = GAME;
             menuMusic.stop();
             gameMusic.play();
+            gameMusic.loop();
             game_soundFx.play();
         }
     }
