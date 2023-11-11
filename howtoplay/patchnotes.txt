@@ -4,3 +4,11 @@ PATCH 1.01
 
 - Reduced Gold Cost
 (developer note: game was too hard so we toned it down)
+
+PATCH 1.02
+- Hitbox fixes
+(developer note: we forgor to fix the hitboxes sorry teehee xd)
+
+- Updated Tutorial, again
+(developer note: yeah we added a lot there. We will personally come to your house if you have anymore questions)
+(for legal reasons, we will not. this is a joke :D)

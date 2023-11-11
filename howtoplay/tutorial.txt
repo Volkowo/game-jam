@@ -1,24 +1,36 @@
-Left Click (click and drag) - Multiple selections for the ship
-Right Click - Gives command to the chosen ships on where to move
+CONTROLS
+    Left Click (click and drag) - Multiple selections for the ship
+    Right Click - Gives command to the chosen ships on where to move
 
-1, 2, 3, and/or 4 on the keyboard - to choose the ships if you dont wanna use the left click
-> You can also choose by clicking on the number located at the top left of the game.
+    1, 2, 3, and/or 4 on the keyboard - to choose the ships if you dont wanna use the left click
+    > You can also choose by clicking on the number located at the top left of the game.
 
 HOW DO I PLAY THE GAME?
-1. Choose the ship either by drag and click, or with the keyboard inputs.
-2. You can assign commands to the ship by letting them collect the treasure chest or towns by right clicking on said resources.
-3. You can build more ships by clicking the "Build" button. DO NOT SPAM THE BUILD BUTTON AS IT WILL COST MONEY
-4. The ship will attack automatically at certain range.
+    1. Choose the ship either by drag and click, or with the keyboard inputs.
+    2. You can assign commands to the ship by letting them collect the treasure chest or towns by right clicking on said resources.
+    (The ship will collect the resource whether it's selected or not)
+    3. You can build more ships by clicking the "Build" button. DO NOT SPAM THE BUILD BUTTON AS IT WILL COST MONEY
+    4. The ship will attack automatically at certain range.
 
 HOW DO I WIN/LOSE?
-1. You don't win. Literally
-2. If you lose just refresh. We cbf to have game over screen
-(Coming soon on Patch 4.23)
+    1. You don't win. Literally
+    2. If you lose just refresh. We cbf to have game over screen
+    (Coming soon on Patch 4.23)
 
+CAN I ATTACK THE RESOURCE?
+    No. The player ships will only collect the resources. It will not attack any of the resources.
+    The enemy however, will attack your base. So keep an eye on the enemy ships!
+
+HOW DO I ATTACK THE ENEMY?
+    The player ships (and the enemy ships too) will start attacking automatically once either ship enters
+    the other ships' range.
+
+    For the player ships, you can see said range when selecting the ship. It is the red circle that surrounds
+    the selected ship.
 
 GAME PROGRESSION
-> Collect the treasure chest (and the town too) to get money
-> Create ships
-> Defend base
-> ???
-> Win
+    > Collect the treasure chest (and the town too) to get money
+    > Create ships
+    > Defend base
+    > ???
+    > Win

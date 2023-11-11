@@ -214,7 +214,7 @@ class Factory {
     createShipFour(x, y) {
         let tempShip = this.createShip(x, y, "Four");
         tempShip.color = 'BROWN';
-        tempShip.w = 85;
+        tempShip.w = 90;
         tempShip.h = 40;
         tempShip.scale = 0.7;
         tempShip.img = this.shipFour;
@@ -359,7 +359,7 @@ class Factory {
     createEnemyFour(x, y) {
         let tempEnemy = this.createEnemy(x, y, "Four", "");
         tempEnemy.color = 'BROWN';
-        tempEnemy.w = 85;
+        tempEnemy.w = 90;
         tempEnemy.h = 40;
         tempEnemy.scale = 0.7;
         tempEnemy.img = this.enemyFour;

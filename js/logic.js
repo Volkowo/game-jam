@@ -105,6 +105,8 @@ class Logic {
             }
         }
 
+        // allSprites.debug = true;
+
         this.shipAmount = 0;
         this.checkShipAmount();
     }
