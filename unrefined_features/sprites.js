@@ -34,7 +34,7 @@ class Factory {
         tempBase.color = 'RED';
         tempBase.w = 80;
         tempBase.h = 80;
-        tempBase.baseBag = 500;
+        tempBase.baseBag = 45;
         tempBase.hitPoint = 100;
         tempBase.collider = 'k'
         tempBase.selected = false;
@@ -61,7 +61,7 @@ class Factory {
         tempResource.h = 30;
         tempResource.remainingAmount = 0;
         tempResource.bounciness = 0;
-        tempResource.resourcePool = Math.floor(random(60, 100));
+        tempResource.resourcePool = Math.floor(random(30, 60));
         tempResource.draw = () => {
             image(this.smallResourceImg, 0,0, 30,30);
         }
@@ -126,8 +126,8 @@ class Factory {
         tempShip.cost = 5;
         tempShip.buildTime = 300;
         tempShip.shipBag = 0;
-        tempShip.reloadTimer = 90;
-        tempShip.shootingTimer = 90;
+        tempShip.reloadTimer = 350;
+        tempShip.shootingTimer = 0;
         tempShip.rotation = tempShip.direction;
         
         // BOOLEAN-RELATED
@@ -159,8 +159,8 @@ class Factory {
         tempShip.cost = 10;
         tempShip.buildTime = 600;
         tempShip.shipBag = 0;
-        tempShip.reloadTimer = 45;
-        tempShip.shootingTimer = 45;
+        tempShip.reloadTimer = 233;
+        tempShip.shootingTimer = 0;
         
         // BOOLEAN-RELATED
         tempShip.selected = false;
@@ -191,8 +191,8 @@ class Factory {
         tempShip.cost = 25;
         tempShip.buildTime = 600;
         tempShip.shipBag = 0;
-        tempShip.reloadTimer = 60;
-        tempShip.shootingTimer = 60;
+        tempShip.reloadTimer = 350;
+        tempShip.shootingTimer = 0;
         
         // BOOLEAN-RELATED
         tempShip.selected = false;
@@ -223,8 +223,8 @@ class Factory {
         tempShip.cost = 35;
         tempShip.buildTime = 1500;
         tempShip.shipBag = 0;
-        tempShip.reloadTimer = 30;
-        tempShip.shootingTimer = 30;
+        tempShip.reloadTimer = 116;
+        tempShip.shootingTimer = 0;
 
         // BOOLEAN-RELATED
         tempShip.selected = false;
@@ -277,7 +277,7 @@ class Factory {
         // STATS
         tempEnemy.hitPoint = 20;
         // tempEnemy.attack = 5;
-        tempEnemy.movementSpeed = 5;
+        tempEnemy.movementSpeed = 1;
         tempEnemy.range = 100;
         tempEnemy.reloadTimer = 350;
         tempEnemy.shootingTimer = 0;
@@ -305,7 +305,7 @@ class Factory {
         // STATS
         tempEnemy.hitPoint = 30;
         // tempEnemy.attack = 8;
-        tempEnemy.movementSpeed = 4;
+        tempEnemy.movementSpeed = 1;
         tempEnemy.range = 150;
         tempEnemy.reloadTimer = 233;
         tempEnemy.shootingTimer = 0;
@@ -333,7 +333,7 @@ class Factory {
         // STATS
         tempEnemy.hitPoint = 50;
         // tempEnemy.attack = 5;
-        tempEnemy.movementSpeed = 3;
+        tempEnemy.movementSpeed = 1;
         tempEnemy.range = 150;
         tempEnemy.reloadTimer = 350;
         tempEnemy.shootingTimer = 0;
@@ -361,7 +361,7 @@ class Factory {
         // STATS
         tempEnemy.hitPoint = 80;
         // tempEnemy.attack = 10;
-        tempEnemy.movementSpeed = 2;
+        tempEnemy.movementSpeed = 1;
         tempEnemy.range = 200;
         tempEnemy.reloadTimer = 116;
         tempEnemy.shootingTimer = 0;
