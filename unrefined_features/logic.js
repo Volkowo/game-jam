@@ -77,18 +77,21 @@ class Logic {
             this.movementLogic(this.ship[i]);
             this.selectionCircle(this.ship[i]);
             this.shipRotate(this.ship[i]);
-            this.shootingLogic(this.ship[i]);
             this.selectLogic('One', '1', this.ship[i]);
             this.selectLogic('Two', '2', this.ship[i]);
             this.selectLogic('Three', '3', this.ship[i]);
             this.selectLogic('Four', '4', this.ship[i]);
         }
-
+        
         for (let j = 0; j < this.enemy.length; j++) {
             this.randomEnemyBehavior(this.enemy[j], j);
             this.assignEnemyBehavior(this.enemy[j]);
             for (let z = 4; z < this.ship.length; z++) {
                 this.detectionLogic(this.enemy[j], this.ship[z]);
+                this.shootingLogic(this.enemy[j], this.ship[z]);
+                if(this.enemy[j] == undefined) {
+                    return
+                }
             }
         }
 
@@ -159,15 +162,15 @@ class Logic {
 
     selectionCircle(ship) {
         if (ship.selected == true) {
-            // this.selection.push(factory.createSelection(ship.x, ship.y, ship.w + 30));
             noFill();
             strokeWeight(2);
             stroke("green");
             ellipse(ship.x, ship.y, 50);
+
+            strokeWeight(0.3);
+            stroke("red");
+            ellipse(ship.x, ship.y, ship.range * 2 - 50);
         }
-        // if(this.selection.length > 1){
-        //     this.selection.shift();
-        // }
     }
 
     movementLogic(ship) {
@@ -235,7 +238,7 @@ class Logic {
                             }
                             // this.ship[j].collectTimer = 180;
                             this.ship[j].goldCollected = true;
-                            this.ship[j].text = this.ship[j].shipBag;
+                            // this.ship[j].text = this.ship[j].shipBag;
                         } else {
                             // console.log("This is a writing too")
                             if (frameCount % this.ship[j].collectTick == 0) {
@@ -248,14 +251,14 @@ class Logic {
                             }
                             // this.ship[j].collectTimer = 180;
                             this.ship[j].goldCollected = true;
-                            this.ship[j].text = this.ship[j].shipBag;
+                            // this.ship[j].text = this.ship[j].shipBag;
                         }
                         // console.log("resource node: " + this.resource[0].resourcePool, "ship inventory: " + this.ship[j].shipBag);
                     }
                 }
 
-                this.displayText();
-                this.resource[i].text = this.resource[i].resourcePool;
+                // this.displayText();
+                // this.resource[i].text = this.resource[i].resourcePool;
                 // this.ship[j].text = this.ship[j].shipBag;
             }
         }
@@ -442,21 +445,21 @@ class Logic {
     // shipType is, well, the ship type of the player ship
     // i = 4 because there are 4 ships that are spawned off-screen to get the stats for the UI board.
     checkDistance(shipType, enemy, ship) {
-        if (ship.type == shipType) {
-            this.distance = dist(ship.x, ship.y, enemy.x, enemy.y);
-            if (this.distance < 200) {
-                enemy.moveTo(enemy.x, enemy.y, 0);
-                if (enemy.shootingTimer <= 0) {
-                    this.enemyBulletGroup.push(this.enemyBullets(enemy.x, enemy.y, ship));
-                    enemy.shootingTimer = enemy.reloadTimer;
+            if (ship.type == shipType) {
+                this.distance = dist(ship.x, ship.y, enemy.x, enemy.y);
+                if (this.distance < enemy.range) {
+                    enemy.moveTo(enemy.x, enemy.y, 0);
+                    if (enemy.shootingTimer <= 0) {
+                        this.enemyBulletGroup.push(this.enemyBullets(enemy.x, enemy.y, ship));
+                        enemy.shootingTimer = enemy.reloadTimer;
+                    }
+                    // return true;
+                } else if (this.distance > 201) {
+                    // console.log("else")
+                    this.assignEnemyBehavior(enemy);
+                    // return false;
                 }
-                // return true;
-            } else if (this.distance > 201) {
-                // console.log("else")
-                this.assignEnemyBehavior(enemy);
-                // return false;
             }
-        }
 
         for (let s = 0; s < this.enemyBulletGroup.length; s++) { // collision for enemy single shot (needs to be outisde of the if statement so its always active)
             // console.log(this.enemyBulletGroup[s], ship)
@@ -524,97 +527,42 @@ class Logic {
     }
 
     // ------- PLAYER SHOOTING
-    shootingLogic(ship) {
-        ship.shootingTimer--
-        // console.log(ship.shootingTimer)
-        if (ship.shootingTimer <= 0) {
-            // console.log("yeah")
-            for (let k = 0; k < this.enemy.length; k++) { // for distance check below
-                this.distance = dist(this.enemy[k].x, this.enemy[k].y, ship.x, ship.y);
-                if (this.distance <= 200) { // create player bullet sprites
-                    if (this.singleShot === true) { // for above boolean if statement (toggled after 'q' key press)
-                        this.singleBulletGroup.push(this.createSingleShot(ship.x, ship.y, this.enemy[k]));
-                    } else if (this.burstFire === true) { // creates three sprites spread out toggle after a 'w' key press
-                        this.burstBulletGroup.push(this.createBurstBullet(ship.x, ship.y - 15, this.enemy[k]));
-                        this.burstBulletGroup.push(this.createBurstBullet(ship.x, ship.y, this.enemy[k]));
-                        this.burstBulletGroup.push(this.createBurstBullet(ship.x, ship.y + 15, this.enemy[k]));
-                    }
-                    ship.shootingTimer = ship.reloadTimer;
-                }
-
-
-                for (let s = 0; s < this.singleBulletGroup.length; s++) { // collision for player single shot (needs to be outisde of the if statement so its always active)
-                    // console.log(this.singleBulletGroup[s], this.enemy[k]);
-                    if (this.singleBulletGroup[s].collides(this.enemy[k])) {
-                        // this.singleBulletGroup[s].remove();
-                        console.log("Shooting")
-                        this.thingsToRemove.push(this.singleBulletGroup[s])
-                        if (this.enemy[k].type == "One") { // damage when hitting enemy type 1
-                            this.enemy[k].hitPoint -= 10;
-                            if (this.enemy[k].hitPoint <= 0) {
-                                // this.enemy[k].remove();
-                                this.thingsToRemove.push(this.enemy[k])
-                            }
-                        } else if (this.enemy[k].type == "Two") { // damage when hitting enemy type 2
-                            this.enemy[k].hitPoint -= 10;
-                            if (this.enemy[k].hitPoint <= 0) {
-                                // this.enemy[k].remove();
-                                this.thingsToRemove.push(this.enemy[k])
-                            }
-                        } else if (this.enemy[k].type == "Three") { // damage when hitting enemy type 3 
-                            this.enemy[k].hitPoint -= 10;
-                            if (this.enemy[k].hitPoint <= 0) {
-                                // this.enemy[k].remove();
-                                this.thingsToRemove.push(this.enemy[k])
-                            }
-                        } else if (this.enemy[k].type == "Four") { // damage when hitting enemy type 4
-                            this.enemy[k].hitPoint -= 10;
-                            if (this.enemy[k].hitPoint <= 0) {
-                                // this.enemy[k].remove();
-                                this.thingsToRemove.push(this.enemy[k])
-                            }
-                        }
-                    }
-                }
-
-                this.thingsToRemove.removeAll();
-
-                // for (let a = 0; a < this.burstBulletGroup.length; a++) { // same collision detection for player burst shot
-                //     if (this.burstBulletGroup[a].collides(this.enemy[k])) {
-                //         // this.burstBulletGroup[a].remove();
-                //         thingsToRemove.push(this.burstBulletGroup[a])
-                //         if (this.enemy[k].type == "One") { // damage when hitting enemy type 1 with burst
-                //             this.enemy[k].hitPoint -= 10;
-                //             if (this.enemy[k].hitPoint <= 0) {
-                //                 // this.enemy[k].remove();
-                //                 thingsToRemove.push(this.enemy[k])
-                //             }
-                //         } else if (this.enemy[k].type == "Two") { // damage when hitting enemy type 2 with burst
-                //             this.enemy[k].hitPoint -= 10;
-                //             if (this.enemy[k].hitPoint <= 0) {
-                //                 // this.enemy[k].remove();
-                //                 thingsToRemove.push(this.enemy[k])
-                //             }
-                //         } else if (this.enemy[k].type == "Three") { // damage when hitting enemy type 3 with burst
-                //             this.enemy[k].hitPoint -= 10;
-                //             if (this.enemy[k].hitPoint <= 0) {
-                //                 // this.enemy[k].remove();
-                //                 thingsToRemove.push(this.enemy[k])
-                //             }
-                //         } else if (this.enemy[k].type == "Four") { // damage when hitting enemy type 4 with burst
-                //             this.enemy[k].hitPoint -= 10;
-                //             if (this.enemy[k].hitPoint <= 0) {
-                //                 // this.enemy[k].remove();
-                //                 thingsToRemove.push(this.enemy[k])
-                //             }
-                //         }
-                //     }
-                // }
-
-                // thingsToRemove.removeAll();
+    shootingLogic(enemy, ship) {
+        ship.shootingTimer--;
+        this.distance = dist(enemy.x, enemy.y, ship.x, ship.y);
+        if (this.distance < ship.range) {
+            if (ship.shootingTimer <= 0) {
+                this.singleBulletGroup.push(this.createSingleShot(ship.x, ship.y, enemy));
+                ship.shootingTimer = ship.reloadTimer;
             }
         }
-
+        for (let s = 0; s < this.singleBulletGroup.length; s++) {
+            if (this.singleBulletGroup[s].collides(enemy)) {
+                this.thingsToRemove.push(this.singleBulletGroup[s]);
+                if (enemy.type == "One") {
+                    enemy.hitPoint -= 10;
+                    if (enemy.hitPoint <= 0) {
+                        this.thingsToRemove.push(enemy);
+                    }
+                } else if (enemy.type == "Two") {
+                    enemy.hitPoint -= 10;
+                    if (enemy.hitPoint <= 0) {
+                        this.thingsToRemove.push(enemy);
+                    }
+                } else if (enemy.type == "Three") {
+                    enemy.hitPoint -= 10;
+                    if (enemy.hitPoint <= 0) {
+                        this.thingsToRemove.push(enemy);
+                    }
+                } else if (enemy.type == "Four") {
+                    enemy.hitPoint -= 10;
+                    if (enemy.hitPoint <= 0) {
+                        this.thingsToRemove.push(enemy);
+                    }
+                }
+            }
+        }
+        this.thingsToRemove.removeAll();
     }
 
     createSingleShot(x, y, angle) { // single boolets
