@@ -13,13 +13,16 @@ class Factory {
         this.enemyThree = loadImage("assets/img/ship_sprites/frigate_enemy.png");
         this.enemyFour = loadImage("assets/img/ship_sprites/manowar_enemy.png");
 
-        this.baseImg = loadImage("assets/img/islands/base.png");
-        this.bigResourceImg = loadImage("assets/img/islands/big_resource.png");
+        this.smallResourceImg = loadImage("assets/img/resources/small_resource.png");
+        this.bigResourceImg = loadImage("assets/img/resources/big_resource.png");
+
+        this.baseAni = loadAnimation("assets/img/base/base_1.png",11);
     }
 
 
     setup() {
-
+        this.baseAni.frameDelay = 40;
+        this.baseAni.scale = 0.08;
     }
 
     draw() {
@@ -37,6 +40,7 @@ class Factory {
         tempBase.selected = false;
         tempBase.canBeMoved = false;
         tempBase.fiction = 0;
+        tempBase.addAni('baseAni', this.baseAni);
         // tempBase.img = this.baseImg;
         // tempBase.scale = 0.08;
         tempBase.layer = 1;
@@ -53,10 +57,14 @@ class Factory {
     createSmallResource(x, y) {
         let tempResource = this.createResource(x, y, "Small");
         tempResource.color = 'GREEN';
-        tempResource.d = 50;
+        tempResource.w = 30;
+        tempResource.h = 30;
         tempResource.remainingAmount = 0;
         tempResource.bounciness = 0;
         tempResource.resourcePool = Math.floor(random(60, 100));
+        tempResource.draw = () => {
+            image(this.smallResourceImg, 0,0, 30,30);
+        }
         
         tempResource.selected = false;
         tempResource.canBeMoved = false;
@@ -66,16 +74,17 @@ class Factory {
     createBigResource(x, y) {
         let tempResource = this.createResource(x, y, "Big");
         tempResource.color = 'GREEN';
-        tempResource.w = 50,
-        tempResource.h = 50;
+        tempResource.w = 70,
+        tempResource.h = 70;
         tempResource.collider = 's';
         tempResource.remainingAmount = 0;
         tempResource.bounciness = 0;
         tempResource.resourcePool = Math.floor(random(450, 480));
         tempResource.resourceCap = 500;
         tempResource.cooldown = Math.floor(random(1200, 1500));
-        // tempResource.img = this.bigResourceImg;
-        // tempResource.scale = 0.08;
+        tempResource.draw = () => {
+            image(this.bigResourceImg, 0,0, 70,70);
+        }
         
         tempResource.selected = false;
         tempResource.canBeMoved = false;
@@ -110,14 +119,15 @@ class Factory {
         
         // STATS
         tempShip.hitPoint = 20;
-        tempShip.attack = 5;
-        tempShip.movementSpeed = 5;
+        // tempShip.attack = 5;
+        tempShip.movementSpeed = 2.5;
         tempShip.collectRate = 2;
+        tempShip.range = 100;
         tempShip.cost = 5;
         tempShip.buildTime = 300;
         tempShip.shipBag = 0;
-        tempShip.reloadTimer = 50;
-        tempShip.shootingTimer = 50;
+        tempShip.reloadTimer = 90;
+        tempShip.shootingTimer = 90;
         tempShip.rotation = tempShip.direction;
         
         // BOOLEAN-RELATED
@@ -142,14 +152,15 @@ class Factory {
         
         // STATS
         tempShip.hitPoint = 30;
-        tempShip.attack = 8;
-        tempShip.movementSpeed = 4;
+        // tempShip.attack = 20;
+        tempShip.movementSpeed = 2;
         tempShip.collectRate = 5;
+        tempShip.range = 150;
         tempShip.cost = 10;
         tempShip.buildTime = 600;
         tempShip.shipBag = 0;
-        tempShip.reloadTimer = 100;
-        tempShip.shootingTimer = 100;
+        tempShip.reloadTimer = 45;
+        tempShip.shootingTimer = 45;
         
         // BOOLEAN-RELATED
         tempShip.selected = false;
@@ -173,14 +184,15 @@ class Factory {
         
         // STATS
         tempShip.hitPoint = 50;
-        tempShip.attack = 5;
-        tempShip.movementSpeed = 3;
+        // tempShip.attack = 20;
+        tempShip.movementSpeed = 2;
         tempShip.collectRate = 5;
+        tempShip.range = 150;
         tempShip.cost = 25;
         tempShip.buildTime = 600;
         tempShip.shipBag = 0;
-        tempShip.reloadTimer = 150;
-        tempShip.shootingTimer = 150;
+        tempShip.reloadTimer = 60;
+        tempShip.shootingTimer = 60;
         
         // BOOLEAN-RELATED
         tempShip.selected = false;
@@ -204,14 +216,15 @@ class Factory {
         
         // STATS
         tempShip.hitPoint = 80;
-        tempShip.attack = 10;
-        tempShip.movementSpeed = 2;
+        // tempShip.attack = 20;
+        tempShip.movementSpeed = 1.5;
         tempShip.collectRate = 1;
+        tempShip.range = 200;
         tempShip.cost = 35;
         tempShip.buildTime = 1500;
         tempShip.shipBag = 0;
-        tempShip.reloadTimer = 200;
-        tempShip.shootingTimer = 200;
+        tempShip.reloadTimer = 30;
+        tempShip.shootingTimer = 30;
 
         // BOOLEAN-RELATED
         tempShip.selected = false;
@@ -255,18 +268,19 @@ class Factory {
     createEnemyOne(x, y) {
         let tempEnemy = this.createEnemy(x, y, "One", "");
         tempEnemy.color = 'YELLOW';
-        tempEnemy.w = 20;
-        tempEnemy.h = 35;
+        tempEnemy.w = 30;
+        tempEnemy.h = 20;
         tempEnemy.scale = 0.7;
         tempEnemy.img = this.enemyOne;
+        tempEnemy.rotation = tempEnemy.direction;
         
         // STATS
         tempEnemy.hitPoint = 20;
-        tempEnemy.attack = 5;
+        // tempEnemy.attack = 5;
         tempEnemy.movementSpeed = 5;
-        tempEnemy.reloadTimer = 200;
-        tempEnemy.shootingTimer = 200;
-        tempEnemy.rotation = tempEnemy.direction;
+        tempEnemy.range = 100;
+        tempEnemy.reloadTimer = 350;
+        tempEnemy.shootingTimer = 0;
         
         // BOOLEAN-RELATED
         tempEnemy.selected = false;
@@ -278,22 +292,23 @@ class Factory {
         tempEnemy.shoot = false;
         return tempEnemy;
     }
-
+    
     createEnemyTwo(x, y) {
         let tempEnemy = this.createEnemy(x, y, "Two", "");
         tempEnemy.color = 'ORANGE';
-        tempEnemy.w = 33;
-        tempEnemy.h = 63;
+        tempEnemy.w = 53;
+        tempEnemy.h = 33;
         tempEnemy.scale = 0.7;
         tempEnemy.img = this.enemyTwo;
         tempEnemy.rotation = tempEnemy.direction;
         
         // STATS
         tempEnemy.hitPoint = 30;
-        tempEnemy.attack = 8;
+        // tempEnemy.attack = 8;
         tempEnemy.movementSpeed = 4;
-        tempEnemy.reloadTimer = 250;
-        tempEnemy.shootingTimer = 250;
+        tempEnemy.range = 150;
+        tempEnemy.reloadTimer = 233;
+        tempEnemy.shootingTimer = 0;
         
         // BOOLEAN-RELATED
         tempEnemy.selected = false;
@@ -309,18 +324,19 @@ class Factory {
     createEnemyThree(x, y) {
         let tempEnemy = this.createEnemy(x, y, "Three", "");
         tempEnemy.color = 'BROWN';
-        tempEnemy.w = 43;
-        tempEnemy.h = 63;
+        tempEnemy.w = 63;
+        tempEnemy.h = 33;
         tempEnemy.scale = 0.7;
         tempEnemy.img = this.enemyThree;
         tempEnemy.rotation = tempEnemy.direction;
         
         // STATS
         tempEnemy.hitPoint = 50;
-        tempEnemy.attack = 5;
+        // tempEnemy.attack = 5;
         tempEnemy.movementSpeed = 3;
-        tempEnemy.reloadTimer = 300;
-        tempEnemy.shootingTimer = 300;
+        tempEnemy.range = 150;
+        tempEnemy.reloadTimer = 350;
+        tempEnemy.shootingTimer = 0;
         
         // BOOLEAN-RELATED
         tempEnemy.selected = false;
@@ -336,18 +352,19 @@ class Factory {
     createEnemyFour(x, y) {
         let tempEnemy = this.createEnemy(x, y, "Four", "");
         tempEnemy.color = 'BROWN';
-        tempEnemy.w = 60;
-        tempEnemy.h = 85;
+        tempEnemy.w = 85;
+        tempEnemy.h = 40;
         tempEnemy.scale = 0.7;
         tempEnemy.img = this.enemyFour;
         tempEnemy.rotation = tempEnemy.direction;
 
         // STATS
         tempEnemy.hitPoint = 80;
-        tempEnemy.attack = 10;
+        // tempEnemy.attack = 10;
         tempEnemy.movementSpeed = 2;
-        tempEnemy.reloadTimer = 350;
-        tempEnemy.shootingTimer = 350;
+        tempEnemy.range = 200;
+        tempEnemy.reloadTimer = 116;
+        tempEnemy.shootingTimer = 0;
 
         // BOOLEAN-RELATED
         tempEnemy.selected = false;

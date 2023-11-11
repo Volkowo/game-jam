@@ -78,14 +78,15 @@ class UI {
         this.ship.push(factory.createShipTwo(10000, 10000));
         this.ship.push(factory.createShipThree(10000, 10000));
         this.ship.push(factory.createShipFour(10000, 10000));
-
+        
         //Starting ships
         this.ship.push(factory.createShipOne(this.base.x - 25, this.base.y - 50));
-        this.ship.push(factory.createShipOne(this.base.x + 25, this.base.y - 50));
-
+        // this.ship.push(factory.createShipOne(this.base.x + 25, this.base.y - 50));
+        this.ship.push(factory.createShipTwo(this.base.x + 25, this.base.y - 50));
+        // this.ship.push(factory.createShipThree(this.base.x + 25, this.base.y - 50));
+        // this.ship.push(factory.createShipFour(this.base.x + 25, this.base.y - 50));
+        
         // ENEMY TESTING
-
-
     }
 
     draw() {
@@ -330,28 +331,28 @@ class UI {
             textAlign(LEFT, CENTER);
             //Ship One
             text("Hit Point : " + this.ship[0].hitPoint, -10, -350);
-            text("Attack : " + this.ship[0].attack, -10, -325);
+            text("Atk Speed: " + this.ship[0].reloadTimer/60 + "/s", -10, -325);
             text("Speed : " + this.ship[0].movementSpeed, -10, -300);
             text("Collect Rate : " + this.ship[0].collectRate + "/s", -10, -275);
             text("Gold Cost : " + this.ship[0].cost, -10, -250);
             text("Build Time : 5s", -10, -225);
             //Ship Two
             text("Hit Point : " + this.ship[1].hitPoint, -10, -152.5);
-            text("Attack : " + this.ship[1].attack, -10, -127.5);
+            text("Atk Speed: " + this.ship[1].reloadTimer/60 + "/s", -10, -127.5);
             text("Speed : " + this.ship[1].movementSpeed, -10, -102.5);
             text("Collect Rate : " + this.ship[1].collectRate + "/s", -10, -77.5);
             text("Gold Cost : " + this.ship[1].cost, -10, -52.5);
             text("Build Time : 10s", -10, -27.5);
             //Ship Three
             text("Hit Point : " + this.ship[2].hitPoint, -10, 45);
-            text("Attack : " + this.ship[2].attack, -10, 70);
+            text("Atk Speed: " + this.ship[2].reloadTimer/60 + "/s", -10, 70);
             text("Speed : " + this.ship[2].movementSpeed, -10, 95);
             text("Collect Rate : " + this.ship[2].collectRate + "/s", -10, 120);
             text("Gold Cost : " + this.ship[2].cost, -10, 145);
             text("Build Time : 10s", -10, 170);
             //Ship Four
             text("Hit Point : " + this.ship[3].hitPoint, -10, 242.5);
-            text("Attack : " + this.ship[3].attack, -10, 267.5);
+            text("Atk Speed: " + this.ship[3].reloadTimer/60 + "/s", -10, 267.5);
             text("Speed : " + this.ship[3].movementSpeed, -10, 292.5);
             text("Collect Rate : " + this.ship[3].collectRate + "/s", -10, 317.5);
             text("Gold Cost : " + this.ship[3].cost, -10, 342.5);
@@ -779,9 +780,7 @@ class UI {
     spawnShip() {
         if (this.startBuildingShipOne == true) {
             this.ship[0].buildTime--;
-            //console.log(this.ship[0].buildTime);
             if (this.ship[0].buildTime <= 0) {
-                console.log('ship');
                 this.ship[0].buildTime = 300;
                 this.ship.push(this.factory.createShipOne(500, H / 2 - 100));
                 this.shipBuilt.counter = 100;
@@ -791,9 +790,8 @@ class UI {
         }
         if (this.startBuildingShipTwo == true) {
             this.ship[1].buildTime--;
-            console.log(this.ship[1].buildTime);
+
             if (this.ship[1].buildTime <= 0) {
-                console.log('ship');
                 this.ship[1].buildTime = 600;
                 this.ship.push(this.factory.createShipTwo(500, H / 2 - 100));
                 this.shipBuilt.counter = 100;
@@ -803,9 +801,7 @@ class UI {
         }
         if (this.startBuildingShipThree == true) {
             this.ship[2].buildTime--;
-            console.log(this.ship[2].buildTime);
             if (this.ship[2].buildTime <= 0) {
-                console.log('ship');
                 this.ship[2].buildTime = 600;
                 this.ship.push(this.factory.createShipThree(500, H / 2 - 100));
                 this.shipBuilt.counter = 100;
@@ -815,9 +811,7 @@ class UI {
         }
         if (this.startBuildingShipFour == true) {
             this.ship[3].buildTime--;
-            console.log(this.ship[3].buildTime);
             if (this.ship[3].buildTime <= 0) {
-                console.log('ship');
                 this.ship[3].buildTime = 1500;
                 this.ship.push(this.factory.createShipFour(500, H / 2 - 100));
                 this.shipBuilt.counter = 100;
