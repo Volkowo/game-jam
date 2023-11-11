@@ -89,6 +89,7 @@ class Factory {
         tempResource.selected = false;
         tempResource.canBeMoved = false;
         tempResource.spawnEnemy = false;
+        tempResource.layer = 1;
         return tempResource;
     }
 
@@ -119,10 +120,10 @@ class Factory {
         
         // STATS
         tempShip.hitPoint = 20;
-        // tempShip.attack = 5;
+        tempShip.attack = 5;
         tempShip.movementSpeed = 2.5;
         tempShip.collectRate = 2;
-        tempShip.range = 100;
+        tempShip.range = 120;
         tempShip.cost = 5;
         tempShip.buildTime = 300;
         tempShip.shipBag = 0;
@@ -154,8 +155,8 @@ class Factory {
         // tempShip.debug = true;
         
         // STATS
-        tempShip.hitPoint = 30;
-        // tempShip.attack = 20;
+        tempShip.hitPoint = 25;
+        tempShip.attack = 8;
         tempShip.movementSpeed = 2;
         tempShip.collectRate = 5;
         tempShip.range = 150;
@@ -188,10 +189,10 @@ class Factory {
         
         // STATS
         tempShip.hitPoint = 50;
-        // tempShip.attack = 20;
+        tempShip.attack = 5;
         tempShip.movementSpeed = 2;
         tempShip.collectRate = 5;
-        tempShip.range = 150;
+        tempShip.range = 110;
         tempShip.cost = 25;
         tempShip.buildTime = 600;
         tempShip.shipBag = 0;
@@ -221,10 +222,10 @@ class Factory {
         
         // STATS
         tempShip.hitPoint = 80;
-        // tempShip.attack = 20;
+        tempShip.attack = 10;
         tempShip.movementSpeed = 1.5;
         tempShip.collectRate = 1;
-        tempShip.range = 200;
+        tempShip.range = 150;
         tempShip.cost = 35;
         tempShip.buildTime = 1500;
         tempShip.shipBag = 0;
@@ -282,9 +283,9 @@ class Factory {
         
         // STATS
         tempEnemy.hitPoint = 20;
-        // tempEnemy.attack = 5;
+        tempEnemy.attack = 5;
         tempEnemy.movementSpeed = 1;
-        tempEnemy.range = 100;
+        tempEnemy.range = 120;
         tempEnemy.reloadTimer = 350;
         tempEnemy.shootingTimer = 0;
         
@@ -309,8 +310,8 @@ class Factory {
         tempEnemy.rotation = tempEnemy.direction;
         
         // STATS
-        tempEnemy.hitPoint = 30;
-        // tempEnemy.attack = 8;
+        tempEnemy.hitPoint = 25;
+        tempEnemy.attack = 8;
         tempEnemy.movementSpeed = 1;
         tempEnemy.range = 150;
         tempEnemy.reloadTimer = 233;
@@ -338,9 +339,9 @@ class Factory {
         
         // STATS
         tempEnemy.hitPoint = 50;
-        // tempEnemy.attack = 5;
+        tempEnemy.attack = 5;
         tempEnemy.movementSpeed = 1;
-        tempEnemy.range = 150;
+        tempEnemy.range = 110;
         tempEnemy.reloadTimer = 350;
         tempEnemy.shootingTimer = 0;
         
@@ -366,9 +367,9 @@ class Factory {
 
         // STATS
         tempEnemy.hitPoint = 80;
-        // tempEnemy.attack = 10;
+        tempEnemy.attack = 10;
         tempEnemy.movementSpeed = 1;
-        tempEnemy.range = 200;
+        tempEnemy.range = 150;
         tempEnemy.reloadTimer = 116;
         tempEnemy.shootingTimer = 0;
 

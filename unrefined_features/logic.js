@@ -67,7 +67,6 @@ class Logic {
     draw(factory) {
         strokeWeight(1);
         this.gameTimer();
-        this.displayCoordinates();
 
         this.checkShipAmount();
         this.clickDrag();
@@ -85,6 +84,7 @@ class Logic {
         for (let j = 0; j < this.enemy.length; j++) {
             this.randomEnemyBehavior(this.enemy[j], j);
             this.assignEnemyBehavior(this.enemy[j]);
+            this.enemyAttackBase(this.enemy[j]);
             for (let z = 4; z < this.ship.length; z++) {
                 if (this.enemy[j] == undefined) {
                     return
@@ -251,13 +251,8 @@ class Logic {
 
     }
 
-    displayCoordinates() {
-        text("X: " + mouseX + " Y: " + mouseY, mouseX - 40, mouseY - 5)
-    }
-
     // this is for the big resource. It will change spawnEnemy to true when said resource reaches the cap.
     // this will allow the big resource to spawn enemies
-
 
     displayText() {
         this.base.text = this.base.baseBag;
@@ -456,41 +451,25 @@ class Logic {
                     this.enemyBulletGroup.push(this.enemyBullets(enemy.x, enemy.y, ship));
                     enemy.shootingTimer = enemy.reloadTimer;
                 }
-                // return true;
-            } else if (this.distance > 201) {
+            } else if (this.distance > enemy.range + 1) {
                 this.assignEnemyBehavior(enemy);
-                // return false;
             }
         }
 
         for (let s = 0; s < this.enemyBulletGroup.length; s++) { // collision for enemy single shot (needs to be outisde of the if statement so its always active)
             if (this.enemyBulletGroup[s].collides(ship)) {
-                // this.enemyBulletGroup[s].remove();
                 this.thingsToRemove.push(this.enemyBulletGroup[s]);
                 if (ship.type == "One") { // damage when hitting ship type 1
-                    ship.hitPoint -= 10;
-                    if (ship.hitPoint <= 0) {
-                        // ship.remove();
-                        this.thingsToRemove.push(ship)
-                    }
+                    ship.hitPoint -= 5;
                 } else if (ship.type == "Two") { // damage when hitting ship type 2
-                    ship.hitPoint -= 10;
-                    if (ship.hitPoint <= 0) {
-                        // ship.remove();
-                        this.thingsToRemove.push(ship)
-                    }
+                    ship.hitPoint -= 8;
                 } else if (ship.type == "Three") { // damage when hitting ship type 3 
-                    ship.hitPoint -= 10;
-                    if (ship.hitPoint <= 0) {
-                        // ship.remove();
-                        this.thingsToRemove.push(ship)
-                    }
+                    ship.hitPoint -= 5;
                 } else if (ship.type == "Four") { // damage when hitting ship type 4
                     ship.hitPoint -= 10;
-                    if (ship.hitPoint <= 0) {
-                        // ship.remove();
-                        this.thingsToRemove.push(ship)
-                    }
+                }
+                if (ship.hitPoint <= 0) {
+                    this.thingsToRemove.push(ship)
                 }
             }
         }
@@ -514,6 +493,38 @@ class Logic {
         }
     }
 
+    enemyAttackBase(enemy) {
+        this.attackBase = dist(this.base.x, this.base.y, enemy.x, enemy.y);
+        console.log(this.base.hitPoint)
+        if (this.attackBase < enemy.range) {
+            enemy.moveTo(enemy.x, enemy.y, 0);
+            if (enemy.shootingTimer <= 0) {
+                this.enemyBulletGroup.push(this.enemyBullets(enemy.x, enemy.y, this.base));
+                enemy.shootingTimer = enemy.reloadTimer;
+            }
+        } else if (this.distance > enemy.range + 1) {
+            this.assignEnemyBehavior(enemy);
+        }
+        for (let s = 0; s < this.enemyBulletGroup.length; s++) {
+            if (this.enemyBulletGroup[s].collides(this.base)) {
+                this.thingsToRemove.push(this.enemyBulletGroup[s]);
+                if (enemy.type == "One") { // damage when hitting the base type 1
+                    this.base.hitPoint -= 5 / 2;
+                } else if (enemy.type == "Two") { // damage when hitting the base type 2
+                    this.base.hitPoint -= 8 / 2;
+                } else if (enemy.type == "Three") { // damage when hitting the base type 3 
+                    this.base.hitPoint -= 5 / 2;
+                } else if (enemy.type == "Four") { // damage when hitting the base type 4
+                    this.base.hitPoint -= 10 / 2;
+                }
+                if (this.base.hitPoint <= 0) {
+                    // this.thingsToRemove.push(this.base)
+                    // Game Over
+                }
+            }
+        }
+    }
+
     enemyBullets(x, y, angle) {
         let tempBullet = new Sprite(x, y);
         tempBullet.diameter = 20;
@@ -528,15 +539,6 @@ class Logic {
     // ------- PLAYER SHOOTING
     shootingLogic(enemy, ship) {
         ship.shootingTimer--;
-        // for (let i = 0; i < this.resource.length; i++) {
-        //     this.resourceAtk = dist(this.resource[i].x, this.resource[i].y, ship.x, ship.y);
-        //     if (ship.shootingTimer <= 0) {
-        //         if (this.resourceAtk < ship.range) {
-        //             this.singleBulletGroup.push(this.createSingleShot(ship.x, ship.y, this.resource[i]));
-        //             ship.shootingTimer = ship.reloadTimer;
-        //         }
-        //     }
-        // }
 
         this.distance = dist(enemy.x, enemy.y, ship.x, ship.y);
         if (this.distance < ship.range) {
@@ -549,22 +551,22 @@ class Logic {
             if (this.singleBulletGroup[s].collides(enemy)) {
                 this.thingsToRemove.push(this.singleBulletGroup[s]);
                 if (enemy.type == "One") {
-                    enemy.hitPoint -= 10;
+                    enemy.hitPoint -= this.ship[0].attack;
                     if (enemy.hitPoint <= 0) {
                         this.thingsToRemove.push(enemy);
                     }
                 } else if (enemy.type == "Two") {
-                    enemy.hitPoint -= 10;
+                    enemy.hitPoint -= this.ship[1].attack;
                     if (enemy.hitPoint <= 0) {
                         this.thingsToRemove.push(enemy);
                     }
                 } else if (enemy.type == "Three") {
-                    enemy.hitPoint -= 10;
+                    enemy.hitPoint -= this.ship[2].attack;
                     if (enemy.hitPoint <= 0) {
                         this.thingsToRemove.push(enemy);
                     }
                 } else if (enemy.type == "Four") {
-                    enemy.hitPoint -= 10;
+                    enemy.hitPoint -= this.ship[3].attack;
                     if (enemy.hitPoint <= 0) {
                         this.thingsToRemove.push(enemy);
                     }
