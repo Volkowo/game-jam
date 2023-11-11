@@ -53,6 +53,9 @@ function preload() {
     buttonClickFx = loadSound("assets/sound/button_pressed.wav");
     game_soundFx = loadSound("assets/sound/oceansfx.mp3");
     error_soundFx = loadSound("assets/sound/error.wav");
+
+    //Video
+    creditVideo = createVideo("assets/video/credit.mp4");
 }
 
 function setup() {
@@ -61,7 +64,7 @@ function setup() {
     screenLoading.setup();
     screenPressAnyKey.setup();
     screenCredits.setup();
-
+    creditVideo.hide();
     setVolume();
 }
 
@@ -83,7 +86,8 @@ function draw() {
             drawGameScreen();
             break;
         case CREDITS:
-            screenCredits.draw();
+            // screenCredits.draw();
+            image(creditVideo, 0, 0, W, H);
             break;
     }
 }
@@ -133,6 +137,7 @@ function drawGameScreen() { // game screen code
 }
 
 function setVolume() {
+    creditVideo.volume(screenMenu.musicSlider.value());
     gameMusic.setVolume(screenMenu.musicSlider.value());
     menuMusic.setVolume(screenMenu.musicSlider.value());
     buildSound.setVolume(screenMenu.soundSlider.value());

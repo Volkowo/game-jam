@@ -228,8 +228,9 @@ class Menu {
 
         this.backToMenuButton = createButton('Back to Main Menu');
         this.backToMenuButton.mouseClicked(() => { this.backToMenuButtonClicked() });
-        this.backToMenuButton.size(100, 50);
-        this.backToMenuButton.position(W / 2 - this.backToMenuButton.size().width / 2, (H / 2) + 200);
+        this.backToMenuButton.size(250, 50);
+        this.backToMenuButton.style("font-size", "20px");
+        this.backToMenuButton.position(W / 2 - this.backToMenuButton.size().width / 2, (H / 2) + 350);
         this.backToMenuButton.hide();
 
         //Setting Popup
@@ -248,11 +249,13 @@ class Menu {
             if (this.musicCheck.checked()) {
                 menuMusic.setVolume(0);
                 gameMusic.setVolume(0);
+                creditVideo.volume(0);
                 // add all musics like above
                 text('0%', 30, -105 + popUpPos);
             } else {
                 menuMusic.setVolume(this.musicSlider.value());
                 gameMusic.setVolume(this.musicSlider.value());
+                creditVideo.volume(this.musicSlider.value());
                 // add all musics like above
                 text(Math.floor(this.musicSlider.value() * 100) + "%", 30, -105 + popUpPos);
             }
@@ -432,6 +435,8 @@ class Menu {
 
     creditsButtonClicked() {
         currentScreen = CREDITS;
+        creditVideo.play();
+        menuMusic.stop();
         // Old Buttons
         // this.playButton.hide();
         // this.settingButton.hide();
@@ -445,6 +450,8 @@ class Menu {
     
     backToMenuButtonClicked() {
         buttonClickFx.play();
+        creditVideo.stop();
+        menuMusic.play();
         currentScreen = MENU;
         this.backToMenuButton.hide();
         this.enableMenuButtons();
