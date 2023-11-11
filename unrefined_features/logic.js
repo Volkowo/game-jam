@@ -100,7 +100,7 @@ class Logic {
         for (let k = 0; k < this.resource.length; k++) {
             this.resourceRegeneration(this.resource[k]);
             this.spawnEnemyAtResource(factory, this.resource[k]);
-            for (let j = 0; j < this.ship.length; j++) {
+            for (let j = 4; j < this.ship.length; j++) {
                 this.resourceCollectionLogic(this.resource[k], this.ship[j]);
             }
         }
@@ -216,7 +216,7 @@ class Logic {
             this.amountReducedFour = ship.collectRate * this.counterFour;
         }
         if (ship.colliding(resource)) {
-            this.amountReduced = this.amountReducedOne + this.amountReducedTwo + this.amountReducedThree + this.amountReducedFour;
+            this.amountReduced = this.amountReducedOne + this.amountReducedTwo + this.amountReducedThree;
             if (resource.resourcePool < this.amountReduced && ship.selected == true) {
                 if (frameCount % ship.collectTick == 0) {
                     resource.remainingAmount = resource.resourcePool;

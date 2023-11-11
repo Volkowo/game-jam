@@ -766,6 +766,7 @@ class UI {
         if (type == 'One' && this.startBuildingShipOne == false) {
             if (this.base.baseBag >= this.ship[0].cost) {
                 this.base.baseBag -= this.ship[0].cost;
+                buildSound.play();
                 this.startBuildingShipOne = true;
             } else {
                 //if there's no gold enough to buy ship show the warning
@@ -776,10 +777,11 @@ class UI {
             this.alreadyBuilding.startCounter = true;
             this.alreadyBuilding.counter = 100;
         }
-
+        
         if (type == 'Two' && this.startBuildingShipTwo == false) {
             if (this.base.baseBag >= this.ship[1].cost) {
                 this.base.baseBag -= this.ship[1].cost;
+                buildSound.play();
                 this.startBuildingShipTwo = true;
             } else {
                 //if there's no gold enough to buy ship show the warning
@@ -790,10 +792,11 @@ class UI {
             this.alreadyBuilding.startCounter = true;
             this.alreadyBuilding.counter = 100;
         }
-
+        
         if (type == 'Three' && this.startBuildingShipThree == false) {
             if (this.base.baseBag >= this.ship[2].cost) {
                 this.base.baseBag -= this.ship[2].cost;
+                buildSound.play();
                 this.startBuildingShipThree = true;
             } else {
                 //if there's no gold enough to buy ship show the warning
@@ -804,10 +807,11 @@ class UI {
             this.alreadyBuilding.startCounter = true;
             this.alreadyBuilding.counter = 100;
         }
-
+        
         if (type == 'Four' && this.startBuildingShipFour == false) {
             if (this.base.baseBag >= this.ship[3].cost) {
                 this.base.baseBag -= this.ship[3].cost;
+                buildSound.play();
                 this.startBuildingShipFour = true;
             } else {
                 //if there's no gold enough to buy ship show the warning
@@ -907,7 +911,7 @@ class UI {
             this.ship[0].buildTime--;
             if (this.ship[0].buildTime <= 0) {
                 this.ship[0].buildTime = 300;
-                this.ship.push(this.factory.createShipOne(this.base.x - 25, this.base.y + 50));
+                this.ship.push(this.factory.createShipOne(this.base.x - 25, this.base.y - 50));
                 this.shipBuilt.counter = 100;
                 this.shipBuilt.startCounter = true;
                 this.startBuildingShipOne = false;
@@ -918,7 +922,7 @@ class UI {
 
             if (this.ship[1].buildTime <= 0) {
                 this.ship[1].buildTime = 600;
-                this.ship.push(this.factory.createShipTwo(this.base.x - 25, this.base.y + 50));
+                this.ship.push(this.factory.createShipTwo(this.base.x - 25, this.base.y - 50));
                 this.shipBuilt.counter = 100;
                 this.shipBuilt.startCounter = true;
                 this.startBuildingShipTwo = false;
@@ -928,7 +932,7 @@ class UI {
             this.ship[2].buildTime--;
             if (this.ship[2].buildTime <= 0) {
                 this.ship[2].buildTime = 600;
-                this.ship.push(this.factory.createShipThree(this.base.x - 25, this.base.y + 50));
+                this.ship.push(this.factory.createShipThree(this.base.x - 25, this.base.y - 50));
                 this.shipBuilt.counter = 100;
                 this.shipBuilt.startCounter = true;
                 this.startBuildingShipThree = false;
@@ -938,7 +942,7 @@ class UI {
             this.ship[3].buildTime--;
             if (this.ship[3].buildTime <= 0) {
                 this.ship[3].buildTime = 1500;
-                this.ship.push(this.factory.createShipFour(this.base.x - 25, this.base.y + 50));
+                this.ship.push(this.factory.createShipFour(this.base.x - 25, this.base.y - 50));
                 this.shipBuilt.counter = 100;
                 this.shipBuilt.startCounter = true;
                 this.startBuildingShipFour = false;

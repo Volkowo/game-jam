@@ -75,8 +75,12 @@ class PressAnyKey {
             if (loadingLink == 1) {
                 currentScreen = MENU;
                 screenMenu.enableMenuButtons();
+                menuMusic.play();
+                gameMusic.stop();
             } else if (loadingLink == 2) {
                 currentScreen = GAME;
+                menuMusic.stop();
+                gameMusic.play();
             }
         }
     }

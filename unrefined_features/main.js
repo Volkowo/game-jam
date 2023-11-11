@@ -10,7 +10,7 @@ const GAME = 3;
 const CREDITS = 4;
 
 // what screen is loaded upon launch/refresh
-let currentScreen = GAME;
+let currentScreen = LOADING;
 
 // button variables
 // let playButton;
@@ -35,6 +35,8 @@ let openSetting = false;
 let activateSetting = false;
 let loadingLink = 1;
 
+let gameMusic, menuMusic;
+
 function preload() {
     screenMenu.preload();
     screenLoading.preload();
@@ -43,6 +45,11 @@ function preload() {
     createSprite.preload();
     gameUI.preload();
     spriteLogic.preload();
+    
+    //Sound
+    menuMusic = loadSound("assets/songs/menu.mp3");
+    gameMusic = loadSound("assets/songs/game.mp3");
+    buildSound = loadSound("assets/sound/build_sound.mp3");
 }
 
 function setup() {
@@ -81,8 +88,12 @@ function keyPressed() { // change from press any key to menu
         if (loadingLink == 1) {
             currentScreen = MENU;
             screenMenu.enableMenuButtons();
+            menuMusic.play();
+            gameMusic.stop();
         } else if (loadingLink == 2) {
             currentScreen = GAME;
+            menuMusic.stop();
+            gameMusic.play();
         }
     }
 }

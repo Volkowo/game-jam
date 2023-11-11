@@ -34,7 +34,7 @@ class Factory {
         tempBase.color = 'RED';
         tempBase.w = 80;
         tempBase.h = 80;
-        tempBase.baseBag = 45;
+        tempBase.baseBag = 10;
         tempBase.hitPoint = 100;
         tempBase.collider = 'k'
         tempBase.selected = false;
@@ -122,9 +122,9 @@ class Factory {
         tempShip.hitPoint = 20;
         tempShip.attack = 5;
         tempShip.movementSpeed = 2.5;
-        tempShip.collectRate = 2;
+        tempShip.collectRate = 3;
         tempShip.range = 120;
-        tempShip.cost = 5;
+        tempShip.cost = 10;
         tempShip.buildTime = 300;
         tempShip.shipBag = 0;
         tempShip.reloadTimer = 90;
@@ -158,9 +158,9 @@ class Factory {
         tempShip.hitPoint = 25;
         tempShip.attack = 8;
         tempShip.movementSpeed = 2;
-        tempShip.collectRate = 5;
+        tempShip.collectRate = 2;
         tempShip.range = 150;
-        tempShip.cost = 10;
+        tempShip.cost = 30;
         tempShip.buildTime = 600;
         tempShip.shipBag = 0;
         tempShip.reloadTimer = 233;
@@ -191,9 +191,9 @@ class Factory {
         tempShip.hitPoint = 50;
         tempShip.attack = 5;
         tempShip.movementSpeed = 2;
-        tempShip.collectRate = 5;
+        tempShip.collectRate = 2;
         tempShip.range = 110;
-        tempShip.cost = 25;
+        tempShip.cost = 30;
         tempShip.buildTime = 600;
         tempShip.shipBag = 0;
         tempShip.reloadTimer = 350;
@@ -226,7 +226,7 @@ class Factory {
         tempShip.movementSpeed = 1.5;
         tempShip.collectRate = 1;
         tempShip.range = 150;
-        tempShip.cost = 35;
+        tempShip.cost = 50;
         tempShip.buildTime = 1500;
         tempShip.shipBag = 0;
         tempShip.reloadTimer = 116;
