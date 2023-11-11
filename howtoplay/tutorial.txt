@@ -10,7 +10,11 @@ HOW DO I PLAY THE GAME?
 3. You can build more ships by clicking the "Build" button. DO NOT SPAM THE BUILD BUTTON AS IT WILL COST MONEY
 4. The ship will attack automatically at certain range.
 
-Click on the treasure chests or town to get resources!
+HOW DO I WIN/LOSE?
+1. You don't win. Literally
+2. If you lose just refresh. We cbf to have game over screen
+(Coming soon on Patch 4.23)
+
 
 GAME PROGRESSION
 > Collect the treasure chest (and the town too) to get money

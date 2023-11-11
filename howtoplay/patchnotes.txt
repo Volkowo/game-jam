@@ -1,0 +1,6 @@
+PATCH 1.01
+- Updated Tutorial
+(developer note: some users are stupid and can't read so we added more) who said this wtf
+
+- Reduced Gold Cost
+(developer note: game was too hard so we toned it down)
