@@ -92,6 +92,9 @@ class Logic {
                 if(this.enemy[j] == undefined) {
                     return
                 }
+                if(this.ship[z] == undefined){
+                    return
+                }
             }
         }
 
