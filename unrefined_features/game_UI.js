@@ -107,8 +107,8 @@ class UI {
         this.ship.push(factory.createShipOne(this.base.x - 25, this.base.y - 50));
         // this.ship.push(factory.createShipOne(this.base.x + 25, this.base.y - 50));
         this.ship.push(factory.createShipTwo(this.base.x + 25, this.base.y - 50));
-        this.ship.push(factory.createShipThree(this.base.x + 25, this.base.y - 50));
-        this.ship.push(factory.createShipFour(this.base.x + 25, this.base.y - 50));
+        // this.ship.push(factory.createShipThree(this.base.x + 25, this.base.y - 50));
+        // this.ship.push(factory.createShipFour(this.base.x + 25, this.base.y - 50));
         
         // ENEMY TESTING
     }
