@@ -128,6 +128,8 @@ class Factory {
         tempShip.shipBag = 0;
         tempShip.reloadTimer = 90;
         tempShip.shootingTimer = 90;
+        tempShip.locationX = 0;
+        tempShip.locationy = 0;
         tempShip.rotation = tempShip.direction;
         
         // BOOLEAN-RELATED
@@ -138,6 +140,7 @@ class Factory {
         tempShip.singleShot = true;
         tempShip.burstFire = false;
         tempShip.shoot = false;
+        tempShip.moving = false;
         return tempShip;
     }
     
@@ -170,6 +173,7 @@ class Factory {
         tempShip.singleShot = true;
         tempShip.burstFire = false;
         tempShip.shoot = false;
+        tempShip.moving = false;
         return tempShip;
     }
     
@@ -202,6 +206,7 @@ class Factory {
         tempShip.singleShot = true;
         tempShip.burstFire = false;
         tempShip.shoot = false;
+        tempShip.moving = false;
         return tempShip;
     }
     
@@ -234,6 +239,7 @@ class Factory {
         tempShip.singleShot = true;
         tempShip.burstFire = false;
         tempShip.shoot = true;
+        tempShip.moving = false;
         return tempShip;
     }
 
