@@ -12,3 +12,10 @@ PATCH 1.02
 - Updated Tutorial, again
 (developer note: yeah we added a lot there. We will personally come to your house if you have anymore questions)
 (for legal reasons, we will not. this is a joke :D)
+
+PATCH 1.03
+- Added connon sprites
+(developer note: +1 to the things we forgorr)
+
+- Adjusted cost and build time display a little bit (2 pixel) to the left
+(developer note: one of the dev is a control freak, please forgive)

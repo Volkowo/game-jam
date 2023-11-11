@@ -47,7 +47,7 @@ class Logic {
     }
 
     preload() {
-
+        this.cannonSpriteImg = loadImage("assets/img/ship_img/cannonball.png");
     }
 
     setup(factory) {
@@ -529,11 +529,14 @@ class Logic {
 
     enemyBullets(x, y, angle) {
         let tempBullet = new Sprite(x, y);
-        tempBullet.diameter = 20;
+        tempBullet.diameter = 10;
         tempBullet.color = 'purple';
         tempBullet.life = 60;
         tempBullet.overlaps(allSprites);
         tempBullet.direction = tempBullet.angleTo(angle);
+        tempBullet.draw = () => {
+            image(this.cannonSpriteImg, 0,0, 10, 10);
+        }
         tempBullet.speed = 4;
         return tempBullet;
     }
@@ -585,6 +588,9 @@ class Logic {
         tempBullet.life = 60;
         tempBullet.mass = 0.1;
         tempBullet.overlaps(allSprites);
+        tempBullet.draw = () => {
+            image(this.cannonSpriteImg, 0,0, 10, 10);
+        }
 
         // tempBullet.collider = "k"
         tempBullet.direction = tempBullet.angleTo(angle);

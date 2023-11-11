@@ -381,29 +381,29 @@ class UI {
             textSize(10.5);
             textAlign(LEFT, CENTER);
             //Ship One
-            text("Cost : " + this.ship[0].cost, -65, -340);
-            text("Time : 5s", 25, -340);
+            text("Cost : " + this.ship[0].cost, -68, -340);
+            text("Time : 5s", 22, -340);
             text("Hit Point : " + this.ship[0].hitPoint, -10, -300);
             text("Attack: " + this.ship[0].attack, -10, -275);
             text("Speed : " + this.ship[0].movementSpeed, -10, -250);
             text("Collect Rate : " + this.ship[0].collectRate + "/s", -10, -225);
             //Ship Two
-            text("Cost : " + this.ship[1].cost, -65, -145);
-            text("Time : 10s", 25, -145);
+            text("Cost : " + this.ship[1].cost, -68, -145);
+            text("Time : 10s", 22, -145);
             text("Hit Point : " + this.ship[1].hitPoint, -10, -102.5);
             text("Attack: " + this.ship[1].attack, -10, -77.5);
             text("Speed : " + this.ship[1].movementSpeed, -10, -52.5);
             text("Collect Rate : " + this.ship[1].collectRate + "/s", -10, -27.5);
             //Ship Three
-            text("Cost : " + this.ship[2].cost, -65, 55);
-            text("Time : 10s", 25, 55);
+            text("Cost : " + this.ship[2].cost, -68, 55);
+            text("Time : 10s", 22, 55);
             text("Hit Point : " + this.ship[2].hitPoint, -10, 95);
             text("Attack: " + this.ship[2].attack, -10, 120);
             text("Speed : " + this.ship[2].movementSpeed, -10, 145);
             text("Collect Rate : " + this.ship[2].collectRate + "/s", -10, 170);
             //Ship Four
-            text("Cost : " + this.ship[3].cost, -65, 255);
-            text("Time : 25s", 25, 255);
+            text("Cost : " + this.ship[3].cost, -68, 255);
+            text("Time : 25s", 22, 255);
             text("Hit Point : " + this.ship[3].hitPoint, -10, 292.5);
             text("Attack: " + this.ship[3].attack, -10, 317.5);
             text("Speed : " + this.ship[3].movementSpeed, -10, 342.5);
