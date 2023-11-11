@@ -59,11 +59,8 @@ class Logic {
         this.enemy = new Group();
         this.dragSelection();
 
-        // this.enemy.push(factory.createEnemyFour(450, 240));
-        // this.enemy.push(factory.createEnemyFour(580, 280));
-        // this.enemy.push(factory.createEnemyFour(780, 280));
-        // this.enemy.push(factory.createEnemyFour(780, 280));
-        // this.enemy.push(factory.createEnemyFour(780, 280));
+        this.enemy.push(factory.createEnemyOne(random(300, 400), random(100, 200)));
+        this.enemy.push(factory.createEnemyOne(random(1200, 1300), random(200, 300)));
         // this.enemyRandomSequence();
     }
 
@@ -108,7 +105,6 @@ class Logic {
             }
         }
 
-
         this.shipAmount = 0;
         this.checkShipAmount();
     }
@@ -121,7 +117,6 @@ class Logic {
 
     selectLogic(type, binding, ship) {
         if (kb.presses(binding)) {
-            // console.log("Test")
             this.checkShip(type, ship);
         }
     }
@@ -195,7 +190,7 @@ class Logic {
             ship.moving = false;
         }
         if (ship.moving == true) {
-            ship.moveTo(ship.locationX, ship.locationY, 3);
+            ship.moveTo(ship.locationX, ship.locationY, ship.movementSpeed);
             strokeWeight(0.5);
             stroke('green');
             line(ship.x, ship.y, ship.locationX, ship.locationY);
@@ -224,14 +219,14 @@ class Logic {
             this.amountReduced = this.amountReducedOne + this.amountReducedTwo + this.amountReducedThree + this.amountReducedFour;
             if (resource.resourcePool < this.amountReduced && ship.selected == true) {
                 if (frameCount % ship.collectTick == 0) {
-                    console.log('no')
                     resource.remainingAmount = resource.resourcePool;
                     resource.resourcePool -= resource.remainingAmount;
                     this.base.baseBag += resource.remainingAmount;
+                    resource.visible = false;
+                    resource.collider = 'n';
                 }
             } else {
                 if (frameCount % ship.collectTick == 0) {
-                    console.log(resource.resourcePool)
                     resource.resourcePool -= this.amountReduced;
                     ship.shipBag += ship.collectRate;
                     ship.collectTimer--;
@@ -249,7 +244,6 @@ class Logic {
                 this.regenTimer = Math.floor(random(20, 60));
                 this.regenValue = Math.floor(random(0, 10));
                 if (frameCount % this.regenTimer == 0) {
-                    // console.log("REGEN ON")
                     resource.resourcePool += this.regenValue;
                 }
             }
@@ -263,34 +257,10 @@ class Logic {
 
     // this is for the big resource. It will change spawnEnemy to true when said resource reaches the cap.
     // this will allow the big resource to spawn enemies
-    checkSpawnEnemy(resource) {
 
-        // console.log("BEFORE: " + this.resource[5].spawnEnemy, this.resource[6].spawnEnemy);
-        if (resource.resourcePool >= resource.resourceCap && resource.size == "Big") {
-            resource.spawnEnemy = true;
-        } else {
-            resource.spawnEnemy = false;
-        }
-        // console.log("AFTER: " + this.resource[5].spawnEnemy, this.resource[6].spawnEnemy);
-
-    }
-
-    spawnEnemyAtResource(factory, resource) {
-        this.checkSpawnEnemy(resource);
-        if (resource.spawnEnemy == true) {
-            if (resource.cooldown > 0) {
-                resource.cooldown--;
-            } else {
-                this.enemy.push(factory.createEnemyOne(resource.x, resource.y + 50));
-                resource.cooldown = Math.floor(random(1200, 1500));
-            }
-        }
-    }
 
     displayText() {
-        // console.log("Calling the method")
         this.base.text = this.base.baseBag;
-        // console.log("Values before return: ", this.base.text, this.base.baseBag)
         return this.base.baseBag;
     }
 
@@ -303,14 +273,14 @@ class Logic {
         if (frameCount % 25 == 0 && enemy.behavior == "Random" && enemy.detectShip == false) {
             enemy.rotateTo(this.enemyX, this.enemyY, 5);
         } else if (frameCount % 40 == 0 && enemy.behavior == "Random" && enemy.detectShip == false) {
-            enemy.moveTo(this.enemyX, this.enemyY, 1);
+            enemy.moveTo(this.enemyX, this.enemyY, enemy.movementSpeed);
         }
     }
 
     enemyHuntBase(enemy) {
         if (enemy.behavior == "Hunting" && enemy.detectShip == false) {
             enemy.rotateTo(this.base.x, this.base.y, 5);
-            enemy.moveTo(this.base.x, this.base.y, 1);
+            enemy.moveTo(this.base.x, this.base.y, enemy.movementSpeed);
         }
     }
 
@@ -322,12 +292,10 @@ class Logic {
                 this.enemyY = random(this.resource[k].y - 80, this.resource[k].y + 80);
 
                 if (this.enemyX > this.resource[k].x - 20 && this.enemyX < this.resource[k].x + this.resource[k].w + 20) {
-                    // console.log("X was between the values " + "X Values: " + this.enemyX);
                     this.enemyX = random(this.resource[k].x - 80, this.resource[k].x + 80);
                 }
 
                 if (this.enemyY > this.resource[k].y - 20 && this.enemyY < this.resource[k].y + this.resource[k].h + 20) {
-                    // console.log("Y was between the values")
                     this.enemyY = random(this.resource[k].y - 80, this.resource[k].y + 80);
                 }
 
@@ -335,25 +303,142 @@ class Logic {
                 if (frameCount % 25 == 0 && enemy.behavior == "Guard" && enemy.detectShip == false) {
                     enemy.rotateTo(this.enemyX, this.enemyY, 5);
                 } else if (frameCount % 30 == 0 && enemy.behavior == "Guard" && enemy.detectShip == false) {
-                    enemy.moveTo(this.enemyX, this.enemyY, 1);
+                    enemy.moveTo(this.enemyX, this.enemyY, enemy.movementSpeed);
                 }
             }
         }
     }
 
-    randomEnemyBehavior(enemy, j) {
-        // console.log(i)
-        if (j % 4 == 0) {
-            enemy.behavior = "Guard";
-        } if (j % 7 == 0) {
-            enemy.behavior = "Hunting";
+    checkSpawnEnemy(resource) {
+        if (resource.resourcePool >= resource.resourceCap && resource.size == "Big" && this.enemy.length < 35) {
+            resource.spawnEnemy = true;
         } else {
-            enemy.behavior = "Random";
+            resource.spawnEnemy = false;
+        }
+    }
+
+    spawnEnemyAtResource(factory, resource) {
+        this.checkSpawnEnemy(resource);
+        if (resource.spawnEnemy == true) {
+            if (resource.cooldown > 0) {
+                resource.cooldown--;
+            } else {
+                this.enemyProgression(factory, resource);
+            }
+        }
+    }
+
+    enemyProgression(factory, resource) {
+        if (this.time < 60) {
+            this.enemy.push(factory.createEnemyOne(resource.x, resource.y + 50));
+            resource.cooldown = Math.floor(random(1700, 1800)); // 60 SECs
+            // resource.cooldown = Math.floor(random(30, 60));
+
+        }
+
+        if (this.time > 60 && this.time < 120) {
+            this.enemy.push(factory.createEnemyOne(resource.x, resource.y + 50));
+            this.enemy.push(factory.createEnemyOne(resource.x + 50, resource.y + 50));
+            resource.cooldown = Math.floor(random(1700, 1800));
+            // resource.cooldown = Math.floor(random(30, 60));
+        }
+
+        if (this.time > 120 && this.time < 180) {
+            this.enemy.push(factory.createEnemyOne(resource.x, resource.y + 50));
+            this.enemy.push(factory.createEnemyOne(resource.x + 50, resource.y + 50));
+            this.enemy.push(factory.createEnemyOne(resource.x + 150, resource.y + 50));
+            resource.cooldown = Math.floor(random(900, 1000));
+            // resource.cooldown = Math.floor(random(30, 60));
+        }
+
+        if (this.time > 180 && this.time < 240) {
+            this.enemy.push(factory.createEnemyOne(resource.x, resource.y + 50));
+            this.enemy.push(factory.createEnemyOne(resource.x + 50, resource.y + 50));;
+            this.enemy.push(factory.createEnemyTwo(resource.x + 50, resource.y + 50));
+            resource.cooldown = Math.floor(random(1000, 1200));
+            // resource.cooldown = Math.floor(random(30, 60));
+        }
+
+        if (this.time > 240 && this.time < 300) {
+            this.enemy.push(factory.createEnemyOne(resource.x, resource.y + 50));
+            this.enemy.push(factory.createEnemyTwo(resource.x + 50, resource.y + 50));
+            this.enemy.push(factory.createEnemyTwo(resource.x + 100, resource.y + 50));
+            resource.cooldown = Math.floor(random(1000, 1200));
+            // resource.cooldown = Math.floor(random(30, 60));
+        }
+
+        if (this.time > 300 && this.time < 360) {
+            this.enemy.push(factory.createEnemyTwo(resource.x, resource.y + 50));
+            this.enemy.push(factory.createEnemyTwo(resource.x + 50, resource.y + 50));
+            this.enemy.push(factory.createEnemyThree(resource.x + 100, resource.y + 50));
+            resource.cooldown = Math.floor(random(1700, 1800));
+            // resource.cooldown = Math.floor(random(30, 60));
+        }
+
+        if (this.time > 360 && this.time < 420) {
+            this.enemy.push(factory.createEnemyTwo(resource.x, resource.y + 50));
+            this.enemy.push(factory.createEnemyThree(resource.x + 50, resource.y + 50));
+            this.enemy.push(factory.createEnemyThree(resource.x + 100, resource.y + 50));
+            resource.cooldown = Math.floor(random(1700, 1800));
+            // resource.cooldown = Math.floor(random(30, 60));
+
+        }
+
+        if (this.time > 420 && this.time < 480) {
+            this.enemy.push(factory.createEnemyTwo(resource.x, resource.y + 50));
+            this.enemy.push(factory.createEnemyOne(resource.x + 50, resource.y + 50));
+            this.enemy.push(factory.createEnemyThree(resource.x + 100, resource.y + 50));
+            this.enemy.push(factory.createEnemyThree(resource.x + 150, resource.y + 50));
+            resource.cooldown = Math.floor(random(1700, 1800));
+            // resource.cooldown = Math.floor(random(30, 60));
+        }
+
+        if (this.time > 480 && this.time < 540) {
+            this.enemy.push(factory.createEnemyOne(resource.x, resource.y + 50));
+            this.enemy.push(factory.createEnemyOne(resource.x + 50, resource.y + 50));
+            this.enemy.push(factory.createEnemyFour(resource.x + 100, resource.y + 50));
+            resource.cooldown = Math.floor(random(1700, 1800));
+            // resource.cooldown = Math.floor(random(30, 60));
+        }
+
+        if (this.time > 540 && this.time < 600) {
+            this.enemy.push(factory.createEnemyOne(resource.x, resource.y + 50));
+            this.enemy.push(factory.createEnemyThree(resource.x + 50, resource.y + 50));
+            this.enemy.push(factory.createEnemyFour(resource.x + 100, resource.y + 50));
+            this.enemy.push(factory.createEnemyTwo(resource.x + 150, resource.y + 50));
+            resource.cooldown = Math.floor(random(1700, 1800));
+            // resource.cooldown = Math.floor(random(30, 60));
+        }
+
+        if (this.time > 600) {
+            this.enemy.push(factory.createEnemyOne(resource.x, resource.y + 50));
+            this.enemy.push(factory.createEnemyOne(resource.x + 50, resource.y + 50));
+            this.enemy.push(factory.createEnemyOne(resource.x + 100, resource.y + 50));
+            this.enemy.push(factory.createEnemyThree(resource.x + 150, resource.y + 50));
+            this.enemy.push(factory.createEnemyFour(resource.x + 200, resource.y + 50));
+            this.enemy.push(factory.createEnemyTwo(resource.x + 250, resource.y + 50));
+            resource.cooldown = Math.floor(random(1700, 1800));
+            // resource.cooldown = Math.floor(random(30, 60));
+        }
+    }
+
+    randomEnemyBehavior(enemy, j) {
+        if (this.time <= 30) {
+            enemy.behavior = "Random"
+        }
+
+        if (this.time > 60) {
+            if (j % 5 == 0) {
+                enemy.behavior = "Hunting"
+            } else if (j % 3) {
+                enemy.behavior = "Random"
+            } else {
+                enemy.behavior = "Guard"
+            }
         }
     }
 
     assignEnemyBehavior(enemy) {
-        // console.log(enemy);
         this.enemyRandomType(enemy);
         this.enemyHuntBase(enemy);
         this.enemySurroundResource(enemy);
@@ -373,14 +458,12 @@ class Logic {
                 }
                 // return true;
             } else if (this.distance > 201) {
-                // console.log("else")
                 this.assignEnemyBehavior(enemy);
                 // return false;
             }
         }
 
         for (let s = 0; s < this.enemyBulletGroup.length; s++) { // collision for enemy single shot (needs to be outisde of the if statement so its always active)
-            // console.log(this.enemyBulletGroup[s], ship)
             if (this.enemyBulletGroup[s].collides(ship)) {
                 // this.enemyBulletGroup[s].remove();
                 this.thingsToRemove.push(this.enemyBulletGroup[s]);
@@ -417,8 +500,6 @@ class Logic {
     // does the actual detection
     detectionLogic(enemy, ship) {
         enemy.shootingTimer--;
-        // console.log(this.enemy[1].shootingTimer)
-        // enemy.shootingTimer--;
         if (ship.type === "One") {
             this.checkDistance("One", enemy, ship);
         }

@@ -65,32 +65,37 @@ class UI {
 
         this.base = factory.createBase(1300, 660);
         this.resource.push(factory.createSmallResource(random(800, 1200), random(40, 120))); // 0
-        this.resource.push(factory.createSmallResource(random(800, 1200), random(40, 120))); // 0
-        this.resource.push(factory.createSmallResource(random(800, 1200), random(40, 120))); // 0
-        this.resource.push(factory.createSmallResource(random(800, 1200), random(40, 120))); // 0
-        this.resource.push(factory.createSmallResource(random(800, 1200), random(40, 120))); // 0
-        this.resource.push(factory.createSmallResource(random(540, 750), random(120, 300))); // 1
-        this.resource.push(factory.createSmallResource(random(540, 750), random(120, 300))); // 1
-        this.resource.push(factory.createSmallResource(random(540, 750), random(120, 300))); // 1
-        this.resource.push(factory.createSmallResource(random(540, 750), random(120, 300))); // 1
-        this.resource.push(factory.createSmallResource(random(1200, 1400), random(450, 500))); // 2
-        this.resource.push(factory.createSmallResource(random(1200, 1400), random(450, 500))); // 2
-        this.resource.push(factory.createSmallResource(random(1200, 1400), random(450, 500))); // 2
-        this.resource.push(factory.createSmallResource(random(1200, 1400), random(450, 500))); // 2
-        this.resource.push(factory.createSmallResource(random(1200, 1400), random(450, 500))); // 2
-        this.resource.push(factory.createSmallResource(random(300, 500), random(600, 820))); // 3
-        this.resource.push(factory.createSmallResource(random(300, 500), random(600, 820))); // 3
-        this.resource.push(factory.createSmallResource(random(300, 500), random(600, 820))); // 3
-        this.resource.push(factory.createSmallResource(random(300, 500), random(600, 820))); // 3
-        this.resource.push(factory.createSmallResource(random(300, 500), random(600, 820))); // 3
-        this.resource.push(factory.createSmallResource(random(850, 1100), random(760, 820))); // 4
-        this.resource.push(factory.createSmallResource(random(850, 1100), random(760, 820))); // 4
-        this.resource.push(factory.createSmallResource(random(850, 1100), random(760, 820))); // 4
-        this.resource.push(factory.createSmallResource(random(850, 1100), random(760, 820))); // 4
-        this.resource.push(factory.createSmallResource(random(850, 1100), random(760, 820))); // 4
+        this.resource.push(factory.createSmallResource(this.resource[0].x - 15, this.resource[0].y + 15)); // 1
+        this.resource.push(factory.createSmallResource(this.resource[0].x - 15, this.resource[0].y - 15)); // 2
+        this.resource.push(factory.createSmallResource(this.resource[0].x + 15, this.resource[0].y + 15)); // 3
+        this.resource.push(factory.createSmallResource(this.resource[0].x + 15, this.resource[0].y - 15)); // 4
 
-        this.resource.push(factory.createBigResource(random(300, 400), random(100, 200))); // 5
-        this.resource.push(factory.createBigResource(random(1200, 1300), random(200, 300))); // 6
+        this.resource.push(factory.createSmallResource(random(540, 750), random(120, 300))); // 5
+        this.resource.push(factory.createSmallResource(this.resource[5].x - 15, this.resource[5].y + 15)); // 6
+        this.resource.push(factory.createSmallResource(this.resource[5].x - 15, this.resource[5].y - 15)); // 7
+        this.resource.push(factory.createSmallResource(this.resource[5].x + 15, this.resource[5].y + 15)); // 8
+        this.resource.push(factory.createSmallResource(this.resource[5].x + 15, this.resource[5].y - 15)); // 9
+
+        this.resource.push(factory.createSmallResource(random(1200, 1400), random(450, 500))); // 10
+        this.resource.push(factory.createSmallResource(this.resource[10].x - 15, this.resource[10].y + 15)); // 11
+        this.resource.push(factory.createSmallResource(this.resource[10].x - 15, this.resource[10].y - 15)); // 12
+        this.resource.push(factory.createSmallResource(this.resource[10].x + 15, this.resource[10].y + 15)); // 13
+        this.resource.push(factory.createSmallResource(this.resource[10].x + 15, this.resource[10].y - 15)); // 14
+
+        this.resource.push(factory.createSmallResource(random(300, 500), random(600, 820))); // 15
+        this.resource.push(factory.createSmallResource(this.resource[15].x - 15, this.resource[15].y + 15)); // 11
+        this.resource.push(factory.createSmallResource(this.resource[15].x - 15, this.resource[15].y - 15)); // 12
+        this.resource.push(factory.createSmallResource(this.resource[15].x + 15, this.resource[15].y + 15)); // 13
+        this.resource.push(factory.createSmallResource(this.resource[15].x + 15, this.resource[15].y - 15)); // 14
+
+        this.resource.push(factory.createSmallResource(random(850, 1100), random(760, 820))); // 20
+        this.resource.push(factory.createSmallResource(this.resource[20].x - 15, this.resource[20].y + 15)); // 11
+        this.resource.push(factory.createSmallResource(this.resource[20].x - 15, this.resource[20].y - 15)); // 12
+        this.resource.push(factory.createSmallResource(this.resource[20].x + 15, this.resource[20].y + 15)); // 13
+        this.resource.push(factory.createSmallResource(this.resource[20].x + 15, this.resource[20].y - 15)); // 14
+
+        this.resource.push(factory.createBigResource(random(300, 400), random(100, 200))); // 25
+        this.resource.push(factory.createBigResource(random(1200, 1300), random(200, 300))); // 26
 
         // For default ship stats
         this.ship.push(factory.createShipOne(10000, 10000));
@@ -801,7 +806,7 @@ class UI {
             this.ship[0].buildTime--;
             if (this.ship[0].buildTime <= 0) {
                 this.ship[0].buildTime = 300;
-                this.ship.push(this.factory.createShipOne(500, H / 2 - 100));
+                this.ship.push(this.factory.createShipOne(this.base.x - 25, this.base.y + 50));
                 this.shipBuilt.counter = 100;
                 this.shipBuilt.startCounter = true;
                 this.startBuildingShipOne = false;
@@ -812,7 +817,7 @@ class UI {
 
             if (this.ship[1].buildTime <= 0) {
                 this.ship[1].buildTime = 600;
-                this.ship.push(this.factory.createShipTwo(500, H / 2 - 100));
+                this.ship.push(this.factory.createShipTwo(this.base.x - 25, this.base.y + 50));
                 this.shipBuilt.counter = 100;
                 this.shipBuilt.startCounter = true;
                 this.startBuildingShipTwo = false;
@@ -822,7 +827,7 @@ class UI {
             this.ship[2].buildTime--;
             if (this.ship[2].buildTime <= 0) {
                 this.ship[2].buildTime = 600;
-                this.ship.push(this.factory.createShipThree(500, H / 2 - 100));
+                this.ship.push(this.factory.createShipThree(this.base.x - 25, this.base.y + 50));
                 this.shipBuilt.counter = 100;
                 this.shipBuilt.startCounter = true;
                 this.startBuildingShipThree = false;
@@ -832,7 +837,7 @@ class UI {
             this.ship[3].buildTime--;
             if (this.ship[3].buildTime <= 0) {
                 this.ship[3].buildTime = 1500;
-                this.ship.push(this.factory.createShipFour(500, H / 2 - 100));
+                this.ship.push(this.factory.createShipFour(this.base.x - 25, this.base.y + 50));
                 this.shipBuilt.counter = 100;
                 this.shipBuilt.startCounter = true;
                 this.startBuildingShipFour = false;
