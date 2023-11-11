@@ -222,8 +222,10 @@ class Logic {
                     resource.remainingAmount = resource.resourcePool;
                     resource.resourcePool -= resource.remainingAmount;
                     this.base.baseBag += resource.remainingAmount;
-                    resource.visible = false;
-                    resource.collider = 'n';
+                    if(resource.size == "Small"){
+                        resource.visible = false;
+                        resource.collider = 'n';
+                    }
                 }
             } else {
                 if (frameCount % ship.collectTick == 0) {
@@ -305,7 +307,7 @@ class Logic {
     }
 
     checkSpawnEnemy(resource) {
-        if (resource.resourcePool >= resource.resourceCap && resource.size == "Big" && this.enemy.length < 5) {
+        if (resource.size == "Big" && this.enemy.length < 25) {
             resource.spawnEnemy = true;
         } else {
             resource.spawnEnemy = false;
@@ -494,7 +496,7 @@ class Logic {
 
     enemyAttackBase(enemy) {
         this.attackBase = dist(this.base.x, this.base.y, enemy.x, enemy.y);
-        console.log(this.base.hitPoint)
+        // console.log(this.base.hitPoint)
         if (this.attackBase < enemy.range) {
             enemy.moveTo(enemy.x, enemy.y, 0);
             if (enemy.shootingTimer <= 0) {

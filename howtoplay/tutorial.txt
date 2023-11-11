@@ -1,0 +1,14 @@
+Left Click (click and drag) - Multiple selections for the ship
+Right Click - Gives command to the chosen ships on where to move
+
+1, 2, 3, and/or 4 on the keyboard - to choose the ships if you dont wanna use the left click
+    > You can also choose by clicking on the number located at the top left of the game.
+
+Click on the treasure chests or town to get resources!
+
+GAME PROGRESSION
+> Collect the treasure chest (and the town too) to get money
+> Create ships
+> Defend base
+> ???
+> Win
