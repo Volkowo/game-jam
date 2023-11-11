@@ -496,7 +496,6 @@ class Logic {
 
     enemyAttackBase(enemy) {
         this.attackBase = dist(this.base.x, this.base.y, enemy.x, enemy.y);
-        // console.log(this.base.hitPoint)
         if (this.attackBase < enemy.range) {
             enemy.moveTo(enemy.x, enemy.y, 0);
             if (enemy.shootingTimer <= 0) {

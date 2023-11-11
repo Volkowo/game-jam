@@ -278,35 +278,39 @@ class UI {
             stroke(246, 238, 227);
             fill(246, 238, 227);
             text("MultiShot", 31, -367.5);
-            text("MultiShot", 31, -210);
-            text("MultiShot", 31, -52.5);
-            text("MultiShot", 31, 105);
-            text("MultiShot", 31, 263);
+            text("Polyester Sail", 31, -210);
+            text("Plunder Pass", 31, -52.5);
+            text("Treasure Map", 31, 105);
+            text("Fast Reload", 31, 263);
 
             //Upgrade Costs
             textSize(12);
             stroke(71, 40, 14);
             fill(71, 40, 14);
             text("Gold Cost : 200", -25, -307.5);
-            text("Gold Cost : 200", -25, -150);
-            text("Gold Cost : 200", -25, 7.5);
+            text("Gold Cost : 300", -25, -150);
+            text("Gold Cost : 250", -25, 7.5);
             text("Gold Cost : 200", -25, 165);
-            text("Gold Cost : 200", -25, 323);
+            text("Gold Cost : 300", -25, 323);
 
             //Upgrade Descriptions
             textAlign(LEFT, CENTER);
             textSize(10);
             //UpgradeOne
             text("Allow ships to do multishot", -65, -287.5);
-            text("attacks. Apply to all ally ships.", -77.5, -272.5);
+            text("attacks. Doesn't really work.", -77.5, -272.5);
             //UpgradeTwo
             text("Descriptions 2", -65, -130);
+            text("This is asthetic only.", -77.5, -115);
             //UpgradeThree
-            text("Descriptions 3", -65, 27.5);
+            text("Descriptions 3, We really", -65, 27.5);
+            text("wanna do the Upgrades.", -77.5, 42.5);
             //UpgradeFour
-            text("Descriptions 4", -65, 185);
+            text("Descriptions 4, We just", -65, 185);
+            text("didn't have enough time :'(", -77.5, 200);
             //UpgradeFive
-            text("Descriptions 5", -65, 343);
+            text("Descriptions 5, So here's the", -65, 343);
+            text("view on what could have been.", -77.5, 358);
 
         }
         this.upgradeDisplay.collider = 'n';
@@ -441,10 +445,10 @@ class UI {
             fill(246, 238, 227);
             quad(-200, -25, 200, -25, 160, 25, -200, 25);
 
-            image(this.selectButtonImg, -15, 0, 45, 45);
-            image(this.selectButtonImg, 35, 0, 45, 45);
-            image(this.selectButtonImg, 85, 0, 45, 45);
-            image(this.selectButtonImg, 135, 0, 45, 45);
+            image(this.selectButtonImg, -40, 0, 45, 45);
+            image(this.selectButtonImg, 10, 0, 45, 45);
+            image(this.selectButtonImg, 60, 0, 45, 45);
+            image(this.selectButtonImg, 110, 0, 45, 45);
             // image(this.menuButtonImg,-80,0,50,50);
         }
         this.selectBar.collider = 's';
@@ -619,7 +623,7 @@ class UI {
 
         //Selection Buttons
         this.selectButtonOne = createButton('1');
-        this.selectButtonOne.position(301, 6);
+        this.selectButtonOne.position(276, 6);
         this.selectButtonOne.mouseClicked(() => { this.selectShipOne() });
         this.selectButtonOne.style("width", "28px");
         this.selectButtonOne.style("height", "28px");
@@ -631,7 +635,7 @@ class UI {
         this.selectButtonOne.show();
 
         this.selectButtonTwo = createButton('2');
-        this.selectButtonTwo.position(351, 6);
+        this.selectButtonTwo.position(326, 6);
         this.selectButtonTwo.mouseClicked(() => { this.selectShipTwo() });
         this.selectButtonTwo.style("width", "28px");
         this.selectButtonTwo.style("height", "28px");
@@ -643,7 +647,7 @@ class UI {
         this.selectButtonTwo.show();
 
         this.selectButtonThree = createButton('3');
-        this.selectButtonThree.position(401, 6);
+        this.selectButtonThree.position(376, 6);
         this.selectButtonThree.mouseClicked(() => { this.selectShipThree() });
         this.selectButtonThree.style("width", "28px");
         this.selectButtonThree.style("height", "28px");
@@ -653,9 +657,9 @@ class UI {
         this.selectButtonThree.style("font-size", "18px");
         this.selectButtonThree.style("border-radius", "20px");
         this.selectButtonThree.show();
-
+        
         this.selectButtonFour = createButton('4');
-        this.selectButtonFour.position(451, 6);
+        this.selectButtonFour.position(426, 6);
         this.selectButtonFour.mouseClicked(() => { this.selectShipFour() });
         this.selectButtonFour.style("width", "28px");
         this.selectButtonFour.style("height", "28px");
@@ -665,10 +669,11 @@ class UI {
         this.selectButtonFour.style("font-size", "18px");
         this.selectButtonFour.style("border-radius", "20px");
         this.selectButtonFour.show();
-
+        
         //Upgrades Buttons              // Neeed to add functionalities on these buttons
         this.upgradeOne = createButton('Buy');
         this.upgradeOne.position(86, 150); //157.5
+        this.upgradeOne.mouseClicked(() => { this.buyUpgradeOne() });
         this.upgradeOne.style("width", "100px");
         this.upgradeOne.style("height", "30px");
         this.upgradeOne.style("background-color", "#f6eee3");
@@ -676,9 +681,10 @@ class UI {
         this.upgradeOne.style("color", "#47280e");
         this.upgradeOne.style("font-size", "15px");
         this.upgradeOne.hide();
-
+        
         this.upgradeTwo = createButton('Buy');
         this.upgradeTwo.position(86, 307);
+        this.upgradeTwo.mouseClicked(() => { this.buyUpgradeTwo() });
         this.upgradeTwo.style("width", "100px");
         this.upgradeTwo.style("height", "30px");
         this.upgradeTwo.style("background-color", "#f6eee3");
@@ -686,9 +692,10 @@ class UI {
         this.upgradeTwo.style("color", "#47280e");
         this.upgradeTwo.style("font-size", "15px");
         this.upgradeTwo.hide();
-
+        
         this.upgradeThree = createButton('Buy');
         this.upgradeThree.position(86, 465);
+        this.upgradeThree.mouseClicked(() => { this.buyUpgradeThree() });
         this.upgradeThree.style("width", "100px");
         this.upgradeThree.style("height", "30px");
         this.upgradeThree.style("background-color", "#f6eee3");
@@ -696,9 +703,10 @@ class UI {
         this.upgradeThree.style("color", "#47280e");
         this.upgradeThree.style("font-size", "15px");
         this.upgradeThree.hide();
-
+        
         this.upgradeFour = createButton('Buy');
         this.upgradeFour.position(86, 622);
+        this.upgradeFour.mouseClicked(() => { this.buyUpgradeFour() });
         this.upgradeFour.style("width", "100px");
         this.upgradeFour.style("height", "30px");
         this.upgradeFour.style("background-color", "#f6eee3");
@@ -706,9 +714,10 @@ class UI {
         this.upgradeFour.style("color", "#47280e");
         this.upgradeFour.style("font-size", "15px");
         this.upgradeFour.hide();
-
+        
         this.upgradeFive = createButton('Buy');
         this.upgradeFive.position(86, 780);
+        this.upgradeFive.mouseClicked(() => { this.buyUpgradeFive() });
         this.upgradeFive.style("width", "100px");
         this.upgradeFive.style("height", "30px");
         this.upgradeFive.style("background-color", "#f6eee3");
@@ -719,6 +728,7 @@ class UI {
     }
 
     buildMode() {
+        buttonClickFx.play();
         this.buildButton.hide();
         this.buildButtonClone.show();
         this.upgradeButton.show();
@@ -741,6 +751,7 @@ class UI {
     }
 
     upgradeMode() {
+        buttonClickFx.play();
         this.buildButton.show();
         this.buildButtonClone.hide();
         this.upgradeButton.hide();
@@ -854,21 +865,25 @@ class UI {
     }
 
     //May be do this????????????????
-    hoverShipOne() {
-        console.log('this is for hover1');
+    buyUpgradeOne() {
+        buttonClickFx.play();
+        console.log('this is for upgrade1');
     }
-    hoverShipTwo() {
-        console.log('this is for hover2');
+    buyUpgradeTwo() {
+        buttonClickFx.play();
+        console.log('this is for upgrade2');
     }
-    hoverShipThree() {
-        console.log('this is for hover3');
+    buyUpgradeThree() {
+        buttonClickFx.play();
+        console.log('this is for upgrade3');
     }
-    hoverShipFour() {
-        console.log('this is for hover4');
+    buyUpgradeFour() {
+        buttonClickFx.play();
+        console.log('this is for upgrade4');
     }
-
-    hoverOut() {
-        console.log('this is for hoverOut')
+    buyUpgradeFive() {
+        buttonClickFx.play();
+        console.log('this is for upgrade5');
     }
 
     notificationManager() {
